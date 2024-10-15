@@ -9,8 +9,8 @@ import { index, pgTableCreator, serial, timestamp, varchar } from "drizzle-orm/p
  */
 export const createTable = pgTableCreator((name) => `${name}`);
 
-export const posts = createTable(
-    "post",
+export const topics = createTable(
+    "topics",
     {
         id: serial("id").primaryKey(),
         prompt: varchar("prompt"),
@@ -21,6 +21,6 @@ export const posts = createTable(
             .notNull(),
     },
     (example) => ({
-        nameIndex: index("name_idx").on(example.id),
+        nameIndex: index("id_idx").on(example.id),
     }),
 );
