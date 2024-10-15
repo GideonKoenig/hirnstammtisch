@@ -24,15 +24,13 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en" className={`${GeistSans.variable}`}>
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="h-screen w-screen bg-neutral-700 text-neutral-200">
+            <body className="bg-menu-main text-text-normal h-screen w-screen">
                 <NavigationBar />
                 {children}
             </body>
