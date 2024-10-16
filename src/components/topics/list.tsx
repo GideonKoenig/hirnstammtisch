@@ -68,10 +68,16 @@ export function TopicList() {
                 <>
                     <p className="px-2 py-1 text-sm text-text-muted">{topicsFiltered[0]!.for}</p>
 
-                    <p className="rounded p-2">{topicsFiltered[0]!.description}</p>
+                    <p
+                        data-state={topicsFiltered[0]!.status}
+                        className="rounded p-2 data-[state=used]:text-text-muted"
+                    >
+                        {topicsFiltered[0]!.description}
+                    </p>
 
                     <button
-                        className="rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted"
+                        className="rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted disabled:opacity-0"
+                        disabled={topicsFiltered[0]!.status === "used"}
                         onClick={async () => {
                             await updateTopic({
                                 id: topicsFiltered[0]!.id,
@@ -108,10 +114,16 @@ export function TopicList() {
 
                         <p className="px-2 py-1 text-sm text-text-muted">{topic.for}</p>
 
-                        <p className="rounded p-2">{topic.description}</p>
+                        <p
+                            data-state={topic.status}
+                            className="rounded p-2 data-[state=used]:text-text-muted"
+                        >
+                            {topic.description}
+                        </p>
 
                         <button
-                            className="rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted"
+                            className="rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted disabled:opacity-0"
+                            disabled={topic.status === "used"}
                             onClick={async () => {
                                 await updateTopic({
                                     id: topic.id,
