@@ -1,4 +1,4 @@
-import { NavigationBar } from "~/components/navigation-menu";
+import { NavigationBar } from "~/components/ui/navigation-menu";
 
 export default function HomePage() {
     return (

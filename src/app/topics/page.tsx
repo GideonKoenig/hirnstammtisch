@@ -1,4 +1,4 @@
-import { NavigationBar } from "~/components/navigation-menu";
+import { NavigationBar } from "~/components/ui/navigation-menu";
 import TopicsForm from "~/components/topics/form";
 import { TopicList } from "~/components/topics/list";
 import { db } from "~/server/db";
