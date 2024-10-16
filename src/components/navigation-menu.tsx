@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Icon from "assets/brain-dark.svg";
+import EditableTextField from "src/components/ui/editable-text-field/editable-text-field";
 
 export function NavigationBar() {
     return (
-        <div className="border-menu-hover flex flex-row items-center gap-4 border-b p-2">
+        <div className="flex flex-row items-center gap-4 border-b border-menu-hover p-2">
             <Link
-                className="hover:bg-menu-hover flex flex-row items-center gap-1 rounded px-4"
+                className="flex flex-row items-center gap-1 rounded px-4 hover:bg-menu-hover"
                 href="/"
             >
                 <Icon className="h-12 w-12" />
@@ -13,17 +14,19 @@ export function NavigationBar() {
             </Link>
             <div className="w-28" />
             <Link
-                className="hover:bg-menu-hover flex h-12 items-center rounded px-4"
+                className="flex h-12 items-center rounded px-4 hover:bg-menu-hover"
                 href="/topics"
             >
                 <p>Topics</p>
             </Link>
             <Link
-                className="hover:bg-menu-hover flex h-12 items-center rounded px-4"
+                className="flex h-12 items-center rounded px-4 hover:bg-menu-hover"
                 href="/events"
             >
                 <p>Events</p>
             </Link>
+            <div className="flex-grow" />
+            <EditableTextField cookieName="username" />
         </div>
     );
 }

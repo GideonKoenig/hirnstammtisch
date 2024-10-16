@@ -27,6 +27,10 @@ export default {
                     hover: "rgb(71 77 79)",
                     dark: "rgb(20 23 25)",
                 },
+                accent: {
+                    main: "rgb(37 99 235)",
+                    dark: "rgb(30 58 138)",
+                },
             },
         },
     },

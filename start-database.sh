@@ -33,6 +33,8 @@ source .env
 
 DB_PASSWORD=$(echo "$DATABASE_URL" | awk -F':' '{print $3}' | awk -F'@' '{print $1}')
 DB_PORT=$(echo "$DATABASE_URL" | awk -F':' '{print $4}' | awk -F'\/' '{print $1}')
+echo "DB_PASSWORD is: $DB_PASSWORD"
+echo "DB_PORT is: $DB_PORT"
 
 if [ "$DB_PASSWORD" = "password" ]; then
   echo "You are using the default database password"

@@ -7,7 +7,7 @@ import { index, pgTableCreator, serial, timestamp, varchar } from "drizzle-orm/p
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `${name}`);
+export const createTable = pgTableCreator((name) => `hirnstammtisch_${name}`);
 
 export const topics = createTable(
     "topics",
