@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import { ComboBox } from "~/components/ui/combobox";
 import { readCookie } from "~/components/utils";
 import { addTopic } from "./db";

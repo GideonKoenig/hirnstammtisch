@@ -1,6 +1,6 @@
 "use server";
 
-import { eq, InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { eq, type InferInsertModel } from "drizzle-orm";
 import { db } from "~/server/db";
 import { topics } from "~/server/db/schema";
 
@@ -21,7 +21,7 @@ export async function updateTopic(updatedTopic: {
         .set({
             status: updatedTopic.status,
         })
-        .where(eq(topics.id, updatedTopic.id!));
+        .where(eq(topics.id, updatedTopic.id));
 }
 
 export async function deleteTopic(id: number) {

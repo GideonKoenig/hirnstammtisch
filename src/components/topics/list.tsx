@@ -6,12 +6,12 @@ import { z } from "zod";
 import { parseJson } from "~/utils/zod";
 import { TopicSchema } from "./types";
 import { Trash2, Check } from "lucide-react";
-import { deleteTopic, updateTopic } from "./db";
+import { updateTopic } from "./db";
 import { Separator } from "~/components/ui/separator";
 import { Checkbox } from "~/components/ui/checkbox";
 import { useState } from "react";
 
-export function TopicList(props: {}) {
+export function TopicList() {
     const [showUsed, setShowUsed] = useState<boolean>(false);
     const queryClient = useQueryClient();
     const { data: topics, isLoading } = useQuery({
@@ -24,7 +24,6 @@ export function TopicList(props: {}) {
             }
 
             const topicsRaw = await res.text();
-            console.log(topicsRaw as string);
             const topics = parseJson(z.object({ topics: z.array(TopicSchema) }), topicsRaw);
             if (!topics.success) {
                 console.log(topics.errors);
@@ -78,7 +77,7 @@ export function TopicList(props: {}) {
                                 id: topicsFiltered[0]!.id,
                                 status: "used",
                             });
-                            queryClient.invalidateQueries({
+                            await queryClient.invalidateQueries({
                                 queryKey: ["topics"],
                                 exact: true,
                             });
@@ -94,7 +93,7 @@ export function TopicList(props: {}) {
                                 id: topicsFiltered[0]!.id,
                                 status: "deleted",
                             });
-                            queryClient.invalidateQueries({
+                            await queryClient.invalidateQueries({
                                 queryKey: ["topicsFiltered"],
                                 exact: true,
                             });
@@ -118,7 +117,7 @@ export function TopicList(props: {}) {
                                     id: topic.id,
                                     status: "used",
                                 });
-                                queryClient.invalidateQueries({
+                                await queryClient.invalidateQueries({
                                     queryKey: ["topics"],
                                     exact: true,
                                 });
@@ -134,7 +133,7 @@ export function TopicList(props: {}) {
                                     id: topic.id,
                                     status: "deleted",
                                 });
-                                queryClient.invalidateQueries({
+                                await queryClient.invalidateQueries({
                                     queryKey: ["topics"],
                                     exact: true,
                                 });
