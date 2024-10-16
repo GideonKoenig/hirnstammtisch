@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 export async function addUser(userName: string) {
     const existingUser = await db.select().from(user).where(eq(user.name, userName)).limit(1);
 
-    if (!existingUser)
+    if (existingUser.length < 1)
         await db.insert(user).values({
             name: userName,
         });
