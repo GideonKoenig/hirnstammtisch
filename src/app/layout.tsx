@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import PlausibleProvider from "next-plausible";
 import { type Metadata } from "next";
+import { ReactQueryProvider } from "~/components/react-query/provider";
 
 export const metadata: Metadata = {
     title: "Hirnstamm Tisch",
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="h-screen w-screen bg-menu-main text-text-normal">{children}</body>
+            <body className="h-screen w-screen bg-menu-main text-text-normal">
+                <ReactQueryProvider>{children}</ReactQueryProvider>
+            </body>
         </html>
     );
 }

@@ -2,18 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { addUser } from "~/user/db";
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
 
-    const saveName = (event: FormEvent) => {
+    const saveName = async (event: FormEvent) => {
         event.preventDefault();
         setLoading(true);
         const formData = new FormData(event.target as HTMLFormElement);
         const username = formData.get("name") as string;
+        if (username === "") {
+            setLoading(false);
+            return;
+        }
 
         document.cookie = `username=${username}`;
+        await addUser(username);
         router.push("/");
     };
 
@@ -31,7 +37,7 @@ export default function Login() {
                     />
                     <button
                         disabled={loading}
-                        className="bg-accent-main disabled:bg-accent-dark w-full rounded-lg p-1 disabled:text-text-muted"
+                        className="bg-accent-main hover:bg-accent-dark disabled:bg-accent-dark w-full rounded-lg p-1 shadow shadow-menu-dark hover:text-text-muted disabled:text-text-muted"
                         type="submit"
                     >
                         Submit

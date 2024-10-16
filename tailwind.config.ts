@@ -30,6 +30,7 @@ export default {
                 accent: {
                     main: "rgb(37 99 235)",
                     dark: "rgb(30 58 138)",
+                    light: "rgb(59 130 246)",
                 },
             },
         },

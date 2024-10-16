@@ -15,3 +15,16 @@ export function readCookie(name: string) {
     }
     return undefined;
 }
+
+export function debounce<F extends (...args: never[]) => void>(func: F, waitFor: number) {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined;
+
+    return (...args: Parameters<F>): void => {
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(() => {
+            func(...args);
+            timeoutId = undefined;
+        }, waitFor);
+    };
+}
