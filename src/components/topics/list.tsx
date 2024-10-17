@@ -6,11 +6,11 @@ import { z } from "zod";
 import { parseJson } from "~/utils/zod";
 import { TopicSchema } from "./types";
 import { Trash2, Check } from "lucide-react";
-import { updateTopic } from "./db";
 import { Separator } from "~/components/ui/separator";
 import { Checkbox } from "~/components/ui/checkbox";
 import { useState } from "react";
 import { ScrollArea, useDynamicHeight } from "~/components/ui/scroll-area";
+import { deleteTopic, markUsedTopic } from "~/components/topics/db";
 
 export function TopicList() {
     const [showUsed, setShowUsed] = useState<boolean>(false);
@@ -71,7 +71,7 @@ export function TopicList() {
                 <p className="text-sm">Show already used topics.</p>
             </div>
             <ScrollArea ref={ref}>
-                <div className="mr-3 grid grid-cols-[170px_auto_1.75rem_1.75rem] items-center gap-2 pb-6">
+                <div className="mr-4 grid grid-cols-[170px_auto_1.75rem_1.75rem] items-center gap-2 pb-6">
                     {topicsFiltered.map((topic, index) => (
                         <>
                             <Separator
@@ -92,9 +92,8 @@ export function TopicList() {
                                 className="rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted disabled:opacity-0"
                                 disabled={topic.status === "used"}
                                 onClick={async () => {
-                                    await updateTopic({
+                                    await markUsedTopic({
                                         id: topic.id,
-                                        status: "used",
                                     });
                                     await queryClient.invalidateQueries({
                                         queryKey: ["topics"],
@@ -108,9 +107,8 @@ export function TopicList() {
                             <button
                                 className="rounded-lg bg-accent-main hover:bg-accent-dark hover:text-text-muted"
                                 onClick={async () => {
-                                    await updateTopic({
+                                    await deleteTopic({
                                         id: topic.id,
-                                        status: "deleted",
                                     });
                                     await queryClient.invalidateQueries({
                                         queryKey: ["topics"],

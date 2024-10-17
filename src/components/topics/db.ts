@@ -12,18 +12,21 @@ export async function addTopic(topic: InferInsertModel<typeof topics>) {
     });
 }
 
-export async function updateTopic(updatedTopic: {
-    id: number;
-    status: "open" | "used" | "deleted";
-}) {
+export async function deleteTopic(updatedTopic: { id: number }) {
     await db
         .update(topics)
         .set({
-            status: updatedTopic.status,
+            status: "deleted",
         })
         .where(eq(topics.id, updatedTopic.id));
 }
 
-export async function deleteTopic(id: number) {
-    await db.delete(topics).where(eq(topics.id, id));
+export async function markUsedTopic(updatedTopic: { id: number }) {
+    await db
+        .update(topics)
+        .set({
+            status: "used",
+            usedAt: new Date(),
+        })
+        .where(eq(topics.id, updatedTopic.id));
 }
