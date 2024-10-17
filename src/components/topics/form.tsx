@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { type ChangeEvent, type FormEvent, useState } from "react";
 import { ComboBox } from "~/components/ui/combobox";
 import { readCookie } from "~/components/utils";
-import { addTopic } from "./db";
+import { addTopic } from "~/components/topics/db";
 
 export default function TopicsForm(props: { user: string[]; userName: string | undefined }) {
     const user = readCookie("username")!;
@@ -51,7 +51,7 @@ export default function TopicsForm(props: { user: string[]; userName: string | u
 
                 <button
                     disabled={!description}
-                    className="bg-accent-main hover:bg-accent-dark disabled:bg-accent-dark rounded-lg border-menu-light p-[0.375rem] shadow shadow-menu-dark hover:text-text-muted disabled:cursor-not-allowed disabled:text-text-muted"
+                    className="rounded-lg border-menu-light bg-accent-main p-[0.375rem] shadow shadow-menu-dark hover:bg-accent-dark hover:text-text-muted disabled:cursor-not-allowed disabled:bg-accent-dark disabled:text-text-muted"
                 >
                     Add
                 </button>

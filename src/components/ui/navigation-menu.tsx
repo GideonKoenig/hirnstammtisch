@@ -4,7 +4,7 @@ import EditableTextField from "src/components/ui/editable-text-field/editable-te
 
 export function NavigationBar() {
     return (
-        <div className="flex flex-row items-center gap-4 border-b border-menu-hover p-2">
+        <div className="flex w-full flex-row items-center gap-4 border-b border-menu-hover p-2">
             <Link
                 className="flex flex-row items-center gap-1 rounded px-4 hover:bg-menu-hover"
                 href="/"

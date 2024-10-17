@@ -4,10 +4,10 @@ import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { Command, CommandList, CommandGroup, CommandItem } from "cmdk";
 import { CheckIcon } from "lucide-react";
-import { cn } from "../utils";
+import { cn } from "~/components/utils";
 import { type Dispatch, type SetStateAction, useState } from "react";
-import { Button } from "./button";
-import { CommandInput } from "./command";
+import { Button } from "~/components/ui/button";
+import { CommandInput } from "~/components/ui/command";
 
 export function ComboBox(props: {
     state: string;
