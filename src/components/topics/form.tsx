@@ -47,7 +47,12 @@ export default function TopicsForm(props: { user: string[]; userName: string | u
                     }
                 />
 
-                <ComboBox className="" state={forUser} setState={setForUser} options={props.user} />
+                <ComboBox
+                    className="z-10"
+                    state={forUser}
+                    setState={setForUser}
+                    options={props.user}
+                />
 
                 <button
                     disabled={!description}
