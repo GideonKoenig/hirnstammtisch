@@ -14,7 +14,6 @@ import { deleteTopic, markUsedTopic } from "~/components/topics/db";
 
 export function TopicList() {
     const [showUsed, setShowUsed] = useState<boolean>(false);
-
     const ref = useDynamicHeight();
 
     const queryClient = useQueryClient();
