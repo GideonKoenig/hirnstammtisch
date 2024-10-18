@@ -9,6 +9,7 @@ import { ComboBox } from "~/components/ui/combobox";
 import { DatePicker } from "~/components/ui/date-picker";
 import { ScrollArea, useDynamicHeight } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
+import { compareDate } from "~/utils/date";
 
 export default function EventList(props: { users: string[]; events: Topic[] }) {
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -17,7 +18,6 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
     const router = useRouter();
     const eventsFiltered = props.events.filter(
         (event) =>
-            event.status !== "deleted" &&
             (showAll || event.eventAt) &&
             event.description.toLowerCase().includes(searchTerm.toLowerCase()),
     );
@@ -56,15 +56,14 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
                                             ? "opacity-50"
                                             : ""
                                     }
+                                    initialValue={event.eventAt}
                                     label={event.eventAt?.toLocaleDateString()}
                                     onChange={async (date) => {
-                                        if (date) {
-                                            await updateEventDateTopic({
-                                                id: event.id,
-                                                eventAt: date,
-                                            });
-                                            router.refresh();
-                                        }
+                                        await updateEventDateTopic({
+                                            id: event.id,
+                                            eventAt: date,
+                                        });
+                                        router.refresh();
                                     }}
                                 />
 

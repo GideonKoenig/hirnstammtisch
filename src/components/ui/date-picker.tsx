@@ -38,6 +38,12 @@ export function DatePicker(props: {
                         setOpen(false);
                     }}
                     initialFocus
+                    modifiers={{
+                        hasEvent: props.initialValue ?? [],
+                    }}
+                    modifiersClassNames={{
+                        hasEvent: "underline aria-selected:text-accent-light text-accent-light",
+                    }}
                 />
             </PopoverContent>
         </Popover>

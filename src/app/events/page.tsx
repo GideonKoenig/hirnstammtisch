@@ -1,4 +1,4 @@
-import { ne } from "drizzle-orm";
+import { not } from "drizzle-orm";
 import EventCalendar from "~/components/events/calendar";
 import EventList from "~/components/events/list";
 import { type Topic } from "~/components/topics/types";
@@ -9,9 +9,18 @@ import { TopicsTable } from "~/server/db/schema";
 export default async function EventPage() {
     const events = (
         await db.query.TopicsTable.findMany({
-            where: ne(TopicsTable.status, "deleted"),
+            where: not(TopicsTable.deleted),
         })
-    ).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as unknown as Topic[];
+    ).sort((a, b) => {
+        if (b.eventAt && a.eventAt) {
+            return b.eventAt.getTime() - a.eventAt.getTime();
+        }
+        if (!b.eventAt && !a.eventAt) {
+            return b.createdAt.getTime() - a.createdAt.getTime();
+        }
+        if (!b.eventAt) return 1;
+        return -1;
+    }) as unknown as Topic[];
 
     const userList = await db.query.UserTable.findMany();
     userList.push({

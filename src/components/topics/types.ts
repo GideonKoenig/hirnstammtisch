@@ -7,7 +7,7 @@ export const TopicSchema = z.object({
     description: z.string(),
     suggestedBy: z.string().max(256),
     speaker: z.string().max(256),
-    status: z.enum(["used", "open", "deleted"]),
+    deleted: z.boolean(),
     eventAt: z.preprocess((arg) => {
         if (typeof arg === "string" || arg instanceof Date) {
             const date = new Date(arg);

@@ -3,14 +3,14 @@ import TopicsForm from "~/components/topics/form";
 import { TopicList } from "~/components/topics/list";
 import { db } from "~/server/db";
 import { readCookie } from "~/server/utils";
-import { ne } from "drizzle-orm";
+import { not } from "drizzle-orm";
 import { type Topic } from "~/components/topics/types";
 import { TopicsTable } from "~/server/db/schema";
 
 export default async function TopicPage() {
     const topics = (
         await db.query.TopicsTable.findMany({
-            where: ne(TopicsTable.status, "deleted"),
+            where: not(TopicsTable.deleted),
         })
     ).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as unknown as Topic[];
 

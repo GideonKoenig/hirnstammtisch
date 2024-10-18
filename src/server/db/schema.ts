@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { index, pgTableCreator, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, index, pgTableCreator, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -9,8 +9,6 @@ import { index, pgTableCreator, serial, timestamp, varchar } from "drizzle-orm/p
  */
 export const createTable = pgTableCreator((name) => `hirnstammtisch_${name}`);
 
-export type TopicStatus = "open" | "used" | "deleted";
-
 export const TopicsTable = createTable(
     "topics",
     {
@@ -18,7 +16,7 @@ export const TopicsTable = createTable(
         description: varchar("description").notNull(),
         suggestedBy: varchar("suggested_by", { length: 256 }).notNull(),
         speaker: varchar("speaker", { length: 256 }).notNull(),
-        status: varchar("status", { length: 256 }).default("open").notNull(),
+        deleted: boolean("deleted").notNull(),
         eventAt: timestamp("event_at", { withTimezone: true }),
         createdAt: timestamp("created_at", { withTimezone: true })
             .default(sql`CURRENT_TIMESTAMP`)

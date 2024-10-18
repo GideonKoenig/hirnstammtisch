@@ -3,6 +3,11 @@ export function dateOnly(date: Date | undefined) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
+export function compareDate(a: Date | undefined, b: Date | undefined) {
+    if (!a || !b) return false;
+    return a.toISOString() === b.toISOString();
+}
+
 export function getUnique(dates: (Date | undefined)[]) {
     const uniqueDates: Date[] = [];
 

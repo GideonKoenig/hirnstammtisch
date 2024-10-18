@@ -9,6 +9,7 @@ export async function addTopic(topic: InferInsertModel<typeof TopicsTable>) {
         suggestedBy: topic.suggestedBy,
         speaker: topic.speaker,
         description: topic.description,
+        deleted: topic.deleted,
     });
 }
 
@@ -16,17 +17,7 @@ export async function deleteTopic(updatedTopic: { id: number }) {
     await db
         .update(TopicsTable)
         .set({
-            status: "deleted",
-        })
-        .where(eq(TopicsTable.id, updatedTopic.id));
-}
-
-export async function markUsedTopic(updatedTopic: { id: number }) {
-    await db
-        .update(TopicsTable)
-        .set({
-            status: "used",
-            eventAt: new Date(),
+            deleted: true,
         })
         .where(eq(TopicsTable.id, updatedTopic.id));
 }
@@ -40,11 +31,14 @@ export async function updateSpeakerTopic(updatedTopic: { id: number; speaker: st
         .where(eq(TopicsTable.id, updatedTopic.id));
 }
 
-export async function updateEventDateTopic(updatedTopic: { id: number; eventAt: Date }) {
+export async function updateEventDateTopic(updatedTopic: {
+    id: number;
+    eventAt: Date | undefined;
+}) {
     await db
         .update(TopicsTable)
         .set({
-            eventAt: updatedTopic.eventAt,
+            eventAt: updatedTopic.eventAt ?? null,
         })
         .where(eq(TopicsTable.id, updatedTopic.id));
 }

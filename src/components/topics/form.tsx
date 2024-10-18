@@ -26,6 +26,7 @@ export default function TopicsForm(props: { user: string[]; userName: string | u
             description,
             speaker: speaker,
             suggestedBy: user,
+            deleted: false,
         });
         router.refresh();
     };
