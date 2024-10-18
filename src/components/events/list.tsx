@@ -9,7 +9,6 @@ import { ComboBox } from "~/components/ui/combobox";
 import { DatePicker } from "~/components/ui/date-picker";
 import { ScrollArea, useDynamicHeight } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
-import { compareDate } from "~/utils/date";
 
 export default function EventList(props: { users: string[]; events: Topic[] }) {
     const [searchTerm, setSearchTerm] = useState<string>("");

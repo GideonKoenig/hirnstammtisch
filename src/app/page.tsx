@@ -56,8 +56,8 @@ export default async function HomePage() {
                             <p>{pastEventCount[0]!.count as number}</p>
                             <p>Members:</p>
                             <div>
-                                {userList.map((user) => (
-                                    <p>{user.name}</p>
+                                {userList.map((user, index) => (
+                                    <p key={index}>{user.name}</p>
                                 ))}
                             </div>
                         </div>
