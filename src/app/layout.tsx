@@ -6,7 +6,7 @@ import { type Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Hirnstamm Tisch",
-    description: "Let's talk about things.",
+    description: "Let's talk about stuff.",
     icons: {
         icon: [
             {
