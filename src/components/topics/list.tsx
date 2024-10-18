@@ -6,10 +6,11 @@ import { Separator } from "~/components/ui/separator";
 import { Checkbox } from "~/components/ui/checkbox";
 import { useState } from "react";
 import { ScrollArea, useDynamicHeight } from "~/components/ui/scroll-area";
-import { deleteTopic } from "~/components/topics/db";
+import { deleteTopic, updateSpeakerTopic } from "~/components/topics/db";
 import { useRouter } from "next/navigation";
+import { ComboBox } from "~/components/ui/combobox";
 
-export function TopicList(props: { topics: Topic[] }) {
+export function TopicList(props: { topics: Topic[]; users: string[] }) {
     const [showUsed, setShowUsed] = useState<boolean>(false);
     const ref = useDynamicHeight();
     const router = useRouter();
@@ -45,23 +46,37 @@ export function TopicList(props: { topics: Topic[] }) {
                                 className="col-span-3 data-[state=hide]:hidden"
                             />
 
-                            <p
-                                data-state={topic.eventAt}
-                                className="px-2 py-1 text-sm text-text-muted data-[state=used]:opacity-50"
+                            <ComboBox
+                                className={topic.eventAt ? "opacity-50" : ""}
+                                state={topic.speaker}
+                                setState={(value: string) => {
+                                    void updateSpeakerTopic({
+                                        id: topic.id,
+                                        speaker: value,
+                                    }).then(() => {
+                                        router.refresh();
+                                    });
+                                }}
+                                options={props.users}
+                            />
+
+                            {/* <p
+                                data-state={topic.eventAt ? "planned" : ""}
+                                className="px-2 py-1 text-sm text-text-muted data-[state=planned]:opacity-50"
                             >
                                 {topic.speaker}
-                            </p>
+                            </p> */}
 
                             <p
-                                data-state={topic.eventAt}
-                                className="rounded p-2 data-[state=used]:opacity-50"
+                                data-state={topic.eventAt ? "planned" : ""}
+                                className="rounded p-2 data-[state=planned]:opacity-50"
                             >
                                 {topic.description}
                             </p>
 
                             <button
-                                data-state={topic.eventAt}
-                                className="rounded-lg bg-accent-main hover:bg-accent-dark hover:text-text-muted data-[state=used]:opacity-50"
+                                data-state={topic.eventAt ? "planned" : ""}
+                                className="rounded-lg bg-accent-main hover:bg-accent-dark hover:text-text-muted data-[state=planned]:opacity-50"
                                 onClick={async () => {
                                     await deleteTopic({
                                         id: topic.id,

@@ -20,6 +20,7 @@ export default async function TopicPage() {
         name: "Anyone",
         createdAt: new Date(0),
     });
+    const users = userList.sort((a, b) => a.id - b.id).map((user) => user.name);
     const userName = readCookie("username");
 
     return (
@@ -33,12 +34,9 @@ export default async function TopicPage() {
                     }
                 </p>
 
-                <TopicsForm
-                    user={userList.sort((a, b) => a.id - b.id).map((user) => user.name)}
-                    userName={userName}
-                />
+                <TopicsForm user={users} userName={userName} />
 
-                <TopicList topics={topics} />
+                <TopicList topics={topics} users={users} />
             </div>
         </div>
     );
