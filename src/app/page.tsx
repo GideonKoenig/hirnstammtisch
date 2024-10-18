@@ -15,8 +15,7 @@ export default async function HomePage() {
             count: sql`COUNT(*)`,
         })
         .from(TopicsTable)
-        .where(lt(TopicsTable.eventAt, new Date()))
-        .execute();
+        .where(lt(TopicsTable.eventAt, new Date()));
 
     return (
         <div className="flex h-screen w-screen flex-col">
