@@ -28,6 +28,7 @@ export default async function EventPage() {
         name: "Anyone",
         createdAt: new Date(0),
     });
+    const users = userList.sort((a, b) => a.id - b.id).map((user) => user.name);
 
     return (
         <div className="flex h-screen flex-col">
@@ -53,7 +54,7 @@ export default async function EventPage() {
                 </div>
 
                 <div className="flex-grow">
-                    <EventList events={events} users={userList.map((user) => user.name)} />
+                    <EventList events={events} users={users} />
                 </div>
             </div>
         </div>

@@ -57,7 +57,11 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
                                             : ""
                                     }
                                     initialValue={event.eventAt}
-                                    label={event.eventAt?.toLocaleDateString()}
+                                    label={event.eventAt?.toLocaleDateString("de-DE", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                    })}
                                     onChange={async (date) => {
                                         await updateEventDateTopic({
                                             id: event.id,
