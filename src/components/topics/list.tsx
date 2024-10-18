@@ -62,8 +62,7 @@ export function TopicList(props: { topics: Topic[] }) {
                             </p>
 
                             <button
-                                data-state={topic.status}
-                                className="cursor-pointer rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted disabled:opacity-0 data-[state=used]:opacity-50"
+                                className="rounded-lg bg-menu-hover hover:bg-menu-light hover:text-text-muted disabled:opacity-0"
                                 disabled={topic.status === "used"}
                                 onClick={async () => {
                                     await markUsedTopic({
