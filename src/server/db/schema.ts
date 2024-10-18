@@ -11,15 +11,15 @@ export const createTable = pgTableCreator((name) => `hirnstammtisch_${name}`);
 
 export type TopicStatus = "open" | "used" | "deleted";
 
-export const topics = createTable(
+export const TopicsTable = createTable(
     "topics",
     {
         id: serial("id").primaryKey(),
         description: varchar("description").notNull(),
-        from: varchar("from", { length: 256 }).notNull(),
-        for: varchar("for", { length: 256 }),
+        suggestedBy: varchar("suggested_by", { length: 256 }).notNull(),
+        speaker: varchar("speaker", { length: 256 }).notNull(),
         status: varchar("status", { length: 256 }).default("open").notNull(),
-        usedAt: timestamp("used_at", { withTimezone: true }),
+        eventAt: timestamp("event_at", { withTimezone: true }),
         createdAt: timestamp("created_at", { withTimezone: true })
             .default(sql`CURRENT_TIMESTAMP`)
             .notNull(),
@@ -29,7 +29,7 @@ export const topics = createTable(
     }),
 );
 
-export const user = createTable(
+export const UserTable = createTable(
     "user",
     {
         id: serial("id").primaryKey(),

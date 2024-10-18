@@ -1,12 +1,27 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { updateEventDateTopic, updateSpeakerTopic } from "~/components/topics/db";
 import { type Topic } from "~/components/topics/types";
+import { Checkbox } from "~/components/ui/checkbox";
+import { ComboBox } from "~/components/ui/combobox";
+import { DatePicker } from "~/components/ui/date-picker";
 import { ScrollArea, useDynamicHeight } from "~/components/ui/scroll-area";
 import { Separator } from "~/components/ui/separator";
 
-export default function EventList(props: { events: Topic[] }) {
-    const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
+export default function EventList(props: { users: string[]; events: Topic[] }) {
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [showAll, setShowAll] = useState<boolean>(false);
+
+    const router = useRouter();
+    const eventsFiltered = props.events.filter(
+        (event) =>
+            event.status !== "deleted" &&
+            (showAll || event.eventAt) &&
+            event.description.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
     const ref = useDynamicHeight();
 
     return (
@@ -17,27 +32,73 @@ export default function EventList(props: { events: Topic[] }) {
                 onFocus={(event) => event.target.select()}
                 type="text"
                 placeholder="Search..."
-                className="w-full rounded border border-menu-light bg-menu-dark px-3 py-1 shadow shadow-menu-dark placeholder:text-text-muted focus-visible:outline-none"
+                className="w-full rounded border border-menu-light bg-menu-dark p-2 px-3 shadow shadow-menu-dark placeholder:text-text-muted focus-visible:outline-none"
             />
+
+            <div className="flex flex-row items-center gap-1 pl-4">
+                <Checkbox onCheckedChange={(checked: boolean) => setShowAll(checked)} />
+                <p className="text-sm">Show unscheduled topics.</p>
+            </div>
+
             <ScrollArea className="h-0" ref={ref}>
-                <div className="mr-4 grid grid-cols-[170px_auto] items-center gap-2 pb-6">
-                    {props.events.map((event, index) => (
-                        <>
-                            <Separator
-                                data-state={index === 0 ? "hide" : "show"}
-                                className="col-span-4 data-[state=hide]:hidden"
-                            />
+                <div className="mr-4 grid grid-cols-[110px_250px_auto] items-center gap-2 pb-6">
+                    {eventsFiltered ? (
+                        eventsFiltered.map((event, index) => (
+                            <>
+                                <Separator
+                                    data-state={index === 0 ? "hide" : "show"}
+                                    className="col-span-3 data-[state=hide]:hidden"
+                                />
 
-                            <p className="px-2 py-1 text-sm text-text-muted">{event.for}</p>
+                                <DatePicker
+                                    className={
+                                        event.eventAt && event.eventAt < new Date()
+                                            ? "opacity-50"
+                                            : ""
+                                    }
+                                    label={event.eventAt?.toLocaleDateString()}
+                                    onChange={async (date) => {
+                                        if (date) {
+                                            await updateEventDateTopic({
+                                                id: event.id,
+                                                eventAt: date,
+                                            });
+                                            router.refresh();
+                                        }
+                                    }}
+                                />
 
-                            <p
-                                data-state={event.status}
-                                className="rounded p-2 data-[state=used]:text-text-muted"
-                            >
-                                {event.description}
-                            </p>
-                        </>
-                    ))}
+                                <ComboBox
+                                    className={
+                                        event.eventAt && event.eventAt < new Date()
+                                            ? "opacity-50"
+                                            : ""
+                                    }
+                                    state={event.speaker}
+                                    setState={(value: string) => {
+                                        void updateSpeakerTopic({
+                                            id: event.id,
+                                            speaker: value,
+                                        }).then(() => {
+                                            router.refresh();
+                                        });
+                                    }}
+                                    options={props.users}
+                                />
+
+                                <p
+                                    data-state={
+                                        event.eventAt && event.eventAt < new Date() ? "old" : "new"
+                                    }
+                                    className="rounded p-2 data-[state=old]:opacity-50"
+                                >
+                                    {event.description}
+                                </p>
+                            </>
+                        ))
+                    ) : (
+                        <div>No entries</div>
+                    )}
                 </div>
             </ScrollArea>
         </div>

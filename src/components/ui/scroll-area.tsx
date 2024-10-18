@@ -48,7 +48,6 @@ function useDynamicHeight() {
     const [element, setElement] = useState<HTMLElement | null>(null);
 
     useLayoutEffect(() => {
-        console.log("enter");
         if (element) {
             const containerTop = element.getBoundingClientRect().top;
             const windowHeight = window.innerHeight;

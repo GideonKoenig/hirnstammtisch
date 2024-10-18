@@ -2,31 +2,49 @@
 
 import { eq, type InferInsertModel } from "drizzle-orm";
 import { db } from "~/server/db";
-import { topics } from "~/server/db/schema";
+import { TopicsTable } from "~/server/db/schema";
 
-export async function addTopic(topic: InferInsertModel<typeof topics>) {
-    await db.insert(topics).values({
-        from: topic.from,
-        for: topic.for,
+export async function addTopic(topic: InferInsertModel<typeof TopicsTable>) {
+    await db.insert(TopicsTable).values({
+        suggestedBy: topic.suggestedBy,
+        speaker: topic.speaker,
         description: topic.description,
     });
 }
 
 export async function deleteTopic(updatedTopic: { id: number }) {
     await db
-        .update(topics)
+        .update(TopicsTable)
         .set({
             status: "deleted",
         })
-        .where(eq(topics.id, updatedTopic.id));
+        .where(eq(TopicsTable.id, updatedTopic.id));
 }
 
 export async function markUsedTopic(updatedTopic: { id: number }) {
     await db
-        .update(topics)
+        .update(TopicsTable)
         .set({
             status: "used",
-            usedAt: new Date(),
+            eventAt: new Date(),
         })
-        .where(eq(topics.id, updatedTopic.id));
+        .where(eq(TopicsTable.id, updatedTopic.id));
+}
+
+export async function updateSpeakerTopic(updatedTopic: { id: number; speaker: string }) {
+    await db
+        .update(TopicsTable)
+        .set({
+            speaker: updatedTopic.speaker,
+        })
+        .where(eq(TopicsTable.id, updatedTopic.id));
+}
+
+export async function updateEventDateTopic(updatedTopic: { id: number; eventAt: Date }) {
+    await db
+        .update(TopicsTable)
+        .set({
+            eventAt: updatedTopic.eventAt,
+        })
+        .where(eq(TopicsTable.id, updatedTopic.id));
 }

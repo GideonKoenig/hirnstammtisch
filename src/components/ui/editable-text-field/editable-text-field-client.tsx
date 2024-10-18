@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { debounce, readCookie } from "src/components/utils";
 import { updateUser } from "~/user/db";
@@ -12,13 +13,16 @@ export default function EditableTextFieldClient(props: {
     const [userName, setContent] = useState<string | undefined>(
         props.content ?? readCookie(props.cookieName),
     );
+    const router = useRouter();
     const previousUserNameRef = useRef(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const updateUserDebounced = useCallback(
         debounce((oldName: string | undefined, newName: string) => {
             if (!oldName) return;
-            void updateUser(oldName, newName);
             previousUserNameRef.current = newName;
+            void updateUser(oldName, newName).then(() => {
+                router.refresh();
+            });
         }, 500),
         [],
     );

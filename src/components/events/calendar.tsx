@@ -11,7 +11,7 @@ export default function EventCalendar(props: { events: Topic[]; className?: stri
 
     return (
         <>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-end gap-2">
                 <Calendar
                     mode="single"
                     selected={selectedDate}
@@ -19,7 +19,7 @@ export default function EventCalendar(props: { events: Topic[]; className?: stri
                         setSelectedDate(date);
                         if (date) {
                             const event = props.events.find(
-                                (event) => event.usedAt?.toDateString() === date.toDateString(),
+                                (event) => event.eventAt?.toDateString() === date.toDateString(),
                             );
                             setSelectedEvent(event);
                         } else {
@@ -29,26 +29,26 @@ export default function EventCalendar(props: { events: Topic[]; className?: stri
                     className={cn("rounded-md border", props.className)}
                     modifiers={{
                         hasEvent: props.events
-                            .map((event) => event.usedAt)
+                            .map((event) => event.eventAt)
                             .filter((event) => event !== undefined),
                     }}
                     modifiersClassNames={{
-                        hasEvent: "underline",
+                        hasEvent: "underline aria-selected:text-accent-light text-accent-light",
                     }}
                 />
-                <div className="flex-grow" />
+                <div className="h-full flex-grow rounded-md border border-menu-light">
+                    {selectedEvent && (
+                        <p className="grid grid-cols-[100px_auto] gap-1 px-2 py-4 text-sm">
+                            <span className="text-text-muted">Speaker:</span>
+                            <span>{selectedEvent.speaker}</span>
+                            <span className="text-text-muted">Suggested By:</span>
+                            <span>{selectedEvent.suggestedBy}</span>
+                            <span className="text-text-muted">Topic:</span>
+                            <span>{selectedEvent.description}</span>
+                        </p>
+                    )}
+                </div>
             </div>
-
-            {selectedEvent && (
-                <p className="grid grid-cols-[100px_auto] gap-1 px-2 text-sm">
-                    <span className="text-text-muted">Speaker:</span>
-                    <span>{selectedEvent.for}</span>
-                    <span className="text-text-muted">Topic:</span>
-                    <span>{selectedEvent.description}</span>
-                    <span className="text-text-muted">Suggested By:</span>
-                    <span>{selectedEvent.from}</span>
-                </p>
-            )}
         </>
     );
 }

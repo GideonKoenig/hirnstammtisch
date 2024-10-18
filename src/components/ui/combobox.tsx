@@ -11,7 +11,7 @@ import { CommandInput } from "~/components/ui/command";
 
 export function ComboBox(props: {
     state: string;
-    setState: Dispatch<SetStateAction<string>>;
+    setState: Dispatch<SetStateAction<string>> | ((value: string) => void);
     options: string[];
     className?: string;
 }) {
@@ -25,7 +25,7 @@ export function ComboBox(props: {
                         variant="outline"
                         role="combobox"
                         aria-expanded={open}
-                        className="w-full justify-between border-menu-hover bg-menu-main shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal focus:bg-menu-hover"
+                        className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal focus:bg-menu-hover"
                     >
                         {props.state}
                         <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -33,7 +33,7 @@ export function ComboBox(props: {
                 </PopoverTrigger>
                 <PopoverContent
                     align="end"
-                    className="mt-2 w-52 rounded border border-menu-light bg-menu-dark p-0"
+                    className="z-20 mt-2 w-[250px] rounded border border-menu-light bg-menu-dark p-0 shadow-lg shadow-menu-dark"
                 >
                     <Command className="w-full">
                         <CommandInput placeholder="Search User..." className="h-9" />

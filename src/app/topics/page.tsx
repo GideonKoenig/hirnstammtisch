@@ -3,9 +3,18 @@ import TopicsForm from "~/components/topics/form";
 import { TopicList } from "~/components/topics/list";
 import { db } from "~/server/db";
 import { readCookie } from "~/server/utils";
+import { ne } from "drizzle-orm";
+import { type Topic } from "~/components/topics/types";
+import { TopicsTable } from "~/server/db/schema";
 
 export default async function TopicPage() {
-    const userList = await db.query.user.findMany();
+    const topics = (
+        await db.query.TopicsTable.findMany({
+            where: ne(TopicsTable.status, "deleted"),
+        })
+    ).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()) as unknown as Topic[];
+
+    const userList = await db.query.UserTable.findMany();
     userList.push({
         id: -1,
         name: "Anyone",
@@ -16,7 +25,7 @@ export default async function TopicPage() {
     return (
         <div>
             <NavigationBar />
-            <div className="m-auto flex w-full max-w-[1200px] flex-col gap-6 p-6 pb-0">
+            <div className="m-auto flex w-full max-w-[1200px] flex-col gap-8 p-6 pb-0">
                 <h1 className="text-4xl font-bold">Topics</h1>
                 <p className="whitespace-pre">
                     {
@@ -29,7 +38,7 @@ export default async function TopicPage() {
                     userName={userName}
                 />
 
-                <TopicList />
+                <TopicList topics={topics} />
             </div>
         </div>
     );
