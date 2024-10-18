@@ -36,7 +36,7 @@ export default function EventCalendar(props: { events: Topic[]; className?: stri
                         hasEvent: "underline aria-selected:text-accent-light text-accent-light",
                     }}
                 />
-                <div className="h-full flex-grow rounded-md border border-menu-light">
+                <div className="h-full flex-grow rounded-md border border-menu-light shadow shadow-menu-dark">
                     {selectedEvent && (
                         <p className="grid grid-cols-[100px_auto] gap-1 px-2 py-4 text-sm">
                             <span className="text-text-muted">Speaker:</span>

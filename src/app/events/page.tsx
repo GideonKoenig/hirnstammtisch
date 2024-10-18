@@ -32,7 +32,7 @@ export default async function EventPage() {
     return (
         <div className="flex h-screen flex-col">
             <NavigationBar />
-            <div className="m-auto flex h-full max-w-[1200px] flex-grow flex-col gap-6 p-6 pb-0">
+            <div className="m-auto flex h-full max-w-[1000px] flex-grow flex-col gap-6 p-6 pb-0">
                 <div className="flex flex-row gap-12">
                     <div className="flex flex-grow flex-col gap-6">
                         <h1 className="text-4xl font-bold">Events</h1>

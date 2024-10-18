@@ -4,7 +4,7 @@ export default function HomePage() {
     return (
         <div>
             <NavigationBar />
-            <main className="m-auto flex max-w-[1200px] flex-col gap-8 p-4">
+            <main className="m-auto flex max-w-[1000px] flex-col gap-8 p-4">
                 <h1 className="text-4xl font-bold">Welcome</h1>
                 <p className="whitespace-pre-wrap">
                     {

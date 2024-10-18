@@ -26,7 +26,7 @@ export default async function TopicPage() {
     return (
         <div>
             <NavigationBar />
-            <div className="m-auto flex w-full max-w-[1200px] flex-col gap-8 p-6 pb-0">
+            <div className="m-auto flex w-full max-w-[1000px] flex-col gap-8 p-6 pb-0">
                 <h1 className="text-4xl font-bold">Topics</h1>
                 <p className="whitespace-pre">
                     {
