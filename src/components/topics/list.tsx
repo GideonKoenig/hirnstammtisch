@@ -22,10 +22,10 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
             <>
                 <div className="flex flex-row items-center gap-1 pl-4">
                     <Checkbox onCheckedChange={(checked: boolean) => setShowUsed(checked)} />
-                    <p className="text-sm">Show already used topics.</p>
+                    <p className="text-sm">Show already scheduled topics.</p>
                 </div>
                 <div className="flex w-full flex-col items-center justify-center">
-                    <p>No suggestions yet.</p>
+                    <p>No new suggestions.</p>
                 </div>
             </>
         );
@@ -35,7 +35,7 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
         <>
             <div className="flex flex-row items-center gap-1 pl-4">
                 <Checkbox onCheckedChange={(checked: boolean) => setShowUsed(checked)} />
-                <p className="text-sm">Show already used topics.</p>
+                <p className="text-sm">Show already scheduled topics.</p>
             </div>
             <ScrollArea ref={ref}>
                 <div className="mr-4 grid w-full grid-cols-[170px_auto_1.75rem] items-center gap-2 pb-6">
@@ -59,13 +59,6 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
                                 }}
                                 options={props.users}
                             />
-
-                            {/* <p
-                                data-state={topic.eventAt ? "planned" : ""}
-                                className="px-2 py-1 text-sm text-text-muted data-[state=planned]:opacity-50"
-                            >
-                                {topic.speaker}
-                            </p> */}
 
                             <p
                                 data-state={topic.eventAt ? "planned" : ""}
