@@ -1,10 +1,6 @@
 import { withPlausibleProxy } from "next-plausible";
 await import("./src/env.js");
 
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds.
- */
 const config = {
     experimental: {
         turbo: {
@@ -64,5 +60,5 @@ const config = {
 };
 
 export default withPlausibleProxy({
-    customDomain: "https://plausible.dnd-platform.com",
+    customDomain: "https://plausible.gko.gg",
 })(config);

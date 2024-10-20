@@ -1,4 +1,4 @@
-import { lt, sql } from "drizzle-orm";
+import { asc, desc, lt, sql } from "drizzle-orm";
 import { NavigationBar } from "~/components/ui/navigation-menu";
 import { db } from "~/server/db";
 import { TopicsTable } from "~/server/db/schema";
@@ -8,7 +8,10 @@ export default async function HomePage() {
         (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
     );
     const firstTopic = (
-        await db.select().from(TopicsTable).orderBy(TopicsTable.eventAt).limit(1)
+        await db.select().from(TopicsTable).orderBy(asc(TopicsTable.eventAt)).limit(1)
+    )[0];
+    const lastTopic = (
+        await db.select().from(TopicsTable).orderBy(desc(TopicsTable.eventAt)).limit(1)
     )[0];
     const pastEventCount = await db
         .select({
@@ -47,6 +50,14 @@ export default async function HomePage() {
                             <p>First Event:</p>
                             <p>
                                 {firstTopic?.eventAt?.toLocaleDateString("de-DE", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                })}
+                            </p>
+                            <p>Last Event:</p>
+                            <p>
+                                {lastTopic?.eventAt?.toLocaleDateString("de-DE", {
                                     day: "2-digit",
                                     month: "2-digit",
                                     year: "numeric",
