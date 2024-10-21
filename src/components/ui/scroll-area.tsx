@@ -51,7 +51,7 @@ function useDynamicHeight() {
         if (element) {
             const containerTop = element.getBoundingClientRect().top;
             const windowHeight = window.innerHeight;
-            element.style.height = `${windowHeight - containerTop}px`;
+            element.style.height = `calc(100vh - ${containerTop}px)`;
         }
         return;
     }, [element]);
