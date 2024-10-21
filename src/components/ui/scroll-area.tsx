@@ -50,7 +50,6 @@ function useDynamicHeight() {
     useLayoutEffect(() => {
         if (element) {
             const containerTop = element.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
             element.style.height = `calc(100vh - ${containerTop}px)`;
         }
         return;
