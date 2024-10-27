@@ -29,7 +29,7 @@ export default async function HomePage() {
                     <div className="col-span-2 flex flex-col gap-8">
                         <p className="whitespace-pre-wrap">
                             {
-                                "Welcome to the HirnStammtisch, a small and lively gathering of curious minds in Bonn! Our aim is to create a casual, open platform where people can share their passions, explore new ideas, and dive into topics they’ve always wanted to discuss — or never thought about before. Whether you’re here to present your own interests or simply listen, we provide an informal space to connect and learn."
+                                "Welcome to the HirnstammTisch, a small and lively gathering of curious minds in Bonn! Our aim is to create a casual, open platform where people can share their passions, explore new ideas, and dive into topics they’ve always wanted to discuss — or never thought about before. Whether you’re here to present your own interests or simply listen, we provide an informal space to connect and learn."
                             }
                         </p>
                         <p className="whitespace-pre-wrap">

@@ -5,7 +5,7 @@ import PlausibleProvider from "next-plausible";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Hirnstamm Tisch",
+    title: "HirnstammTisch",
     description: "Let's talk about stuff.",
     icons: {
         icon: [
