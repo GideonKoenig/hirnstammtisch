@@ -22,7 +22,10 @@ export async function deleteTopic(updatedTopic: { id: number }) {
         .where(eq(TopicsTable.id, updatedTopic.id));
 }
 
-export async function updateSpeakerTopic(updatedTopic: { id: number; speaker: string }) {
+export async function updateTopicSpeaker(updatedTopic: {
+    id: number;
+    speaker: string;
+}) {
     await db
         .update(TopicsTable)
         .set({
@@ -31,7 +34,19 @@ export async function updateSpeakerTopic(updatedTopic: { id: number; speaker: st
         .where(eq(TopicsTable.id, updatedTopic.id));
 }
 
-export async function updateEventDateTopic(updatedTopic: {
+export async function updateTopicDescription(updatedTopic: {
+    id: number;
+    description: string;
+}) {
+    await db
+        .update(TopicsTable)
+        .set({
+            description: updatedTopic.description,
+        })
+        .where(eq(TopicsTable.id, updatedTopic.id));
+}
+
+export async function updateTopicEventDate(updatedTopic: {
     id: number;
     eventAt: Date | undefined;
 }) {
@@ -39,6 +54,18 @@ export async function updateEventDateTopic(updatedTopic: {
         .update(TopicsTable)
         .set({
             eventAt: updatedTopic.eventAt ?? null,
+        })
+        .where(eq(TopicsTable.id, updatedTopic.id));
+}
+
+export async function updateTopicPresentationUrl(updatedTopic: {
+    id: number;
+    presentationUrl: string | null;
+}) {
+    await db
+        .update(TopicsTable)
+        .set({
+            presentationUrl: updatedTopic.presentationUrl,
         })
         .where(eq(TopicsTable.id, updatedTopic.id));
 }

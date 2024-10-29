@@ -6,22 +6,33 @@ import { Separator } from "~/components/ui/separator";
 import { Checkbox } from "~/components/ui/checkbox";
 import { useState } from "react";
 import { ScrollArea, useDynamicHeight } from "~/components/ui/scroll-area";
-import { deleteTopic, updateSpeakerTopic } from "~/components/topics/db";
+import {
+    deleteTopic,
+    updateTopicDescription,
+    updateTopicSpeaker,
+} from "~/components/topics/db";
 import { useRouter } from "next/navigation";
 import { ComboBox } from "~/components/ui/combobox";
+import EditableTextFieldClient from "~/components/ui/editable-text-field/editable-text-field-client";
 
 export function TopicList(props: { topics: Topic[]; users: string[] }) {
     const [showUsed, setShowUsed] = useState<boolean>(false);
     const ref = useDynamicHeight();
     const router = useRouter();
 
-    const topicsFiltered = props.topics.filter((topic) => showUsed || !topic.eventAt);
+    const topicsFiltered = props.topics.filter(
+        (topic) => showUsed || !topic.eventAt,
+    );
 
     if (!topicsFiltered || topicsFiltered.length < 1) {
         return (
             <>
                 <div className="flex flex-row items-center gap-1 pl-4">
-                    <Checkbox onCheckedChange={(checked: boolean) => setShowUsed(checked)} />
+                    <Checkbox
+                        onCheckedChange={(checked: boolean) =>
+                            setShowUsed(checked)
+                        }
+                    />
                     <p className="text-sm">Show already scheduled topics.</p>
                 </div>
                 <div className="flex w-full flex-col items-center justify-center">
@@ -34,11 +45,13 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
     return (
         <>
             <div className="flex flex-row items-center gap-1 pl-4">
-                <Checkbox onCheckedChange={(checked: boolean) => setShowUsed(checked)} />
+                <Checkbox
+                    onCheckedChange={(checked: boolean) => setShowUsed(checked)}
+                />
                 <p className="text-sm">Show already scheduled topics.</p>
             </div>
-            <ScrollArea ref={ref}>
-                <div className="mr-4 grid w-full grid-cols-[170px_auto_1.75rem] items-center gap-2 pb-6">
+            <ScrollArea className="pr-3" ref={ref}>
+                <div className="mr-4 grid w-full grid-cols-[170px_auto_1.75rem] items-center gap-2 gap-x-4 pb-6">
                     {topicsFiltered.map((topic, index) => (
                         <>
                             <Separator
@@ -50,7 +63,7 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
                                 className={topic.eventAt ? "opacity-50" : ""}
                                 state={topic.speaker}
                                 setState={(value: string) => {
-                                    void updateSpeakerTopic({
+                                    void updateTopicSpeaker({
                                         id: topic.id,
                                         speaker: value,
                                     }).then(() => {
@@ -60,12 +73,23 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
                                 options={props.users}
                             />
 
-                            <p
+                            <EditableTextFieldClient
+                                data-state={topic.eventAt ? "planned" : ""}
+                                className="rounded data-[state=planned]:opacity-50"
+                                callback={async (oldValue, newValue) => {
+                                    await updateTopicDescription({
+                                        id: topic.id,
+                                        description: newValue,
+                                    });
+                                }}
+                                initialContent={topic.description}
+                            />
+                            {/* <p
                                 data-state={topic.eventAt ? "planned" : ""}
                                 className="rounded p-2 data-[state=planned]:opacity-50"
                             >
                                 {topic.description}
-                            </p>
+                            </p> */}
 
                             <button
                                 data-state={topic.eventAt ? "planned" : ""}
