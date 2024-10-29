@@ -1,57 +1,63 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
-import { debounce, readCookie } from "src/components/utils";
-import { updateUser } from "~/user/db";
+import { type ReactNode, useCallback, useRef, useState } from "react";
+import { cn, debounce, readCookie } from "src/components/utils";
 
 export default function EditableTextFieldClient(props: {
-    cookieName: string;
-    content: string | undefined;
+    className?: string;
+    cookieName?: string;
+    initialContent?: string;
+    callback: (oldValue: string, newValue: string) => Promise<void>;
+    fallback?: ReactNode;
 }) {
-    const [userName, setContent] = useState<string | undefined>(
-        props.content ?? readCookie(props.cookieName),
-    );
+    const [content, setContent] = useState<string>(() => {
+        if (props.initialContent) return props.initialContent;
+        if (!props.cookieName) return "";
+
+        const cookieValue = readCookie(props.cookieName);
+        if (cookieValue) return cookieValue;
+        return "";
+    });
     const router = useRouter();
-    const previousUserNameRef = useRef(userName);
+    const previousUserNameRef = useRef(content);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const updateUserDebounced = useCallback(
-        debounce((oldName: string | undefined, newName: string) => {
-            if (!oldName) return;
-            previousUserNameRef.current = newName;
-            void updateUser(oldName, newName).then(() => {
+        debounce((oldValue: string | undefined, newValue: string) => {
+            if (!oldValue) return;
+            previousUserNameRef.current = newValue;
+            void props.callback(oldValue, newValue).then(() => {
                 router.refresh();
             });
         }, 500),
         [],
     );
 
-    if (!userName)
-        return (
-            <Link className="flex h-12 items-center rounded px-4 hover:bg-menu-hover" href="/login">
-                <p>Login</p>
-            </Link>
-        );
+    if (!content) return props.fallback;
 
     return (
-        <div className="relative w-auto">
+        <div className={cn("relative w-auto", props.className, "p-0")}>
             <p
-                data-state={userName === "" ? "placeholder" : "name"}
-                className="p-2 text-text-normal data-[state=placeholder]:text-text-muted"
+                data-state={content === "" ? "placeholder" : "name"}
+                className="max-w-full text-text-normal data-[state=placeholder]:text-text-muted"
             >
-                {userName ?? "Please enter your Name"}
+                {content ?? "Please enter your Name"}
             </p>
             <input
                 type="text"
-                value={userName}
-                onChange={async (event: React.ChangeEvent<HTMLInputElement>) => {
+                value={content}
+                onChange={async (
+                    event: React.ChangeEvent<HTMLInputElement>,
+                ) => {
                     setContent(event.target.value);
-                    document.cookie = `username=${event.target.value}`;
-                    updateUserDebounced(previousUserNameRef.current, event.target.value);
+                    if (props.cookieName)
+                        document.cookie = `${props.cookieName}=${event.target.value}`;
+                    updateUserDebounced(
+                        previousUserNameRef.current,
+                        event.target.value,
+                    );
                 }}
-                placeholder="Please enter your Name"
-                className="absolute left-0 top-0 z-10 w-full bg-transparent p-2 text-transparent caret-text-normal focus-visible:outline-none"
+                className="absolute left-0 top-0 z-10 w-full bg-transparent text-transparent caret-text-normal focus-visible:outline-none"
             />
         </div>
     );
