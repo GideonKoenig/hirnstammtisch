@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { updateEventDateTopic, updateSpeakerTopic } from "~/components/topics/db";
+import { updateTopicEventDate, updateTopicSpeaker } from "~/components/topics/db";
 import { type Topic } from "~/components/topics/types";
 import { Checkbox } from "~/components/ui/checkbox";
 import { ComboBox } from "~/components/ui/combobox";
@@ -62,7 +62,7 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
                                         year: "numeric",
                                     })}
                                     onChange={async (date) => {
-                                        await updateEventDateTopic({
+                                        await updateTopicEventDate({
                                             id: event.id,
                                             eventAt: date,
                                         });
@@ -78,7 +78,7 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
                                     }
                                     state={event.speaker}
                                     setState={(value: string) => {
-                                        void updateSpeakerTopic({
+                                        void updateTopicSpeaker({
                                             id: event.id,
                                             speaker: value,
                                         }).then(() => {
