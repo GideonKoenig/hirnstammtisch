@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Icon from "assets/brain-dark.svg";
 import EditableTextField from "src/components/ui/editable-text-field/editable-text-field";
+import { updateUser } from "~/user/db";
 
 export function NavigationBar() {
     return (
@@ -26,7 +27,18 @@ export function NavigationBar() {
                 <p>Events</p>
             </Link>
             <div className="flex-grow" />
-            <EditableTextField cookieName="username" />
+            <EditableTextField
+                cookieName="username"
+                callback={updateUser}
+                fallback={
+                    <Link
+                        className="flex h-12 items-center rounded px-4 hover:bg-menu-hover"
+                        href="/login"
+                    >
+                        <p>Login</p>
+                    </Link>
+                }
+            />
         </div>
     );
 }

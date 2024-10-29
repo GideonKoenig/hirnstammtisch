@@ -7,6 +7,7 @@ export const TopicSchema = z.object({
     description: z.string(),
     suggestedBy: z.string().max(256),
     speaker: z.string().max(256),
+    presentationUrl: z.string().max(512).optional(),
     deleted: z.boolean(),
     eventAt: z.preprocess((arg) => {
         if (typeof arg === "string" || arg instanceof Date) {
