@@ -6,6 +6,7 @@ import { readCookie } from "~/server/utils";
 import { not } from "drizzle-orm";
 import { type Topic } from "~/components/topics/types";
 import { TopicsTable } from "~/server/db/schema";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
 export default async function TopicPage() {
     const topics = (
@@ -26,20 +27,25 @@ export default async function TopicPage() {
     const userName = readCookie("username");
 
     return (
-        <div>
+        <div className="flex h-full w-full flex-col overflow-hidden">
             <NavigationBar />
-            <div className="m-auto flex w-full max-w-[1000px] flex-col gap-8 p-6 pb-0">
-                <h1 className="text-4xl font-bold">Topics</h1>
-                <p className="whitespace-pre">
-                    {
-                        "Feel free to leave suggestions for topics that you want to talk or hear about.\nIf you want to schedule a specific topic, go to the Events page.\nYou can edit the description of a topic by just clicking on it."
-                    }
-                </p>
+            <ScrollArea className="h-full w-full flex-grow">
+                <div className="m-auto flex w-full max-w-[1000px] flex-col gap-8 p-6">
+                    <h1 className="text-4xl font-bold">Topics</h1>
+                    <p className="whitespace-pre">
+                        {
+                            "Feel free to leave suggestions for topics that you want to talk or hear about.\nIf you want to schedule a specific topic, go to the Events page.\nYou can edit the description of a topic by just clicking on it."
+                        }
+                    </p>
 
-                <TopicsForm user={users} userName={userName} />
+                    <TopicsForm user={users} userName={userName} />
 
-                <TopicList topics={topics} users={users} />
-            </div>
+                    <TopicList
+                        topics={[...topics, ...topics, ...topics, ...topics]}
+                        users={users}
+                    />
+                </div>
+            </ScrollArea>
         </div>
     );
 }
