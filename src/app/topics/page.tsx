@@ -40,10 +40,7 @@ export default async function TopicPage() {
 
                     <TopicsForm user={users} userName={userName} />
 
-                    <TopicList
-                        topics={[...topics, ...topics, ...topics, ...topics]}
-                        users={users}
-                    />
+                    <TopicList topics={topics} users={users} />
                 </div>
             </ScrollArea>
         </div>
