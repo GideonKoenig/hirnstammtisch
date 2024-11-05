@@ -38,11 +38,12 @@ export default async function EventPage() {
                     <div className="flex flex-grow flex-col gap-6">
                         <h1 className="text-4xl font-bold">Events</h1>
                         <p>
-                            Here you find an overview over past events and events that are already
-                            planned for the future.
+                            Here you find an overview over past events and
+                            events that are already planned for the future.
                             <br />
                             <br />
-                            You can also create events, by setting a Event data for a topic.
+                            You can also create events, by setting a Event data
+                            for a topic.
                         </p>
                     </div>
                     <div className="flex w-[600px] flex-shrink-0 flex-col gap-4">

@@ -1,8 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import React from "react";
 import { useState } from "react";
-import { updateTopicEventDate, updateTopicSpeaker } from "~/components/topics/db";
+import {
+    updateTopicEventDate,
+    updateTopicSpeaker,
+} from "~/components/topics/db";
 import { type Topic } from "~/components/topics/types";
 import { Checkbox } from "~/components/ui/checkbox";
 import { ComboBox } from "~/components/ui/combobox";
@@ -20,7 +24,7 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
             (showAll || event.eventAt) &&
             event.description.toLowerCase().includes(searchTerm.toLowerCase()),
     );
-
+    eventsFiltered.forEach((event) => event.eventAt?.setHours(23));
     const ref = useDynamicHeight();
 
     return (
@@ -35,7 +39,9 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
             />
 
             <div className="flex flex-row items-center gap-1 pl-4">
-                <Checkbox onCheckedChange={(checked: boolean) => setShowAll(checked)} />
+                <Checkbox
+                    onCheckedChange={(checked: boolean) => setShowAll(checked)}
+                />
                 <p className="text-sm">Show unscheduled topics.</p>
             </div>
 
@@ -51,16 +57,20 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
 
                                 <DatePicker
                                     className={
-                                        event.eventAt && event.eventAt < new Date()
+                                        event.eventAt &&
+                                        event.eventAt < new Date()
                                             ? "opacity-50"
                                             : ""
                                     }
                                     initialValue={event.eventAt}
-                                    label={event.eventAt?.toLocaleDateString("de-DE", {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                    })}
+                                    label={event.eventAt?.toLocaleDateString(
+                                        "de-DE",
+                                        {
+                                            day: "2-digit",
+                                            month: "2-digit",
+                                            year: "numeric",
+                                        },
+                                    )}
                                     onChange={async (date) => {
                                         await updateTopicEventDate({
                                             id: event.id,
@@ -72,7 +82,8 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
 
                                 <ComboBox
                                     className={
-                                        event.eventAt && event.eventAt < new Date()
+                                        event.eventAt &&
+                                        event.eventAt < new Date()
                                             ? "opacity-50"
                                             : ""
                                     }
@@ -90,7 +101,10 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
 
                                 <p
                                     data-state={
-                                        event.eventAt && event.eventAt < new Date() ? "old" : "new"
+                                        event.eventAt &&
+                                        event.eventAt < new Date()
+                                            ? "old"
+                                            : "new"
                                     }
                                     className="rounded p-2 data-[state=old]:opacity-50"
                                 >
