@@ -52,7 +52,7 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
 
             <div className="mr-4 grid w-full grid-cols-[170px_auto_1.75rem] items-center gap-2 gap-x-4 pb-6">
                 {topicsFiltered.map((topic, index) => (
-                    <React.Fragment key={index}>
+                    <React.Fragment key={topic.id}>
                         <Separator
                             data-state={index === 0 ? "hide" : "show"}
                             className="col-span-3 data-[state=hide]:hidden"

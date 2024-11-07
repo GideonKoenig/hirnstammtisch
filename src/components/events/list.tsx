@@ -46,7 +46,7 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
             <div className="mr-4 grid grid-cols-[110px_250px_auto] items-center gap-2 pb-6">
                 {eventsFiltered ? (
                     eventsFiltered.map((event, index) => (
-                        <React.Fragment key={index}>
+                        <React.Fragment key={event.id}>
                             <Separator
                                 data-state={index === 0 ? "hide" : "show"}
                                 className="col-span-3 data-[state=hide]:hidden"
