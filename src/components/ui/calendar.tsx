@@ -3,22 +3,30 @@
 import * as React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "react-day-picker";
+import { de } from "date-fns/locale";
 
 import { cn } from "~/components/utils";
 import { buttonVariants } from "~/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+function Calendar({
+    className,
+    classNames,
+    showOutsideDays = true,
+    ...props
+}: CalendarProps) {
     return (
         <DayPicker
+            locale={de}
             weekStartsOn={1}
             showOutsideDays={showOutsideDays}
             className={cn("p-3", className)}
             classNames={{
                 months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
                 month: "space-y-4",
-                caption: "flex justify-center text-text-normal pt-1 relative items-center",
+                caption:
+                    "flex justify-center text-text-normal pt-1 relative items-center",
                 caption_label: "text-sm font-medium",
                 nav: "space-x-1 flex items-center",
                 nav_button: cn(
@@ -29,7 +37,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
                 nav_button_next: "absolute border-menu-light right-1",
                 table: "w-full border-collapse space-y-1",
                 head_row: "flex",
-                head_cell: "text-text-muted rounded-md w-8 font-normal text-[0.8rem]",
+                head_cell:
+                    "text-text-muted rounded-md w-8 font-normal text-[0.8rem]",
                 row: "flex w-full mt-2",
                 cell: cn(
                     "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-menu-light [&:has([aria-selected].day-outside)]:bg-menu-light/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
@@ -49,7 +58,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
                 day_outside:
                     "day-outside text-neutral-500 opacity-50 aria-selected:text-text-muted aria-selected:opacity-30 ",
                 day_disabled: "text-text-normal opacity-50",
-                day_range_middle: "aria-selected:bg-menu-hover aria-selected:text-text-normal ",
+                day_range_middle:
+                    "aria-selected:bg-menu-hover aria-selected:text-text-normal ",
                 day_hidden: "invisible",
                 ...classNames,
             }}

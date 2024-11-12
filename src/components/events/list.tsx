@@ -68,6 +68,7 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
                                     },
                                 )}
                                 onChange={async (date) => {
+                                    date?.setHours(23);
                                     await updateTopicEventDate({
                                         id: event.id,
                                         eventAt: date,
