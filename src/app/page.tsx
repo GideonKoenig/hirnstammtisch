@@ -4,34 +4,37 @@ import { db } from "~/server/db";
 import { TopicsTable } from "~/server/db/schema";
 
 export default async function HomePage() {
-    const userList = (await db.query.UserTable.findMany()).sort(
+    const [userListRaw, nextEventRaw, lastEventRaw, pastEventCount] =
+        await Promise.all([
+            db.query.UserTable.findMany(),
+
+            db
+                .select()
+                .from(TopicsTable)
+                .where(gt(TopicsTable.eventAt, new Date()))
+                .orderBy(asc(TopicsTable.eventAt))
+                .limit(1),
+
+            db
+                .select()
+                .from(TopicsTable)
+                .where(lt(TopicsTable.eventAt, new Date()))
+                .orderBy(desc(TopicsTable.eventAt))
+                .limit(1),
+
+            db
+                .select({
+                    count: sql`COUNT(*)`,
+                })
+                .from(TopicsTable)
+                .where(lt(TopicsTable.eventAt, new Date())),
+        ]);
+
+    const nextEvent = nextEventRaw[0]!;
+    const lastEvent = lastEventRaw[0]!;
+    const userList = userListRaw.sort(
         (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
     );
-
-    const nextEvent = (
-        await db
-            .select()
-            .from(TopicsTable)
-            .where(gt(TopicsTable.eventAt, new Date()))
-            .orderBy(asc(TopicsTable.eventAt))
-            .limit(1)
-    )[0]!;
-
-    const lastEvent = (
-        await db
-            .select()
-            .from(TopicsTable)
-            .where(lt(TopicsTable.eventAt, new Date()))
-            .orderBy(desc(TopicsTable.eventAt))
-            .limit(1)
-    )[0]!;
-
-    const pastEventCount = await db
-        .select({
-            count: sql`COUNT(*)`,
-        })
-        .from(TopicsTable)
-        .where(lt(TopicsTable.eventAt, new Date()));
 
     return (
         <div className="flex h-screen w-screen flex-col">

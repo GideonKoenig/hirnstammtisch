@@ -8,11 +8,14 @@ import { db } from "~/server/db";
 import { TopicsTable } from "~/server/db/schema";
 
 export default async function EventPage() {
-    const events = (
-        await db.query.TopicsTable.findMany({
+    const [eventsRaw, userList] = await Promise.all([
+        db.query.TopicsTable.findMany({
             where: not(TopicsTable.deleted),
-        })
-    ).sort((a, b) => {
+        }),
+        db.query.UserTable.findMany(),
+    ]);
+
+    const events = eventsRaw.sort((a, b) => {
         if (b.eventAt && a.eventAt) {
             return b.eventAt.getTime() - a.eventAt.getTime();
         }
@@ -23,7 +26,6 @@ export default async function EventPage() {
         return -1;
     }) as unknown as Topic[];
 
-    const userList = await db.query.UserTable.findMany();
     userList.push({
         id: -1,
         name: "Anyone",

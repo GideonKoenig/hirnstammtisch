@@ -9,15 +9,17 @@ import { TopicsTable } from "~/server/db/schema";
 import { ScrollArea } from "~/components/ui/scroll-area";
 
 export default async function TopicPage() {
-    const topics = (
-        await db.query.TopicsTable.findMany({
+    const [topicsRaw, userList] = await Promise.all([
+        db.query.TopicsTable.findMany({
             where: not(TopicsTable.deleted),
-        })
-    ).sort(
+        }),
+        db.query.UserTable.findMany(),
+    ]);
+
+    const topics = topicsRaw.sort(
         (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
     ) as unknown as Topic[];
 
-    const userList = await db.query.UserTable.findMany();
     userList.push({
         id: -1,
         name: "Anyone",
