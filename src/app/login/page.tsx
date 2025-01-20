@@ -14,13 +14,13 @@ export default function Login() {
         setLoading(true);
         const formData = new FormData(event.target as HTMLFormElement);
         const username = formData.get("name") as string;
-        if (username === "") {
+        if (username.trim() === "") {
             setLoading(false);
             return;
         }
 
-        document.cookie = `username=${username}`;
-        await addUser(username);
+        document.cookie = `username=${username.trim()}`;
+        await addUser(username.trim());
         router.push("/");
     };
 
@@ -38,7 +38,7 @@ export default function Login() {
                     />
                     <button
                         disabled={loading}
-                        className="bg-accent-main hover:bg-accent-dark disabled:bg-accent-dark flex w-full flex-row items-center justify-center gap-1 rounded-lg p-1 shadow shadow-menu-dark hover:text-text-muted disabled:text-text-muted"
+                        className="flex w-full flex-row items-center justify-center gap-1 rounded-lg bg-accent-main p-1 shadow shadow-menu-dark hover:bg-accent-dark hover:text-text-muted disabled:bg-accent-dark disabled:text-text-muted"
                         type="submit"
                     >
                         <LoaderCircle

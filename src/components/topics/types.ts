@@ -7,7 +7,7 @@ export const TopicSchema = z.object({
     description: z.string(),
     suggestedBy: z.string().max(256),
     speaker: z.string().max(256),
-    presentationUrl: z.string().max(512).optional(),
+    presentationUrl: z.string().max(512).nullish(),
     deleted: z.boolean(),
     eventAt: z.preprocess((arg) => {
         if (typeof arg === "string" || arg instanceof Date) {
@@ -15,7 +15,7 @@ export const TopicSchema = z.object({
             return isNaN(date.getTime()) ? undefined : date;
         }
         return undefined;
-    }, z.date().optional()),
+    }, z.date().nullish()),
     createdAt: z.preprocess((arg) => {
         if (typeof arg === "string" || arg instanceof Date) {
             const date = new Date(arg);

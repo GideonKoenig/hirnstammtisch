@@ -1,44 +1,58 @@
-import Link from "next/link";
-import Icon from "assets/brain-dark.svg";
-import EditableTextField from "src/components/ui/editable-text-field/editable-text-field";
-import { updateUser } from "~/user/db";
+"use client";
 
-export function NavigationBar() {
+import { Bookmark, Home, Text, User } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+export function NavigationBar(props: { username: string | undefined }) {
+    const path = usePathname();
+
     return (
-        <div className="flex w-full flex-row items-center gap-4 border-b border-menu-hover p-2">
+        <div className="flex w-full flex-row items-center gap-1">
             <Link
-                className="flex flex-row items-center gap-1 rounded px-4 hover:bg-menu-hover"
+                data-active={path === "/"}
+                className="data-[active=true]:text-accent flex flex-grow flex-col items-center rounded px-4 py-2 hover:bg-menu-hover data-[active=true]:bg-menu-hover"
                 href="/"
             >
-                <Icon className="h-12 w-12" />
-                <p>Hirnstamm Tisch</p>
+                <Home className="aspect-square h-4" />
+                <p className="text-xs md:text-base">Home</p>
             </Link>
-            <div className="w-28" />
+
             <Link
-                className="flex h-12 items-center rounded px-4 hover:bg-menu-hover"
-                href="/topics"
-            >
-                <p>Topics</p>
-            </Link>
-            <Link
-                className="flex h-12 items-center rounded px-4 hover:bg-menu-hover"
+                data-active={path === "/events"}
+                className="data-[active=true]:text-accent flex flex-grow flex-col items-center rounded px-4 py-2 hover:bg-menu-hover data-[active=true]:bg-menu-hover"
                 href="/events"
             >
-                <p>Events</p>
+                <Bookmark className="aspect-square h-4" />
+                <p className="text-xs md:text-base">Events</p>
             </Link>
-            <div className="flex-grow" />
-            <EditableTextField
-                cookieName="username"
-                callback={updateUser}
-                fallback={
-                    <Link
-                        className="flex h-12 items-center rounded px-4 hover:bg-menu-hover"
-                        href="/login"
-                    >
-                        <p>Login</p>
-                    </Link>
-                }
-            />
+            <Link
+                data-active={path === "/about"}
+                className="data-[active=true]:text-accent flex flex-grow flex-col items-center rounded px-4 py-2 hover:bg-menu-hover data-[active=true]:bg-menu-hover"
+                href="/about"
+            >
+                <Text className="aspect-square h-4" />
+                <p className="text-xs md:text-base">About</p>
+            </Link>
+
+            <Link
+                data-hidden={props.username === undefined}
+                data-active={path === "/profile"}
+                className="data-[active=true]:text-accent flex flex-grow flex-col items-center rounded px-4 py-2 hover:bg-menu-hover data-[hidden=true]:hidden data-[active=true]:bg-menu-hover"
+                href="/profil"
+            >
+                <User className="aspect-square h-4" />
+                <p className="text-xs md:text-base">{props.username}</p>
+            </Link>
+            <Link
+                data-hidden={props.username !== undefined}
+                data-active={path === "/login"}
+                className="data-[active=true]:text-accent flex flex-grow flex-col items-center rounded px-4 py-2 hover:bg-menu-hover data-[hidden=true]:hidden data-[active=true]:bg-menu-hover"
+                href="/login"
+            >
+                <User className="aspect-square h-4" />
+                <p className="text-xs md:text-base">Login</p>
+            </Link>
         </div>
     );
 }
