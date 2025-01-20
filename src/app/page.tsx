@@ -30,7 +30,12 @@ export default async function HomePage() {
                     <EventCard key={event.id} event={event} />
                 ))}
 
-                <p className="pt-4 text-2xl font-bold">Past Events</p>
+                <p className="pt-4 text-2xl font-bold">
+                    Past Events
+                    <span className="whitespace-pre text-xl text-text-muted">
+                        {"  "}({pastEvents.length})
+                    </span>
+                </p>
                 {pastEvents.map((event) => (
                     <EventCard key={event.id} event={event} />
                 ))}
