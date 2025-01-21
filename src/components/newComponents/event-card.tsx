@@ -1,13 +1,17 @@
 import { type Topic } from "~/components/topics/types";
 import { formatWeekDistance } from "~/utils/date";
+import { type User } from "~/components/newComponents/db-types";
 
-export default function EventCard(props: { event: Topic }) {
+export default function EventCard(props: {
+    event: Topic;
+    speaker: User | undefined;
+}) {
     return (
         <div className="flex flex-col rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark">
             <h2 className="pb-1 text-lg font-bold">
                 {props.event.description}
             </h2>
-            <p className="text-sm">{props.event.speaker}</p>
+            <p className="text-sm">{props.speaker?.name}</p>
             <p className="whitespace-pre text-sm">
                 {props.event.eventAt?.toLocaleDateString("de-DE", {
                     day: "2-digit",

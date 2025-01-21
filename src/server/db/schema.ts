@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import {
     boolean,
     index,
+    integer,
     pgTableCreator,
     serial,
     timestamp,
@@ -21,8 +22,12 @@ export const TopicsTable = createTable(
     {
         id: serial("id").primaryKey(),
         description: varchar("description").notNull(),
-        suggestedBy: varchar("suggested_by", { length: 256 }).notNull(),
-        speaker: varchar("speaker", { length: 256 }).notNull(),
+        suggestedBy: integer("suggested_by")
+            .notNull()
+            .references(() => UserTable.id),
+        speaker: integer("speaker")
+            .notNull()
+            .references(() => UserTable.id),
         presentationUrl: varchar("presentation_url", { length: 512 }),
         deleted: boolean("deleted").notNull(),
         eventAt: timestamp("event_at", { withTimezone: true }),
@@ -40,6 +45,7 @@ export const UserTable = createTable(
     {
         id: serial("id").primaryKey(),
         name: varchar("name", { length: 256 }).notNull(),
+        imageUrl: varchar("image_url", { length: 512 }),
         createdAt: timestamp("created_at", { withTimezone: true })
             .default(sql`CURRENT_TIMESTAMP`)
             .notNull(),
