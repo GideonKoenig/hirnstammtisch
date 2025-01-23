@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { DEFAULT_USER } from "~/components/newComponents/data-types";
 import { EventList } from "~/components/newComponents/event-list";
-import { type Topic } from "~/components/topics/types";
+import { type Event } from "~/components/newComponents/data-types";
 import { db } from "~/server/db";
 
 export default async function EventPage() {
@@ -13,7 +13,7 @@ export default async function EventPage() {
     ]);
     const userName = cookies().get("username")?.value;
 
-    const events = eventsRaw.sort((a, b) => {
+    const events: Event[] = eventsRaw.sort((a, b) => {
         const speakerA = users.find((user) => user.id === a.speaker)!;
         const speakerB = users.find((user) => user.id === b.speaker)!;
 
@@ -32,7 +32,7 @@ export default async function EventPage() {
 
         // Otherwise sort alphabetically by speaker name
         return speakerA.id - speakerB.id;
-    }) as Topic[];
+    });
 
     users.push(DEFAULT_USER);
 

@@ -5,16 +5,30 @@ import { useRef, useState, type KeyboardEvent } from "react";
 import { cn } from "~/components/utils";
 
 export default function EditableTextField(props: {
-    value: string;
+    value: string | undefined | null;
     onChange: (newValue: string) => void | Promise<void>;
+    size?: "xs" | "sm" | "base";
+    placeholder?: string;
+    hideButton?: boolean;
     className?: string;
 }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [currentValue, setCurrentValue] = useState(props.value);
+    const calculatedValue =
+        (props.value?.trim() === "" ? undefined : props.value?.trim()) ??
+        props.placeholder ??
+        "";
+    const placeholderUsed =
+        (!props.value || props.value.trim() === "") && !!props.placeholder;
+    const [currentValue, setCurrentValue] = useState(calculatedValue);
     const ref = useRef<HTMLTextAreaElement>(null);
 
     const handleSubmit = async () => {
-        await props.onChange(currentValue);
+        if (currentValue !== props.placeholder) {
+            await props.onChange(currentValue);
+        }
+        if (currentValue.trim() === "") {
+            setCurrentValue(props.placeholder ?? "");
+        }
         setIsEditing(false);
     };
 
@@ -23,7 +37,7 @@ export default function EditableTextField(props: {
             event.preventDefault();
             void handleSubmit();
         } else if (event.key === "Escape") {
-            setCurrentValue(props.value);
+            setCurrentValue(calculatedValue);
             setIsEditing(false);
         }
     };
@@ -36,6 +50,10 @@ export default function EditableTextField(props: {
         });
     };
 
+    console.log(currentValue);
+    console.log(calculatedValue);
+    console.log(placeholderUsed);
+
     return (
         <div
             className={cn(
@@ -45,7 +63,9 @@ export default function EditableTextField(props: {
         >
             <p
                 data-editing={isEditing}
-                className="max-w-full whitespace-pre-wrap break-words rounded border border-transparent p-1 text-base data-[editing=true]:border-menu-hover"
+                data-placeholder={placeholderUsed}
+                data-size={props.size}
+                className="max-w-full whitespace-pre-wrap break-words rounded border border-transparent p-1 text-base data-[editing=true]:border-menu-hover data-[size=sm]:text-sm data-[size=xs]:text-xs data-[placeholder=true]:text-text-muted"
                 onMouseDown={startEditing}
             >
                 {currentValue}
@@ -58,17 +78,21 @@ export default function EditableTextField(props: {
                 onChange={(event) => setCurrentValue(event.target.value)}
                 onKeyDown={handleKeyDown}
                 onBlur={() => void handleSubmit()}
-                className="absolute left-0 top-0 z-10 hidden h-full w-full resize-none overflow-hidden whitespace-pre-wrap break-words border border-transparent bg-transparent p-1 text-base text-transparent caret-text-normal focus-visible:outline-none data-[editing=true]:block"
+                data-placeholder={placeholderUsed}
+                data-size={props.size}
+                className="absolute left-0 top-0 z-10 hidden h-full w-full resize-none overflow-hidden whitespace-pre-wrap break-words border border-transparent bg-transparent p-1 text-base text-transparent caret-text-normal focus-visible:outline-none data-[editing=true]:block data-[size=sm]:text-sm data-[size=xs]:text-xs"
             />
 
-            <button
-                onMouseDown={startEditing}
-                data-editing={isEditing}
-                className="absolute right-1 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100 data-[editing=true]:hidden"
-                aria-label="Edit text"
-            >
-                <PencilIcon className="h-4 w-4 stroke-text-muted" />
-            </button>
+            {!props.hideButton && (
+                <button
+                    onMouseDown={startEditing}
+                    data-editing={isEditing}
+                    className="absolute right-1 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100 data-[editing=true]:hidden"
+                    aria-label="Edit text"
+                >
+                    <PencilIcon className="h-4 w-4 stroke-text-muted" />
+                </button>
+            )}
         </div>
     );
 }

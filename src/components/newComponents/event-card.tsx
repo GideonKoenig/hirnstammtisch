@@ -1,10 +1,10 @@
-import { type Topic } from "~/components/topics/types";
 import { formatWeekDistance } from "~/utils/date";
-import { type User } from "~/components/newComponents/data-types";
 import { cn } from "~/components/utils";
+import { type Event, type User } from "~/components/newComponents/data-types";
+import Link from "next/link";
 
 export default function EventCard(props: {
-    event: Topic;
+    event: Event;
     speaker: User | undefined;
     className?: string;
 }) {
@@ -29,13 +29,15 @@ export default function EventCard(props: {
                     {"  "}({formatWeekDistance(props.event.eventAt!)})
                 </span>
             </p>
-            <a
+            <Link
                 data-hide={!props.event.presentationUrl}
                 className="text-sm text-blue-500 underline data-[hide=true]:hidden"
                 href={props.event.presentationUrl ?? ""}
+                target="_blank"
+                rel="noopener noreferrer"
             >
                 Presentation
-            </a>
+            </Link>
         </div>
     );
 }

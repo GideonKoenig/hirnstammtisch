@@ -101,6 +101,22 @@ export function EventForm(props: {
                         });
                     }}
                 />
+
+                <p className="text-sm text-text-muted">Presentation URL:</p>
+                <EditableTextField
+                    hideButton
+                    className="max-h-6 w-full"
+                    size="sm"
+                    placeholder="Insert presentation url"
+                    value={props.event.presentationUrl}
+                    onChange={(newValue) => {
+                        const newUrl = newValue.trim() === "" ? null : newValue;
+                        void updateEvent(props.event.id, {
+                            ...props.event,
+                            presentationUrl: newUrl,
+                        });
+                    }}
+                />
             </div>
         </div>
     );
