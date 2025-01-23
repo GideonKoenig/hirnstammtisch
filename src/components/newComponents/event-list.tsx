@@ -82,7 +82,7 @@ export function EventList(props: { events: Event[]; users: User[] }) {
             <Separator className="max-w-3xl bg-menu-hover" />
 
             <ScrollArea className="h-full w-full overflow-hidden p-4 py-0">
-                <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 py-4 lg:grid-cols-2">
+                <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 py-4 md:grid-cols-2">
                     {filteredEvents.map((event) => (
                         <EventForm
                             key={event.id}
