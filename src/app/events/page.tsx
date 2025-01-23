@@ -1,15 +1,13 @@
-import { not } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { DEFAULT_USER } from "~/components/newComponents/data-types";
 import { EventList } from "~/components/newComponents/event-list";
 import { type Topic } from "~/components/topics/types";
 import { db } from "~/server/db";
-import { EventsTable } from "~/server/db/schema";
 
 export default async function EventPage() {
     const [eventsRaw, users] = await Promise.all([
         db.query.EventsTable.findMany({
-            where: not(EventsTable.deleted),
+            where: (events, { eq }) => eq(events.deleted, false),
         }),
         db.query.UserTable.findMany(),
     ]);

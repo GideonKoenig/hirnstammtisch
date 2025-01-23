@@ -1,13 +1,20 @@
 import { type Topic } from "~/components/topics/types";
 import { formatWeekDistance } from "~/utils/date";
 import { type User } from "~/components/newComponents/data-types";
+import { cn } from "~/components/utils";
 
 export default function EventCard(props: {
     event: Topic;
     speaker: User | undefined;
+    className?: string;
 }) {
     return (
-        <div className="flex flex-col rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark">
+        <div
+            className={cn(
+                "flex flex-col rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark",
+                props.className,
+            )}
+        >
             <h2 className="pb-1 text-lg font-bold">
                 {props.event.description}
             </h2>

@@ -23,45 +23,47 @@ function Calendar({
             showOutsideDays={showOutsideDays}
             className={cn("p-3", className)}
             classNames={{
-                months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-                month: "space-y-4",
+                months: "flex",
+                month: "space-y-6 space-x-6 flex flex-col gap-8 items-center",
                 caption:
-                    "flex justify-center text-text-normal pt-1 relative items-center",
-                caption_label: "text-sm font-medium",
-                nav: "space-x-1 flex items-center",
+                    "flex flex-row w-full justify-center text-text-normal items-center relative",
+                caption_label: "text-base font-medium",
+                nav: "flex flex-row absolute w-full h-full top-0 left-0 items-center justify-between",
                 nav_button: cn(
                     buttonVariants({ variant: "outline" }),
-                    "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+                    "h-8 w-8 bg-transparent p-0 text-text-muted  border-menu-hover focus:bg-transparent focus:text-text-muted hover:bg-transparent hover:text-text-muted",
                 ),
-                nav_button_previous:
-                    "absolute border-menu-hover focus:border-menu-hover focus:stroke-menu-hover focus:bg-transparent left-1",
-                nav_button_next:
-                    "absolute border-menu-hover focus:border-menu-hover focus:stroke-menu-hover focus:bg-transparent right-1",
-                table: "w-full border-collapse space-y-1",
+                nav_button_previous: "",
+                nav_button_next: "",
+
+                table: "w-full !m-0",
                 head_row: "flex",
-                head_cell:
-                    "text-text-muted rounded-md w-8 font-normal text-[0.8rem]",
-                row: "flex w-full mt-2",
+                head_cell: "text-text-muted rounded-md w-12 font-normal",
+
+                row: "flex w-full mt-6",
                 cell: cn(
-                    "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-menu-light [&:has([aria-selected].day-outside)]:bg-menu-light/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
+                    "p-1 mx-1 text-center text-sm [&:has([aria-selected])]:bg-menu-light [&:has([aria-selected].day-outside)]:bg-menu-light/50 [&:has([aria-selected].day-range-end)]:rounded-r-full",
                     props.mode === "range"
                         ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
                         : "[&:has([aria-selected])]:rounded-md",
                 ),
+
                 day: cn(
                     buttonVariants({ variant: "ghost" }),
-                    "h-8 w-8 p-0 focus-visible:ring-menu-light font-normal aria-selected:opacity-100 hover:bg-menu-hover ",
+                    "h-8 w-8 p-4 focus-visible:ring-menu-light hover:bg-menu-light font-normal aria-selected:opacity-100  ",
                 ),
+
                 day_range_start: "day-range-start",
                 day_range_end: "day-range-end",
-                day_selected:
-                    "bg-menu-light text-text-normal hover:bg-menu-hover hover:text-text-normal focus:bg-menu-light focus:text-text-normal",
+                day_range_middle: "",
+
                 day_today: "border border-menu-light",
+                day_selected:
+                    "bg-menu-light text-text-normal focus:bg-menu-light focus:text-text-normal",
                 day_outside:
                     "day-outside text-neutral-500 opacity-50 aria-selected:text-text-muted aria-selected:opacity-30 ",
+
                 day_disabled: "text-text-normal opacity-50",
-                day_range_middle:
-                    "aria-selected:bg-menu-hover aria-selected:text-text-normal ",
                 day_hidden: "invisible",
                 ...classNames,
             }}

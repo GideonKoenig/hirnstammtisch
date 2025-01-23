@@ -1,14 +1,13 @@
-{
-    /* <div className="flex flex-row gap-12">
-                        <div className="flex w-[600px] flex-shrink-0 flex-col gap-4">
-                            <EventCalendar
-                                events={events}
-                                className="border-menu-light bg-menu-main shadow shadow-menu-dark"
-                            />
-                        </div>
-                    </div> */
-}
+import EventCalendar from "~/components/newComponents/event-calendar";
+import { db } from "~/server/db";
 
-export default function CalendarPage() {
-    return <div>Calendar</div>;
+export default async function CalendarPage() {
+    const [events, users] = await Promise.all([
+        db.query.EventsTable.findMany({
+            where: (events, { not }) => not(events.deleted),
+        }),
+        db.query.UserTable.findMany(),
+    ]);
+
+    return <EventCalendar events={events} users={users} />;
 }

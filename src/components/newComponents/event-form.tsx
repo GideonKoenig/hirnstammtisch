@@ -1,7 +1,7 @@
 "use client";
 
 import { ComboBox } from "~/components/ui/combobox";
-import { readCookie } from "~/components/utils";
+import { cn, readCookie } from "~/components/utils";
 import {
     DEFAULT_USER,
     type Event,
@@ -12,17 +12,26 @@ import { updateEvent } from "~/components/newComponents/server-actions";
 import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/newComponents/date-picker";
 
-export function EventForm(props: { event: Event; user: User[] }) {
+export function EventForm(props: {
+    event: Event;
+    users: User[];
+    className?: string;
+}) {
     const currentUserName = readCookie("username")!;
-    const eventSpeaker = props.user.find(
+    const eventSpeaker = props.users.find(
         (user) => user.id === props.event.speaker,
     );
-    const eventSuggestedBy = props.user.find(
+    const eventSuggestedBy = props.users.find(
         (user) => user.id === props.event.suggestedBy,
     );
 
     return (
-        <div className="flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark">
+        <div
+            className={cn(
+                "flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark",
+                props.className,
+            )}
+        >
             <EditableTextField
                 className="flex-grow"
                 value={props.event.description}
@@ -42,7 +51,7 @@ export function EventForm(props: { event: Event; user: User[] }) {
                     className="w-full"
                     initialValue={eventSpeaker?.name ?? DEFAULT_USER.name}
                     onChange={(value) => {
-                        const newSpeaker = props.user.find(
+                        const newSpeaker = props.users.find(
                             (user) => user.name === value,
                         )?.id;
                         if (newSpeaker) {
@@ -52,7 +61,7 @@ export function EventForm(props: { event: Event; user: User[] }) {
                             });
                         }
                     }}
-                    options={props.user.map((user) => user.name)}
+                    options={props.users.map((user) => user.name)}
                     sortOptions
                 />
 
@@ -61,7 +70,7 @@ export function EventForm(props: { event: Event; user: User[] }) {
                     className="w-full"
                     initialValue={eventSuggestedBy?.name ?? DEFAULT_USER.name}
                     onChange={(value) => {
-                        const newSuggestedBy = props.user.find(
+                        const newSuggestedBy = props.users.find(
                             (user) => user.name === value,
                         )?.id;
                         if (newSuggestedBy) {
@@ -71,7 +80,7 @@ export function EventForm(props: { event: Event; user: User[] }) {
                             });
                         }
                     }}
-                    options={props.user.map((user) => user.name)}
+                    options={props.users.map((user) => user.name)}
                     sortOptions
                 />
 

@@ -93,7 +93,7 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                         <EventForm
                             key={event.id}
                             event={event}
-                            user={props.users}
+                            users={props.users}
                         />
                     ))}
                 </div>
