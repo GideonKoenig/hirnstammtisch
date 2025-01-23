@@ -60,7 +60,7 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
 
                         <ComboBox
                             className={topic.eventAt ? "opacity-50" : ""}
-                            state={topic.speaker}
+                            initialValue={topic.speaker}
                             setState={(value: string) => {
                                 void updateTopicSpeaker({
                                     id: topic.id,
@@ -86,7 +86,7 @@ export function TopicList(props: { topics: Topic[]; users: string[] }) {
 
                         <button
                             data-state={topic.eventAt ? "planned" : ""}
-                            className="rounded-lg bg-accent-main hover:bg-accent-dark hover:text-text-muted data-[state=planned]:opacity-50"
+                            className="bg-accent-main hover:bg-accent-dark rounded-lg hover:text-text-muted data-[state=planned]:opacity-50"
                             onClick={async () => {
                                 await deleteTopic({
                                     id: topic.id,

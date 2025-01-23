@@ -4,13 +4,17 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "~/components/utils";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "~/components/ui/popover";
 import { useState } from "react";
 
 export function DatePicker(props: {
     className?: string;
     label?: string;
-    initialValue?: Date;
+    initialValue: Date | undefined | null;
     onChange?: (date?: Date) => void | Promise<void>;
 }) {
     const [open, setOpen] = useState<boolean>(false);
@@ -21,7 +25,7 @@ export function DatePicker(props: {
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "justify-between border-none bg-menu-light p-0 px-2 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal",
+                        "justify-between bg-menu-light p-0 px-2 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal",
                         props.className,
                     )}
                 >
@@ -32,7 +36,7 @@ export function DatePicker(props: {
             <PopoverContent className="w-auto p-0">
                 <Calendar
                     mode="single"
-                    selected={props.initialValue}
+                    selected={props.initialValue ?? undefined}
                     onSelect={async (date?: Date) => {
                         if (props.onChange) await props.onChange(date);
                         setOpen(false);
@@ -42,7 +46,8 @@ export function DatePicker(props: {
                         hasEvent: props.initialValue ?? [],
                     }}
                     modifiersClassNames={{
-                        hasEvent: "underline aria-selected:text-accent-light text-accent-light",
+                        hasEvent:
+                            "underline aria-selected:text-accent-light text-accent-light",
                     }}
                 />
             </PopoverContent>

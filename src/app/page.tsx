@@ -5,8 +5,8 @@ import { getWeekDistance } from "~/utils/date";
 
 export default async function HomePage() {
     const [events, userList] = await Promise.all([
-        db.query.TopicsTable.findMany({
-            where: (topics, { isNotNull }) => isNotNull(topics.eventAt),
+        db.query.EventsTable.findMany({
+            where: (events, { isNotNull }) => isNotNull(events.eventAt),
         }),
 
         db.query.UserTable.findMany(),

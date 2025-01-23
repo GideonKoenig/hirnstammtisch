@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export type Topic = z.infer<typeof TopicSchema>;
-export const TopicSchema = z.object({
+export type Event = z.infer<typeof EventSchema>;
+export const EventSchema = z.object({
     id: z.number().int(),
     description: z.string(),
     suggestedBy: z.number().int(),
@@ -37,3 +37,10 @@ export const UserSchema = z.object({
         return undefined;
     }, z.date()),
 });
+
+export const DEFAULT_USER = {
+    id: -1,
+    name: "Anyone",
+    createdAt: new Date(0),
+    imageUrl: null,
+};

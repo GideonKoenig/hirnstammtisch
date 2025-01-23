@@ -10,7 +10,7 @@ import {
 import { type Topic } from "~/components/topics/types";
 import { Checkbox } from "~/components/ui/checkbox";
 import { ComboBox } from "~/components/ui/combobox";
-import { DatePicker } from "~/components/ui/date-picker";
+import { DatePicker } from "~/components/newComponents/date-picker";
 import { Separator } from "~/components/ui/separator";
 
 export default function EventList(props: { users: string[]; events: Topic[] }) {
@@ -83,7 +83,7 @@ export default function EventList(props: { users: string[]; events: Topic[] }) {
                                         ? "opacity-50"
                                         : ""
                                 }
-                                state={event.speaker}
+                                initialValue={event.speaker}
                                 setState={(value: string) => {
                                     void updateTopicSpeaker({
                                         id: event.id,

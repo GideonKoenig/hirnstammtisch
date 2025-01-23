@@ -4,8 +4,8 @@ import { db } from "~/server/db";
 
 export default async function About() {
     const [events, userListRaw] = await Promise.all([
-        db.query.TopicsTable.findMany({
-            where: (topics, { isNotNull }) => isNotNull(topics.eventAt),
+        db.query.EventsTable.findMany({
+            where: (events, { isNotNull }) => isNotNull(events.eventAt),
         }),
 
         db.query.UserTable.findMany(),

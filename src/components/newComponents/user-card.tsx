@@ -1,10 +1,10 @@
-import { type User } from "~/components/newComponents/db-types";
+import { type User } from "~/components/newComponents/data-types";
 import { formatWeekDistance } from "~/utils/date";
 import Image from "next/image";
 import { db } from "~/server/db";
 
 export default async function UserCard(props: { user: User }) {
-    const events = await db.query.TopicsTable.findMany({
+    const events = await db.query.EventsTable.findMany({
         where: (topics, { isNotNull, eq, and }) => {
             return and(
                 isNotNull(topics.eventAt),
@@ -18,7 +18,7 @@ export default async function UserCard(props: { user: User }) {
         <div className="grid grid-cols-[auto_140px] gap-4 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark md:grid-cols-[auto_180px]">
             <div className="flex flex-col">
                 <h2 className="text-lg font-bold">{props.user.name}</h2>
-                <p className="whitespace-pre text-sm text-text-muted">
+                <p className="whitespace-pre text-xs text-text-muted">
                     {"Mitglied seit "}
                     {props.user.createdAt?.toLocaleDateString("de-DE", {
                         day: "2-digit",

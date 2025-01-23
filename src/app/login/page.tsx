@@ -25,7 +25,7 @@ export default function Login() {
     };
 
     return (
-        <div className="flex h-screen w-screen flex-col items-center justify-center">
+        <div className="flex h-screen w-screen flex-col items-center justify-center p-2">
             <div className="flex flex-col gap-4 rounded-lg border border-menu-hover bg-menu-light p-4 shadow shadow-menu-dark">
                 <p className="w-full text-center text-2xl font-bold">Login</p>
                 <p className="pr-28">To continue please tell us your name.</p>

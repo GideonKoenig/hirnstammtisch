@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import PlausibleProvider from "next-plausible";
 import { type Metadata } from "next";
-import { NavigationBar } from "~/components/ui/navigation-menu";
+import { NavigationBar } from "~/components/newComponents/navigation-menu";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {

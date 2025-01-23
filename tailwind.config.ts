@@ -18,7 +18,7 @@ export default {
             colors: {
                 text: {
                     normal: "rgb(255 255 244)",
-                    muted: "rgb(201 194 182)",
+                    muted: "rgb(170 170 170)",
                     dark: "rgb(16 22 23)",
                 },
                 menu: {
@@ -27,7 +27,7 @@ export default {
                     hover: "rgb(71 77 79)",
                     dark: "rgb(20 23 25)",
                 },
-                accent: "rgb(250,204,21)",
+                accent: "rgb(210,22,22)",
             },
         },
     },

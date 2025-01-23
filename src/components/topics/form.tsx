@@ -6,10 +6,15 @@ import { readCookie } from "~/components/utils";
 import { addTopic } from "~/components/topics/db";
 import { useRouter } from "next/navigation";
 
-export default function TopicsForm(props: { user: string[]; userName: string | undefined }) {
+export default function TopicsForm(props: {
+    user: string[];
+    userName: string | undefined;
+}) {
     const user = readCookie("username")!;
     const [speaker, setSpeaker] = useState<string>(props.userName ?? user);
-    const [description, setDescription] = useState<string | undefined>(undefined);
+    const [description, setDescription] = useState<string | undefined>(
+        undefined,
+    );
     const router = useRouter();
 
     useEffect(() => {
@@ -35,7 +40,9 @@ export default function TopicsForm(props: { user: string[]; userName: string | u
         <form onSubmit={submit}>
             <div className="grid grid-cols-[auto_250px_100px] items-center gap-x-2 gap-y-1">
                 <p className="pl-1 text-sm text-text-muted">Title:</p>
-                <p className="pl-1 text-sm text-text-muted">Proposed Speaker:</p>
+                <p className="pl-1 text-sm text-text-muted">
+                    Proposed Speaker:
+                </p>
                 <div className="" />
 
                 <input
@@ -49,16 +56,16 @@ export default function TopicsForm(props: { user: string[]; userName: string | u
                     }
                 />
 
-                <ComboBox
+                {/* <ComboBox
                     className="z-10 w-[250px]"
-                    state={speaker}
+                    initialValue={speaker}
                     setState={setSpeaker}
                     options={props.user}
-                />
+                /> */}
 
                 <button
                     disabled={!description}
-                    className="rounded-lg border-menu-light bg-accent-main p-[0.375rem] shadow shadow-menu-dark hover:bg-accent-dark hover:text-text-muted disabled:cursor-not-allowed disabled:bg-accent-dark disabled:text-text-muted"
+                    className="bg-accent-main hover:bg-accent-dark disabled:bg-accent-dark rounded-lg border-menu-light p-[0.375rem] shadow shadow-menu-dark hover:text-text-muted disabled:cursor-not-allowed disabled:text-text-muted"
                 >
                     Add
                 </button>

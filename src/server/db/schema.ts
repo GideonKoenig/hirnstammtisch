@@ -17,8 +17,8 @@ import {
  */
 export const createTable = pgTableCreator((name) => `hirnstammtisch_${name}`);
 
-export const TopicsTable = createTable(
-    "topics",
+export const EventsTable = createTable(
+    "events",
     {
         id: serial("id").primaryKey(),
         description: varchar("description").notNull(),

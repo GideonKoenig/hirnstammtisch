@@ -1,6 +1,6 @@
 import { type Topic } from "~/components/topics/types";
 import { formatWeekDistance } from "~/utils/date";
-import { type User } from "~/components/newComponents/db-types";
+import { type User } from "~/components/newComponents/data-types";
 
 export default function EventCard(props: {
     event: Topic;
