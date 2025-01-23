@@ -8,19 +8,23 @@ import {
 } from "~/components/newComponents/data-types";
 import { type User } from "~/components/newComponents/data-types";
 import EditableTextField from "~/components/newComponents/editable-text-field";
-import { updateEvent } from "~/components/newComponents/actions";
+import { updateEvent } from "~/components/newComponents/server-actions";
 import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/newComponents/date-picker";
 
 export function EventForm(props: { event: Event; user: User[] }) {
     const currentUserName = readCookie("username")!;
-    const eventUser = props.user.find(
+    const eventSpeaker = props.user.find(
         (user) => user.id === props.event.speaker,
+    );
+    const eventSuggestedBy = props.user.find(
+        (user) => user.id === props.event.suggestedBy,
     );
 
     return (
         <div className="flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark">
             <EditableTextField
+                className="flex-grow"
                 value={props.event.description}
                 onChange={(newValue) => {
                     void updateEvent(props.event.id, {
@@ -36,7 +40,7 @@ export function EventForm(props: { event: Event; user: User[] }) {
                 <p className="text-sm text-text-muted">Speaker:</p>
                 <ComboBox
                     className="w-full"
-                    initialValue={eventUser?.name ?? DEFAULT_USER.name}
+                    initialValue={eventSpeaker?.name ?? DEFAULT_USER.name}
                     onChange={(value) => {
                         const newSpeaker = props.user.find(
                             (user) => user.name === value,
@@ -55,7 +59,7 @@ export function EventForm(props: { event: Event; user: User[] }) {
                 <p className="text-sm text-text-muted">Suggested By:</p>
                 <ComboBox
                     className="w-full"
-                    initialValue={eventUser?.name ?? DEFAULT_USER.name}
+                    initialValue={eventSuggestedBy?.name ?? DEFAULT_USER.name}
                     onChange={(value) => {
                         const newSuggestedBy = props.user.find(
                             (user) => user.name === value,

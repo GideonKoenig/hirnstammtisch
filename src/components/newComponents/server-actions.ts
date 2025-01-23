@@ -7,7 +7,6 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function updateEvent(eventId: number, newValue: Event) {
-    console.log(newValue);
     await db
         .update(EventsTable)
         .set({

@@ -56,7 +56,13 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                         className="w-full text-text-muted"
                         initialValue={speaker}
                         onChange={setSpeaker}
-                        options={props.users.map((user) => user.name)}
+                        options={props.users
+                            .filter((user) =>
+                                events.some(
+                                    (event) => event.speaker === user.id,
+                                ),
+                            )
+                            .map((user) => user.name)}
                         sortOptions
                     />
                     <Button
@@ -70,12 +76,12 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                 </div>
 
                 <div className="flex flex-row gap-2">
-                    <p className="text-sm text-text-muted">Show all events</p>
                     <Switch
                         className="ml-2 bg-menu-light"
                         checked={showAll}
                         onCheckedChange={setShowAll}
                     />
+                    <p className="text-sm text-text-muted">Show all events</p>
                 </div>
             </div>
 
