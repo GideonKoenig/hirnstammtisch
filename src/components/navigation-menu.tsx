@@ -1,9 +1,9 @@
 "use client";
 
 import { Bookmark, Calendar, Home, Text, User } from "lucide-react";
-import Icon from "public/icon.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export function NavigationBar(props: { username: string | undefined }) {
     const path = usePathname();
@@ -16,7 +16,13 @@ export function NavigationBar(props: { username: string | undefined }) {
                 href="/"
             >
                 <Home className="aspect-square h-4 md:h-5 lg:hidden" />
-                <Icon className="hidden h-10 w-10 lg:block" />
+                <Image
+                    className="hidden lg:block"
+                    src={"icon.svg"}
+                    alt="HirnstammTisch"
+                    width={40}
+                    height={40}
+                />
                 <p className="text-xs md:text-base lg:text-lg lg:font-bold">
                     Home
                 </p>
