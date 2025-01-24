@@ -17,7 +17,7 @@ export default async function About() {
 
     return (
         <ScrollArea className="h-full w-full">
-            <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-4 p-2">
+            <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-4 p-4">
                 <p className="text-2xl font-bold">About</p>
                 <p>
                     The HirnstammTisch is a small group of people who meet
