@@ -1,9 +1,9 @@
-import { type User } from "~/components/newComponents/data-types";
-import { formatWeekDistance } from "~/utils/date";
+import { type User } from "~/lib/data-types";
+import { formatWeekDistance } from "~/lib/date";
 import Image from "next/image";
 import { db } from "~/server/db";
 
-export default async function UserCard(props: { user: User }) {
+export async function UserCard(props: { user: User }) {
     const events = await db.query.EventsTable.findMany({
         where: (topics, { isNotNull, eq, and }) => {
             return and(

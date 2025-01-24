@@ -1,23 +1,23 @@
 "use client";
 
 import { ComboBox } from "~/components/ui/combobox";
-import { cn, readCookie } from "~/components/utils";
-import {
-    DEFAULT_USER,
-    type Event,
-} from "~/components/newComponents/data-types";
-import { type User } from "~/components/newComponents/data-types";
-import EditableTextField from "~/components/newComponents/editable-text-field";
-import { updateEvent } from "~/components/newComponents/server-actions";
+import { cn, readCookie } from "~/lib/utils";
+import { DEFAULT_USER, type Event } from "~/lib/data-types";
+import { type User } from "~/lib/data-types";
+import EditableTextField from "~/components/editable-text-field";
+import { updateEvent } from "~/lib/server-actions";
 import { Separator } from "~/components/ui/separator";
-import { DatePicker } from "~/components/newComponents/date-picker";
+import { DatePicker } from "~/components/ui/date-picker";
+import { redirect } from "next/navigation";
 
 export function EventForm(props: {
     event: Event;
     users: User[];
     className?: string;
 }) {
-    const currentUserName = readCookie("username")!;
+    const currentUserName = readCookie("username");
+    if (!currentUserName) return redirect("/login");
+
     const eventSpeaker = props.users.find(
         (user) => user.id === props.event.speaker,
     );

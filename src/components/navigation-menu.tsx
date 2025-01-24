@@ -67,7 +67,7 @@ export function NavigationBar(props: { username: string | undefined }) {
             >
                 <User className="aspect-square h-4 md:h-5 lg:hidden" />
                 <p className="text-xs md:text-base lg:text-lg lg:font-bold">
-                    {props.username}
+                    Profile
                 </p>
             </Link>
             <Link

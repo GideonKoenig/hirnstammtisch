@@ -1,4 +1,4 @@
-import UserCard from "~/components/newComponents/user-card";
+import { UserCard } from "~/components/user-card";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { db } from "~/server/db";
 

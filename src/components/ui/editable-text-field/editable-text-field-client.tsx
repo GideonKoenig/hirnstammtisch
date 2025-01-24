@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { type ReactNode, useCallback, useRef, useState } from "react";
-import { cn, debounce, readCookie } from "src/components/utils";
+import { cn, debounce, readCookie } from "~/lib/utils";
 
 export default function EditableTextFieldClient(props: {
     className?: string;

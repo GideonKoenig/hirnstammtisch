@@ -1,6 +1,6 @@
-import { formatWeekDistance } from "~/utils/date";
-import { cn } from "~/components/utils";
-import { type Event, type User } from "~/components/newComponents/data-types";
+import { formatWeekDistance } from "~/lib/date";
+import { cn } from "~/lib/utils";
+import { type Event, type User } from "~/lib/data-types";
 import Link from "next/link";
 
 export default function EventCard(props: {

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { type User, type Event, DEFAULT_USER } from "./data-types";
-import { EventForm } from "~/components/newComponents/event-form";
+import { type User, type Event, DEFAULT_USER } from "../lib/data-types";
+import { EventForm } from "~/components/event-form";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Switch } from "~/components/ui/switch";
 import { ComboBox } from "~/components/ui/combobox";

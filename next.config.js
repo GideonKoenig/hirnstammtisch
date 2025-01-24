@@ -5,7 +5,7 @@ const config = {
     images: {
         remotePatterns: [
             {
-                hostname: "d5glgttj02.ufs.sh",
+                hostname: "utfs.io",
             },
         ],
     },

@@ -1,4 +1,4 @@
-import EventCalendar from "~/components/newComponents/event-calendar";
+import EventCalendar from "~/components/event-calendar";
 import { db } from "~/server/db";
 
 export default async function CalendarPage() {

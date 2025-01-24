@@ -8,7 +8,7 @@ import {
 } from "@radix-ui/react-popover";
 import { Command, CommandList, CommandGroup, CommandItem } from "cmdk";
 import { CheckIcon } from "lucide-react";
-import { cn } from "~/components/utils";
+import { cn } from "~/lib/utils";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { CommandInput } from "~/components/ui/command";
@@ -41,7 +41,7 @@ export function ComboBox(props: {
                         className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark"
                     >
                         {props.initialValue}
-                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 text-text-normal opacity-50" />
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent

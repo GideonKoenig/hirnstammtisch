@@ -1,9 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import UserCard from "~/components/newComponents/user-card";
-import EditableTextField from "~/components/ui/editable-text-field/editable-text-field";
 import { db } from "~/server/db";
-import { updateUser } from "~/user/db";
+import UserForm from "~/components/user-form";
 
 export default async function Profil() {
     const userName = cookies().get("username")?.value;
@@ -17,9 +15,10 @@ export default async function Profil() {
     }
 
     return (
-        <div>
-            <UserCard user={user} />
-            <EditableTextField cookieName="username" callback={updateUser} />
+        <div className="h-full w-full p-2">
+            <div className="mx-auto flex w-full max-w-xl">
+                <UserForm user={user} />
+            </div>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "~/components/utils";
+import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import {
@@ -25,12 +25,12 @@ export function DatePicker(props: {
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "justify-between bg-menu-light p-0 px-2 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal",
+                        "justify-between bg-menu-light p-2 px-4 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal",
                         props.className,
                     )}
                 >
                     {props.label ?? "-"}
-                    <CalendarIcon className="h-4 w-4" />
+                    <CalendarIcon className="h-4 w-4 stroke-1 text-text-normal" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

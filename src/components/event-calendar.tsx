@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Event, User } from "~/components/newComponents/data-types";
-import EventCard from "~/components/newComponents/event-card";
-import { EventForm } from "~/components/newComponents/event-form";
+import { Event, User } from "~/lib/data-types";
+import EventCard from "~/components/event-card";
+import { EventForm } from "~/components/event-form";
 import { Calendar } from "~/components/ui/calendar";
-import { cn } from "~/components/utils";
+import { cn } from "~/lib/utils";
 
 export default function EventCalendar(props: {
     events: Event[];

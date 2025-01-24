@@ -5,7 +5,7 @@ import { type DialogProps } from "@radix-ui/react-dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Command as CommandPrimitive } from "cmdk";
 
-import { cn } from "~/components/utils";
+import { cn } from "~/lib/utils";
 import { Dialog, DialogContent } from "~/components/ui/dialog";
 
 const Command = React.forwardRef<
@@ -41,7 +41,10 @@ const CommandInput = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Input>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-    <div className="flex items-center border-b border-menu-light px-3" cmdk-input-wrapper="">
+    <div
+        className="flex items-center border-b border-menu-light px-3"
+        cmdk-input-wrapper=""
+    >
         <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         <CommandPrimitive.Input
             ref={ref}
@@ -62,7 +65,10 @@ const CommandList = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <CommandPrimitive.List
         ref={ref}
-        className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
+        className={cn(
+            "max-h-[300px] overflow-y-auto overflow-x-hidden",
+            className,
+        )}
         {...props}
     />
 ));
@@ -73,7 +79,11 @@ const CommandEmpty = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Empty>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
-    <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />
+    <CommandPrimitive.Empty
+        ref={ref}
+        className="py-6 text-center text-sm"
+        {...props}
+    />
 ));
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
@@ -122,10 +132,16 @@ const CommandItem = React.forwardRef<
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
-const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+const CommandShortcut = ({
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLSpanElement>) => {
     return (
         <span
-            className={cn("ml-auto text-xs tracking-widest text-text-muted", className)}
+            className={cn(
+                "ml-auto text-xs tracking-widest text-text-muted",
+                className,
+            )}
             {...props}
         />
     );

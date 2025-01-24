@@ -3,7 +3,7 @@
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { addUser } from "~/user/db";
+import { addUser } from "~/lib/server-actions";
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false);

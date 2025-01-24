@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
-import { DEFAULT_USER } from "~/components/newComponents/data-types";
-import { EventList } from "~/components/newComponents/event-list";
-import { type Event } from "~/components/newComponents/data-types";
+import { DEFAULT_USER } from "~/lib/data-types";
+import { EventList } from "~/components/event-list";
+import { type Event } from "~/lib/data-types";
 import { db } from "~/server/db";
 
 export default async function EventPage() {

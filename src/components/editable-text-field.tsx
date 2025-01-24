@@ -2,7 +2,7 @@
 
 import { PencilIcon } from "lucide-react";
 import { useRef, useState, type KeyboardEvent } from "react";
-import { cn } from "~/components/utils";
+import { cn } from "~/lib/utils";
 
 export default function EditableTextField(props: {
     value: string | undefined | null;
@@ -49,10 +49,6 @@ export default function EditableTextField(props: {
             if (input) input?.select();
         });
     };
-
-    console.log(currentValue);
-    console.log(calculatedValue);
-    console.log(placeholderUsed);
 
     return (
         <div

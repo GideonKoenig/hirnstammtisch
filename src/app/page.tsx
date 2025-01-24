@@ -1,7 +1,7 @@
-import EventCard from "~/components/newComponents/event-card";
+import EventCard from "~/components/event-card";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { db } from "~/server/db";
-import { getWeekDistance } from "~/utils/date";
+import { getWeekDistance } from "~/lib/date";
 
 export default async function HomePage() {
     const [events, userList] = await Promise.all([
