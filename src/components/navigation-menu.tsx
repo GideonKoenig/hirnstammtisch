@@ -1,7 +1,7 @@
 "use client";
 
 import { Bookmark, Calendar, Home, Text, User } from "lucide-react";
-import Icon from "assets/brain-dark.svg";
+import Icon from "public/icon.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

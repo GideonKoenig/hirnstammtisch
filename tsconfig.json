@@ -15,13 +15,16 @@
         "checkJs": true,
 
         /* Bundled projects */
-        "lib": ["dom", "dom.iterable", "ES2022"],
+        "lib": ["dom", "dom.iterable", "ES2022", "webworker"],
         "noEmit": true,
         "module": "ESNext",
         "moduleResolution": "Bundler",
         "jsx": "preserve",
         "plugins": [{ "name": "next" }],
         "incremental": true,
+
+        /* Serwist specifics */
+        "types": ["@serwist/next/typings"],
 
         /* Path Aliases */
         "baseUrl": ".",
@@ -31,7 +34,6 @@
         }
     },
     "include": [
-        "svgr.d.ts",
         ".eslintrc.cjs",
         "next-env.d.ts",
         "**/*.ts",
@@ -40,5 +42,5 @@
         "**/*.js",
         ".next/types/**/*.ts"
     ],
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules", "public/sw.js"]
 }

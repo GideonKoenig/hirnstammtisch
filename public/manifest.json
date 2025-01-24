@@ -1,0 +1,22 @@
+{
+    "name": "HirnstammTisch",
+    "short_name": "HirnstammTisch",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "192x192",
+            "type": "image/ico",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/favicon.ico",
+            "sizes": "512x512",
+            "type": "image/ico"
+        }
+    ],
+    "theme_color": "#212425",
+    "background_color": "#212425",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+}
