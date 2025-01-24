@@ -31,10 +31,10 @@ export default async function EventPage() {
 
         // If same speaker, sort by creation date
         if (a.speaker === b.speaker) {
-            return a.createdAt.getTime() - b.createdAt.getTime();
+            return b.createdAt.getTime() - a.createdAt.getTime();
         }
 
-        // Otherwise sort alphabetically by speaker name
+        // Otherwise sort by speaker id
         return speakerA.id - speakerB.id;
     });
 
