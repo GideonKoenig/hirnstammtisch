@@ -1,4 +1,4 @@
-import EventCard from "~/components/event-card";
+import { EventCard } from "~/components/event-card";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { db } from "~/server/db";
 import { getWeekDistance } from "~/lib/date";

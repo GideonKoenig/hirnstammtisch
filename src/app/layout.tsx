@@ -38,7 +38,7 @@ export default function RootLayout({
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="flex h-screen w-screen flex-col-reverse bg-menu-main text-text-normal lg:flex-col">
+            <body className="w-dvh flex h-dvh flex-col-reverse bg-menu-main text-text-normal lg:flex-col">
                 <UploadThingProvider
                     routerConfig={extractRouterConfig(fileRouter)}
                 />

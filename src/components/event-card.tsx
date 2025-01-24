@@ -3,7 +3,7 @@ import { cn } from "~/lib/utils";
 import { type Event, type User } from "~/lib/data-types";
 import Link from "next/link";
 
-export default function EventCard(props: {
+export function EventCard(props: {
     event: Event;
     speaker: User | undefined;
     className?: string;
