@@ -1,10 +1,10 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { db } from "~/server/db";
 import UserForm from "~/components/user-form";
+import { readCookie } from "~/server/utils";
 
 export default async function Profil() {
-    const userName = cookies().get("username")?.value;
+    const userName = readCookie("username");
 
     const user = await db.query.UserTable.findFirst({
         where: (user, { eq }) => eq(user.name, userName ?? ""),

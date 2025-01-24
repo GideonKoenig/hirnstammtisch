@@ -9,6 +9,11 @@ import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi();
 
+export async function addEvent(event: Omit<Event, "id" | "createdAt">) {
+    await db.insert(EventsTable).values(event);
+    revalidatePath("/events");
+}
+
 export async function updateEvent(eventId: number, newValue: Event) {
     await db
         .update(EventsTable)
@@ -17,6 +22,16 @@ export async function updateEvent(eventId: number, newValue: Event) {
         })
         .where(eq(EventsTable.id, eventId));
 
+    revalidatePath("/events");
+}
+
+export async function deleteEvent(eventId: number) {
+    await db
+        .update(EventsTable)
+        .set({
+            deleted: true,
+        })
+        .where(eq(EventsTable.id, eventId));
     revalidatePath("/events");
 }
 

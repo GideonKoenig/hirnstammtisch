@@ -1,23 +1,21 @@
 "use client";
 
 import { ComboBox } from "~/components/ui/combobox";
-import { cn, readCookie } from "~/lib/utils";
+import { cn } from "~/lib/utils";
 import { DEFAULT_USER, type Event } from "~/lib/data-types";
 import { type User } from "~/lib/data-types";
 import EditableTextField from "~/components/editable-text-field";
-import { updateEvent } from "~/lib/server-actions";
+import { deleteEvent, updateEvent } from "~/lib/server-actions";
 import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/ui/date-picker";
-import { redirect } from "next/navigation";
+import { Button } from "~/components/ui/button";
+import { X } from "lucide-react";
 
 export function EventForm(props: {
     event: Event;
     users: User[];
     className?: string;
 }) {
-    const currentUserName = readCookie("username");
-    if (!currentUserName) return redirect("/login");
-
     const eventSpeaker = props.users.find(
         (user) => user.id === props.event.speaker,
     );
@@ -28,10 +26,23 @@ export function EventForm(props: {
     return (
         <div
             className={cn(
-                "flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark",
+                "relative flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark",
                 props.className,
             )}
         >
+            <div className="absolute -right-2 -top-4 lg:-right-4">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6 bg-transparent p-1 hover:bg-transparent"
+                    onMouseDown={() => {
+                        void deleteEvent(props.event.id);
+                    }}
+                >
+                    <X className="h-full w-full" />
+                </Button>
+            </div>
+
             <EditableTextField
                 className="flex-grow"
                 value={props.event.description}

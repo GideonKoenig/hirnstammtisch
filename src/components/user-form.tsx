@@ -50,8 +50,9 @@ export default function UserForm(props: { user: User }) {
                         }}
                     />
                     <Button
+                        data-hide={!props.user.imageUrl}
                         variant="ghost"
-                        className="aspect-square h-full p-1"
+                        className="aspect-square h-full p-1 data-[hide=true]:hidden"
                         onMouseDown={() => {
                             void removeProfileImage(props.user);
                         }}

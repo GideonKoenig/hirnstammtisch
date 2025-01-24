@@ -83,7 +83,7 @@ export default function EditableTextField(props: {
                 <button
                     onMouseDown={startEditing}
                     data-editing={isEditing}
-                    className="absolute right-1 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100 data-[editing=true]:hidden"
+                    className="absolute right-1 top-2 opacity-0 transition-opacity group-hover:opacity-100 data-[editing=true]:hidden"
                     aria-label="Edit text"
                 >
                     <PencilIcon className="h-4 w-4 stroke-text-muted" />
