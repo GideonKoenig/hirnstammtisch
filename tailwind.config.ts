@@ -1,8 +1,9 @@
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import AnimtePlugin from "tailwindcss-animate";
+import { withUt } from "uploadthing/tw";
 
-export default {
+export default withUt({
     darkMode: ["class"],
     content: ["./src/**/*.tsx"],
     theme: {
@@ -18,7 +19,7 @@ export default {
             colors: {
                 text: {
                     normal: "rgb(255 255 244)",
-                    muted: "rgb(201 194 182)",
+                    muted: "rgb(170 170 170)",
                     dark: "rgb(16 22 23)",
                 },
                 menu: {
@@ -27,13 +28,9 @@ export default {
                     hover: "rgb(71 77 79)",
                     dark: "rgb(20 23 25)",
                 },
-                accent: {
-                    main: "rgb(37 99 235)",
-                    dark: "rgb(30 58 138)",
-                    light: "rgb(59 130 246)",
-                },
+                accent: "rgb(210,22,22)",
             },
         },
     },
     plugins: [AnimtePlugin],
-} satisfies Config;
+} satisfies Config);

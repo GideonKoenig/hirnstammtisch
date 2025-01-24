@@ -1,68 +1,48 @@
-import { not } from "drizzle-orm";
-import EventCalendar from "~/components/events/calendar";
-import EventList from "~/components/events/list";
-import { type Topic } from "~/components/topics/types";
-import { NavigationBar } from "~/components/ui/navigation-menu";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import { DEFAULT_USER } from "~/lib/data-types";
+import { EventList } from "~/components/event-list";
+import { type Event } from "~/lib/data-types";
 import { db } from "~/server/db";
-import { TopicsTable } from "~/server/db/schema";
+import { readCookie } from "~/server/utils";
 
 export default async function EventPage() {
-    const [eventsRaw, userList] = await Promise.all([
-        db.query.TopicsTable.findMany({
-            where: not(TopicsTable.deleted),
+    const [eventsRaw, users] = await Promise.all([
+        db.query.EventsTable.findMany({
+            where: (events, { eq }) => eq(events.deleted, false),
         }),
         db.query.UserTable.findMany(),
     ]);
+    const userName = readCookie("username");
 
-    const events = eventsRaw.sort((a, b) => {
-        if (b.eventAt && a.eventAt) {
-            return b.eventAt.getTime() - a.eventAt.getTime();
-        }
-        if (!b.eventAt && !a.eventAt) {
-            return b.createdAt.getTime() - a.createdAt.getTime();
-        }
-        if (!b.eventAt) return 1;
-        return -1;
-    }) as unknown as Topic[];
+    const events: Event[] = eventsRaw.sort((a, b) => {
+        const speakerA = users.find((user) => user.id === a.speaker)!;
+        const speakerB = users.find((user) => user.id === b.speaker)!;
 
-    userList.push({
-        id: -1,
-        name: "Anyone",
-        createdAt: new Date(0),
+        // Check if either event is new
+        if (a.description === "New event") return -1;
+        if (b.description === "New event") return 1;
+
+        // Check if either speaker is the current user
+        const isASpeakerCurrentUser = speakerA.name === userName;
+        const isBSpeakerCurrentUser = speakerB.name === userName;
+
+        // Current user's events should come first
+        if (isASpeakerCurrentUser && !isBSpeakerCurrentUser) return -1;
+        if (!isASpeakerCurrentUser && isBSpeakerCurrentUser) return 1;
+
+        // If same speaker, sort by creation date
+        if (a.speaker === b.speaker) {
+            return a.createdAt.getTime() - b.createdAt.getTime();
+        }
+
+        // Otherwise sort alphabetically by speaker name
+        return speakerA.id - speakerB.id;
     });
-    const users = userList.sort((a, b) => a.id - b.id).map((user) => user.name);
+
+    users.push(DEFAULT_USER);
 
     return (
-        <div className="flex h-screen flex-col">
-            <NavigationBar />
-            <ScrollArea>
-                <div className="m-auto flex h-full max-w-[1000px] flex-grow flex-col gap-6 p-6 pb-12">
-                    <div className="flex flex-row gap-12">
-                        <div className="flex flex-grow flex-col gap-6">
-                            <h1 className="text-4xl font-bold">Events</h1>
-                            <p>
-                                Here you find an overview over past events and
-                                events that are already planned for the future.
-                                <br />
-                                <br />
-                                You can also create events, by setting a Event
-                                data for a topic.
-                            </p>
-                        </div>
-                        <div className="flex w-[600px] flex-shrink-0 flex-col gap-4">
-                            <EventCalendar
-                                events={events}
-                                className="border-menu-light bg-menu-main shadow shadow-menu-dark"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex-grow">
-                        <EventList events={events} users={users} />
-                    </div>
-                </div>
-            </ScrollArea>
+        <div className="flex h-full w-full flex-col">
+            <EventList events={events} users={users} />
         </div>
     );
 }

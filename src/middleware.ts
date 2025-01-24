@@ -2,7 +2,14 @@ import { NextResponse, type NextRequest } from "next/server";
 import { cookies } from "next/headers";
 
 export function middleware(request: NextRequest) {
-    const publicPaths = ["/login", "/favicon.ico", "/_next/", "/static/"];
+    const publicPaths = [
+        "/login",
+        "/favicon.ico",
+        "/_next/",
+        "/static/",
+        "/calendar",
+        "/about",
+    ];
 
     if (publicPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
         return NextResponse.next();
@@ -17,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/topics/:path*", "/events/:path*"],
+    matcher: ["/events/:path*", "/profile/:path*"],
 };

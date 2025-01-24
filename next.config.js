@@ -2,6 +2,13 @@ import { withPlausibleProxy } from "next-plausible";
 await import("./src/env.js");
 
 const config = {
+    images: {
+        remotePatterns: [
+            {
+                hostname: "utfs.io",
+            },
+        ],
+    },
     experimental: {
         turbo: {
             rules: {
@@ -16,7 +23,9 @@ const config = {
      * @param {{ module: { rules: any[]; }; }} config
      */
     webpack(config) {
-        const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.(".svg"));
+        const fileLoaderRule = config.module.rules.find((rule) =>
+            rule.test?.test?.(".svg"),
+        );
 
         config.module.rules.push(
             {
@@ -27,7 +36,9 @@ const config = {
             {
                 test: /\.svg$/i,
                 issuer: fileLoaderRule.issuer,
-                resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
+                resourceQuery: {
+                    not: [...fileLoaderRule.resourceQuery.not, /url/],
+                },
                 use: [
                     {
                         loader: "@svgr/webpack",
