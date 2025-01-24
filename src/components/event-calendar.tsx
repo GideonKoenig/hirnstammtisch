@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Event, User } from "~/lib/data-types";
+import { type Event, type User } from "~/lib/data-types";
 import EventCard from "~/components/event-card";
 import { EventForm } from "~/components/event-form";
 import { Calendar } from "~/components/ui/calendar";
