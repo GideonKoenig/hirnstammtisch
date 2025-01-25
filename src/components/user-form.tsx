@@ -9,16 +9,16 @@ import { UploadButton } from "~/lib/uploadthing";
 import { Button } from "~/components/ui/button";
 import { LoaderCircle, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useStatus } from "~/components/status-provider";
+import { usePwa } from "~/components/provider-pwa";
 import { useState } from "react";
 
 export default function UserForm(props: { user: User }) {
     const router = useRouter();
-    const { isOffline } = useStatus();
+    const { isOffline } = usePwa();
     const [loading, setLoading] = useState(false);
 
     return (
-        <div className="grid w-full max-w-xl grid-cols-2 items-center gap-2 gap-y-4 rounded-lg border border-menu-hover bg-menu-light p-2 py-4 shadow-sm shadow-menu-dark">
+        <div className="border-menu-hover bg-menu-light shadow-menu-dark grid w-full max-w-xl grid-cols-2 items-center gap-2 gap-y-4 rounded-lg border p-2 py-4 shadow-sm">
             <div className="col-span-2 flex flex-col items-center gap-2 pb-4">
                 {props.user.imageUrl ? (
                     <div className="relative h-[160px] w-[140px] md:h-[220px] md:w-[180px]">
@@ -26,12 +26,12 @@ export default function UserForm(props: { user: User }) {
                             src={props.user.imageUrl}
                             alt={props.user.name}
                             fill
-                            className="rounded-lg object-cover shadow-sm shadow-menu-dark"
+                            className="shadow-menu-dark rounded-lg object-cover shadow-sm"
                         />
                     </div>
                 ) : (
-                    <div className="flex h-[160px] w-[140px] items-center justify-center rounded-lg bg-menu-hover shadow-sm shadow-menu-dark md:h-[220px] md:w-[180px]">
-                        <p className="flex h-full w-full items-center justify-center text-[100px] text-text-muted">
+                    <div className="bg-menu-hover shadow-menu-dark flex h-[160px] w-[140px] items-center justify-center rounded-lg shadow-sm md:h-[220px] md:w-[180px]">
+                        <p className="text-text-muted flex h-full w-full items-center justify-center text-[100px]">
                             ?
                         </p>
                     </div>
@@ -95,13 +95,13 @@ export default function UserForm(props: { user: User }) {
                 }}
             />
 
-            <Separator className="col-span-2 bg-menu-hover" />
+            <Separator className="bg-menu-hover col-span-2" />
 
-            <p className="text-sm text-text-muted">User ID:</p>
-            <p className="text-sm text-text-muted">{props.user.id}</p>
+            <p className="text-text-muted text-sm">User ID:</p>
+            <p className="text-text-muted text-sm">{props.user.id}</p>
 
-            <p className="text-sm text-text-muted">Account created at:</p>
-            <p className="text-sm text-text-muted">
+            <p className="text-text-muted text-sm">Account created at:</p>
+            <p className="text-text-muted text-sm">
                 {props.user.createdAt.toLocaleDateString("de-DE", {
                     day: "2-digit",
                     month: "2-digit",

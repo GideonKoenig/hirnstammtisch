@@ -10,7 +10,7 @@ import {
     PopoverTrigger,
 } from "~/components/ui/popover";
 import { useState } from "react";
-import { useStatus } from "~/components/status-provider";
+import { usePwa } from "~/components/provider-pwa";
 
 export function DatePicker(props: {
     className?: string;
@@ -18,7 +18,7 @@ export function DatePicker(props: {
     initialValue: Date | undefined | null;
     onChange?: (date?: Date) => void | Promise<void>;
 }) {
-    const { isOffline } = useStatus();
+    const { isOffline } = usePwa();
     const [open, setOpen] = useState<boolean>(false);
 
     return (
@@ -27,12 +27,12 @@ export function DatePicker(props: {
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "justify-between bg-menu-light p-2 px-4 text-left font-normal shadow-sm shadow-menu-dark hover:bg-menu-hover hover:text-text-normal disabled:pointer-events-auto disabled:cursor-not-allowed",
+                        "bg-menu-light shadow-menu-dark hover:bg-menu-hover hover:text-text-normal justify-between p-2 px-4 text-left font-normal shadow-sm disabled:pointer-events-auto disabled:cursor-not-allowed",
                         props.className,
                     )}
                 >
                     {props.label ?? "-"}
-                    <CalendarIcon className="h-4 w-4 stroke-1 text-text-normal" />
+                    <CalendarIcon className="text-text-normal h-4 w-4 stroke-1" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

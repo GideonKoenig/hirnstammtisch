@@ -12,7 +12,7 @@ import { cn } from "~/lib/utils";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { CommandInput } from "~/components/ui/command";
-import { useStatus } from "~/components/status-provider";
+import { usePwa } from "~/components/provider-pwa";
 
 export function ComboBox(props: {
     initialValue: string;
@@ -21,7 +21,7 @@ export function ComboBox(props: {
     sortOptions?: boolean;
     className?: string;
 }) {
-    const { isOffline } = useStatus();
+    const { isOffline } = usePwa();
     const [open, setOpen] = useState(false);
     const sortedOptions = props.sortOptions
         ? props.options.sort((a, b) => {
@@ -40,15 +40,15 @@ export function ComboBox(props: {
                         variant="outline"
                         role="combobox"
                         aria-expanded={open}
-                        className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow-sm shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark disabled:pointer-events-auto disabled:cursor-not-allowed"
+                        className="border-menu-hover bg-menu-dark shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark z-0 w-full justify-between shadow-sm disabled:pointer-events-auto disabled:cursor-not-allowed"
                     >
                         {props.initialValue}
-                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 text-text-normal opacity-50" />
+                        <CaretSortIcon className="text-text-normal ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent
                     align="end"
-                    className="z-20 mt-2 w-[250px] rounded border border-menu-light bg-menu-dark p-0 shadow-lg shadow-menu-dark"
+                    className="border-menu-light bg-menu-dark shadow-menu-dark z-20 mt-2 w-[250px] rounded border p-0 shadow-lg"
                 >
                     <Command className="w-full">
                         <CommandInput
@@ -59,7 +59,7 @@ export function ComboBox(props: {
                             <CommandGroup className="w-full">
                                 {selectedOptions.map((option, index) => (
                                     <CommandItem
-                                        className="flex w-full cursor-pointer flex-row items-center justify-between rounded px-3 py-1 hover:bg-menu-hover"
+                                        className="hover:bg-menu-hover flex w-full cursor-pointer flex-row items-center justify-between rounded px-3 py-1"
                                         key={index}
                                         value={option}
                                         onSelect={(value) => {

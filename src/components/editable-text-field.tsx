@@ -2,7 +2,7 @@
 
 import { PencilIcon } from "lucide-react";
 import { useRef, useState, type KeyboardEvent } from "react";
-import { useStatus } from "~/components/status-provider";
+import { usePwa } from "~/components/provider-pwa";
 import { cn } from "~/lib/utils";
 
 export default function EditableTextField(props: {
@@ -13,7 +13,7 @@ export default function EditableTextField(props: {
     hideButton?: boolean;
     className?: string;
 }) {
-    const { isOffline } = useStatus();
+    const { isOffline } = usePwa();
     const [isEditing, setIsEditing] = useState(false);
     const calculatedValue =
         (props.value?.trim() === "" ? undefined : props.value?.trim()) ??
@@ -64,7 +64,7 @@ export default function EditableTextField(props: {
                 data-editing={isEditing}
                 data-placeholder={placeholderUsed}
                 data-size={props.size}
-                className="max-w-full whitespace-pre-wrap break-words rounded border border-transparent p-1 text-base data-[offline=true]:cursor-not-allowed data-[editing=true]:border-menu-hover data-[size=sm]:text-sm data-[size=xs]:text-xs data-[placeholder=true]:text-text-muted"
+                className="data-[editing=true]:border-menu-hover data-[placeholder=true]:text-text-muted max-w-full rounded border border-transparent p-1 text-base break-words whitespace-pre-wrap data-[offline=true]:cursor-not-allowed data-[size=sm]:text-sm data-[size=xs]:text-xs"
                 onMouseDown={() => {
                     if (!isOffline) startEditing();
                 }}
@@ -81,7 +81,7 @@ export default function EditableTextField(props: {
                 onBlur={() => void handleSubmit()}
                 data-placeholder={placeholderUsed}
                 data-size={props.size}
-                className="absolute left-0 top-0 z-10 hidden h-full w-full resize-none overflow-hidden whitespace-pre-wrap break-words border border-transparent bg-transparent p-1 text-base text-transparent caret-text-normal focus-visible:outline-hidden data-[editing=true]:block data-[size=sm]:text-sm data-[size=xs]:text-xs"
+                className="caret-text-normal absolute top-0 left-0 z-10 hidden h-full w-full resize-none overflow-hidden border border-transparent bg-transparent p-1 text-base break-words whitespace-pre-wrap text-transparent focus-visible:outline-hidden data-[editing=true]:block data-[size=sm]:text-sm data-[size=xs]:text-xs"
             />
 
             {!props.hideButton && (
@@ -89,10 +89,10 @@ export default function EditableTextField(props: {
                     disabled={isOffline}
                     onMouseDown={startEditing}
                     data-editing={isEditing}
-                    className="absolute right-1 top-2 opacity-0 transition-opacity disabled:cursor-not-allowed group-hover:opacity-100 group-hover:disabled:opacity-50 data-[editing=true]:hidden"
+                    className="absolute top-2 right-1 opacity-0 transition-opacity group-hover:opacity-100 disabled:cursor-not-allowed group-hover:disabled:opacity-50 data-[editing=true]:hidden"
                     aria-label="Edit text"
                 >
-                    <PencilIcon className="h-4 w-4 stroke-text-muted" />
+                    <PencilIcon className="stroke-text-muted h-4 w-4" />
                 </button>
             )}
         </div>

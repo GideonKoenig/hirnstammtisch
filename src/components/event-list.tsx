@@ -11,10 +11,10 @@ import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { addEvent } from "~/lib/server-actions";
 import { readCookie } from "~/lib/utils";
-import { useStatus } from "~/components/status-provider";
+import { usePwa } from "~/components/provider-pwa";
 
 export function EventList(props: { events: Event[]; users: User[] }) {
-    const { isOffline } = useStatus();
+    const { isOffline } = usePwa();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [speaker, setSpeaker] = useState<string>("Anyone");
     const [showAll, setShowAll] = useState<boolean>(false);

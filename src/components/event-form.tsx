@@ -10,14 +10,14 @@ import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/ui/date-picker";
 import { Button } from "~/components/ui/button";
 import { X } from "lucide-react";
-import { useStatus } from "~/components/status-provider";
+import { usePwa } from "~/components/provider-pwa";
 
 export function EventForm(props: {
     event: Event;
     users: User[];
     className?: string;
 }) {
-    const { isOffline } = useStatus();
+    const { isOffline } = usePwa();
     const eventSpeaker = props.users.find(
         (user) => user.id === props.event.speaker,
     );
@@ -28,11 +28,11 @@ export function EventForm(props: {
     return (
         <div
             className={cn(
-                "relative flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow-sm shadow-menu-dark",
+                "border-menu-hover bg-menu-light shadow-menu-dark relative flex w-full flex-col gap-2 rounded-lg border p-2 shadow-sm",
                 props.className,
             )}
         >
-            <div className="absolute -right-2 -top-4 lg:-right-4">
+            <div className="absolute -top-4 -right-2 lg:-right-4">
                 <Button
                     disabled={isOffline}
                     variant="ghost"
@@ -60,7 +60,7 @@ export function EventForm(props: {
             <Separator className="bg-menu-hover" />
 
             <div className="grid grid-cols-2 items-center gap-y-2">
-                <p className="text-sm text-text-muted">Speaker:</p>
+                <p className="text-text-muted text-sm">Speaker:</p>
                 <ComboBox
                     className="w-full"
                     initialValue={eventSpeaker?.name ?? DEFAULT_USER.name}
@@ -79,7 +79,7 @@ export function EventForm(props: {
                     sortOptions
                 />
 
-                <p className="text-sm text-text-muted">Suggested By:</p>
+                <p className="text-text-muted text-sm">Suggested By:</p>
                 <ComboBox
                     className="w-full"
                     initialValue={eventSuggestedBy?.name ?? DEFAULT_USER.name}
@@ -98,10 +98,10 @@ export function EventForm(props: {
                     sortOptions
                 />
 
-                <p className="text-sm text-text-muted">Event Date:</p>
+                <p className="text-text-muted text-sm">Event Date:</p>
                 <DatePicker
                     initialValue={props.event.eventAt}
-                    className="border border-menu-hover bg-menu-dark shadow-sm shadow-menu-dark hover:bg-menu-dark focus:bg-menu-dark"
+                    className="border-menu-hover bg-menu-dark shadow-menu-dark hover:bg-menu-dark focus:bg-menu-dark border shadow-sm"
                     label={props.event.eventAt?.toLocaleDateString("de-DE", {
                         day: "2-digit",
                         month: "2-digit",
@@ -116,7 +116,7 @@ export function EventForm(props: {
                     }}
                 />
 
-                <p className="text-sm text-text-muted">Presentation URL:</p>
+                <p className="text-text-muted text-sm">Presentation URL:</p>
                 <EditableTextField
                     hideButton
                     className="max-h-6 w-full"

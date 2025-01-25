@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { NextSSRPlugin as UploadThingProvider } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { fileRouter } from "~/app/api/uploadthing/core";
-import { StatusProvider } from "~/components/status-provider";
+import { PwaProvider } from "~/components/provider-pwa";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
@@ -75,7 +75,7 @@ export default async function RootLayout({
                 />
                 <NavigationBar username={username} />
                 <main className="grow overflow-hidden">
-                    <StatusProvider>{children}</StatusProvider>
+                    <PwaProvider>{children}</PwaProvider>
                 </main>
             </body>
         </html>
