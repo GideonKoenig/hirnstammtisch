@@ -4,7 +4,7 @@ import UserForm from "~/components/user-form";
 import { readCookie } from "~/server/utils";
 
 export default async function Profil() {
-    const userName = readCookie("username");
+    const userName = await readCookie("username");
 
     const user = await db.query.UserTable.findFirst({
         where: (user, { eq }) => eq(user.name, userName ?? ""),

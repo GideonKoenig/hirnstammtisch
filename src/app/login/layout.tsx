@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { readCookie } from "~/server/utils";
 
-export default function LoginLayout({
+export default async function LoginLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const userName = readCookie("username");
+    const userName = await readCookie("username");
     if (userName) {
         redirect("/profile");
     }

@@ -11,7 +11,7 @@ export default async function EventPage() {
         }),
         db.query.UserTable.findMany(),
     ]);
-    const userName = readCookie("username");
+    const userName = await readCookie("username");
 
     const events: Event[] = eventsRaw.sort((a, b) => {
         const speakerA = users.find((user) => user.id === a.speaker)!;
