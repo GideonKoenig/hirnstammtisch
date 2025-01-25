@@ -15,10 +15,10 @@ export async function UserCard(props: { user: User }) {
     });
 
     return (
-        <div className="grid grid-cols-[auto_140px] gap-4 rounded-lg border border-menu-hover bg-menu-light p-2 shadow-sm shadow-menu-dark md:grid-cols-[auto_180px]">
+        <div className="border-menu-hover bg-menu-light shadow-menu-dark grid grid-cols-[auto_140px] gap-4 rounded-lg border p-2 shadow-sm md:grid-cols-[auto_180px]">
             <div className="flex flex-col">
                 <h2 className="text-lg font-bold">{props.user.name}</h2>
-                <p className="whitespace-pre text-xs text-text-muted">
+                <p className="text-text-muted text-xs whitespace-pre">
                     {"Mitglied seit "}
                     {props.user.createdAt?.toLocaleDateString("de-DE", {
                         day: "2-digit",
@@ -31,7 +31,7 @@ export async function UserCard(props: { user: User }) {
                     {events.map((event) => (
                         <div className="flex flex-col" key={event.id}>
                             <p className="text-sm">{event.description}</p>
-                            <p className="whitespace-pre text-xs text-text-muted">
+                            <p className="text-text-muted text-xs whitespace-pre">
                                 {event.eventAt?.toLocaleDateString("de-DE", {
                                     day: "2-digit",
                                     month: "2-digit",
@@ -52,12 +52,12 @@ export async function UserCard(props: { user: User }) {
                         src={props.user.imageUrl}
                         alt={props.user.name}
                         fill
-                        className="rounded-lg object-cover shadow-sm shadow-menu-dark"
+                        className="shadow-menu-dark rounded-lg object-cover shadow-sm"
                     />
                 </div>
             ) : (
-                <div className="flex h-[160px] w-[140px] items-center justify-center rounded-lg bg-menu-hover shadow-sm shadow-menu-dark md:h-[220px] md:w-[180px]">
-                    <p className="flex h-full w-full items-center justify-center text-[100px] text-text-muted">
+                <div className="bg-menu-hover shadow-menu-dark flex h-[160px] w-[140px] items-center justify-center rounded-lg shadow-sm md:h-[220px] md:w-[180px]">
+                    <p className="text-text-muted flex h-full w-full items-center justify-center text-[100px]">
                         ?
                     </p>
                 </div>
@@ -67,7 +67,7 @@ export async function UserCard(props: { user: User }) {
                 {events.map((event) => (
                     <div className="flex flex-col" key={event.id}>
                         <p className="text-sm">{event.description}</p>
-                        <p className="whitespace-pre text-xs text-text-muted">
+                        <p className="text-text-muted text-xs whitespace-pre">
                             {event.eventAt?.toLocaleDateString("de-DE", {
                                 day: "2-digit",
                                 month: "2-digit",

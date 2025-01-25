@@ -14,6 +14,7 @@ const config = {
         turbo: {
             rules: {},
         },
+        reactCompiler: true,
     },
 };
 
