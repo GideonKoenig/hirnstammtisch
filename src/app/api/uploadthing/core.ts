@@ -9,7 +9,7 @@ import { UserTable } from "~/server/db/schema";
 const f = createUploadthing();
 
 const auth = async () => {
-    const username = cookies().get("username")?.value;
+    const username = (await cookies()).get("username")?.value;
     if (!username) return undefined;
 
     const user = await db.query.UserTable.findFirst({

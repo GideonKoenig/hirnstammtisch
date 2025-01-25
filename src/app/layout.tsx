@@ -58,10 +58,11 @@ export const viewport: Viewport = {
     themeColor: "#212425",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const username = cookies().get("username")?.value;
+    const cookieStore = await cookies();
+    const username = cookieStore.get("username")?.value;
 
     return (
         <html lang="en" className={`${GeistSans.variable}`}>

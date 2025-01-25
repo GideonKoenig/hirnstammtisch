@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 
 export function middleware(request: NextRequest) {
     const publicPaths = [
@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const cookieStore = cookies();
+    const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
     const username = cookieStore.get("username");
     if (username?.value) {
         return NextResponse.next();

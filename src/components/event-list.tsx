@@ -58,12 +58,12 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                     onFocus={(event) => event.target.select()}
                     type="text"
                     placeholder="Looking for an event?"
-                    className="col-span-2 w-full rounded-xl border border-menu-light bg-menu-dark p-2 px-3 shadow-sm shadow-menu-dark placeholder:text-text-muted/80 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
+                    className="border-menu-light bg-menu-dark shadow-menu-dark placeholder:text-text-muted/80 col-span-2 w-full rounded-xl border p-2 px-3 shadow-sm focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
                 />
 
                 <div className="flex max-w-60 flex-row items-center gap-1">
                     <ComboBox
-                        className="w-full text-text-muted"
+                        className="text-text-muted w-full"
                         initialValue={speaker}
                         onChange={setSpeaker}
                         options={props.users
@@ -78,7 +78,7 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6 p-1 text-text-muted"
+                        className="text-text-muted h-6 w-6 p-1"
                         onClick={() => setSpeaker("Anyone")}
                     >
                         <X />
@@ -88,20 +88,20 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                 <div className="flex flex-row gap-2">
                     <Switch
                         disabled={isOffline}
-                        className="ml-2 bg-menu-light disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-50"
+                        className="bg-menu-light ml-2 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-50"
                         checked={showAll}
                         onCheckedChange={setShowAll}
                     />
                     <p
                         data-offline={isOffline}
-                        className="text-sm text-text-muted data-[offline=true]:cursor-not-allowed data-[offline=true]:opacity-50"
+                        className="text-text-muted text-sm data-[offline=true]:cursor-not-allowed data-[offline=true]:opacity-50"
                     >
                         Show all events
                     </p>
                 </div>
             </div>
 
-            <Separator className="max-w-3xl bg-menu-hover" />
+            <Separator className="bg-menu-hover max-w-3xl" />
 
             <ScrollArea className="h-full w-full p-4 py-0">
                 <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 py-4 md:grid-cols-2">
@@ -117,7 +117,7 @@ export function EventList(props: { events: Event[]; users: User[] }) {
 
             <Button
                 data-offline={isOffline}
-                className="absolute bottom-4 right-4 bg-accent shadow-lg shadow-menu-dark hover:bg-accent/80"
+                className="bg-accent shadow-menu-dark hover:bg-accent/80 absolute right-4 bottom-4 shadow-lg"
                 disabled={isOffline}
                 onMouseDown={() => {
                     void addEvent({

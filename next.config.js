@@ -10,6 +10,11 @@ const config = {
             },
         ],
     },
+    experimental: {
+        turbo: {
+            rules: {},
+        },
+    },
 };
 
 const withSerwist = withSerwistInit({

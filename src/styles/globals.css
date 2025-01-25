@@ -1,43 +1,26 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
 
-  --color-text-normal: rgb(255 255 244);
-  --color-text-muted: rgb(170 170 170);
-  --color-text-dark: rgb(16 22 23);
+    --color-text-normal: rgb(255 255 244);
+    --color-text-muted: rgb(170 170 170);
+    --color-text-dark: rgb(16 22 23);
 
-  --color-menu-main: rgb(33 36 37);
-  --color-menu-light: rgb(55 60 62);
-  --color-menu-hover: rgb(71 77 79);
-  --color-menu-dark: rgb(20 23 25);
+    --color-menu-main: rgb(33 36 37);
+    --color-menu-light: rgb(55 60 62);
+    --color-menu-hover: rgb(71 77 79);
+    --color-menu-dark: rgb(20 23 25);
 
-  --color-accent: rgb(210, 22, 22);
-}
-
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+    --color-accent: rgb(210, 22, 22);
 }
 
 @layer base {
