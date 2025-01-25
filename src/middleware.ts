@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
+import { cookies } from "next/headers";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const publicPaths = [
         "/login",
         "/favicon.ico",
@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies);
+    const cookieStore = await cookies();
     const username = cookieStore.get("username");
     if (username?.value) {
         return NextResponse.next();
