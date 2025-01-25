@@ -34,7 +34,7 @@ const ScrollBar = React.forwardRef<
         ref={ref}
         orientation={orientation}
         className={cn(
-            "flex touch-none select-none transition-colors",
+            "flex touch-none transition-colors select-none",
             orientation === "vertical" &&
                 "h-full w-2.5 border-l border-l-transparent p-[1px]",
             orientation === "horizontal" &&
@@ -48,18 +48,4 @@ const ScrollBar = React.forwardRef<
 ));
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
 
-function useDynamicHeight() {
-    const [element, setElement] = useState<HTMLElement | null>(null);
-
-    useLayoutEffect(() => {
-        if (element) {
-            const containerTop = element.getBoundingClientRect().top;
-            element.style.height = `calc(100vh - ${containerTop}px)`;
-        }
-        return;
-    }, [element]);
-
-    return setElement;
-}
-
-export { ScrollArea, ScrollBar, useDynamicHeight };
+export { ScrollArea, ScrollBar };
