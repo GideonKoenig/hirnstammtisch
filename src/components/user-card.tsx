@@ -15,7 +15,7 @@ export async function UserCard(props: { user: User }) {
     });
 
     return (
-        <div className="grid grid-cols-[auto_140px] gap-4 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark md:grid-cols-[auto_180px]">
+        <div className="grid grid-cols-[auto_140px] gap-4 rounded-lg border border-menu-hover bg-menu-light p-2 shadow-sm shadow-menu-dark md:grid-cols-[auto_180px]">
             <div className="flex flex-col">
                 <h2 className="text-lg font-bold">{props.user.name}</h2>
                 <p className="whitespace-pre text-xs text-text-muted">
@@ -52,11 +52,11 @@ export async function UserCard(props: { user: User }) {
                         src={props.user.imageUrl}
                         alt={props.user.name}
                         fill
-                        className="rounded-lg object-cover shadow shadow-menu-dark"
+                        className="rounded-lg object-cover shadow-sm shadow-menu-dark"
                     />
                 </div>
             ) : (
-                <div className="flex h-[160px] w-[140px] items-center justify-center rounded-lg bg-menu-hover shadow shadow-menu-dark md:h-[220px] md:w-[180px]">
+                <div className="flex h-[160px] w-[140px] items-center justify-center rounded-lg bg-menu-hover shadow-sm shadow-menu-dark md:h-[220px] md:w-[180px]">
                     <p className="flex h-full w-full items-center justify-center text-[100px] text-text-muted">
                         ?
                     </p>

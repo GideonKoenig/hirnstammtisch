@@ -81,7 +81,7 @@ export default function EditableTextField(props: {
                 onBlur={() => void handleSubmit()}
                 data-placeholder={placeholderUsed}
                 data-size={props.size}
-                className="absolute left-0 top-0 z-10 hidden h-full w-full resize-none overflow-hidden whitespace-pre-wrap break-words border border-transparent bg-transparent p-1 text-base text-transparent caret-text-normal focus-visible:outline-none data-[editing=true]:block data-[size=sm]:text-sm data-[size=xs]:text-xs"
+                className="absolute left-0 top-0 z-10 hidden h-full w-full resize-none overflow-hidden whitespace-pre-wrap break-words border border-transparent bg-transparent p-1 text-base text-transparent caret-text-normal focus-visible:outline-hidden data-[editing=true]:block data-[size=sm]:text-sm data-[size=xs]:text-xs"
             />
 
             {!props.hideButton && (
@@ -89,7 +89,7 @@ export default function EditableTextField(props: {
                     disabled={isOffline}
                     onMouseDown={startEditing}
                     data-editing={isEditing}
-                    className="absolute right-1 top-2 opacity-0 transition-opacity disabled:cursor-not-allowed group-hover:opacity-100 disabled:group-hover:opacity-50 data-[editing=true]:hidden"
+                    className="absolute right-1 top-2 opacity-0 transition-opacity disabled:cursor-not-allowed group-hover:opacity-100 group-hover:disabled:opacity-50 data-[editing=true]:hidden"
                     aria-label="Edit text"
                 >
                     <PencilIcon className="h-4 w-4 stroke-text-muted" />

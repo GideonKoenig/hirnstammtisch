@@ -18,7 +18,7 @@ export default function UserForm(props: { user: User }) {
     const [loading, setLoading] = useState(false);
 
     return (
-        <div className="grid w-full max-w-xl grid-cols-2 items-center gap-2 gap-y-4 rounded-lg border border-menu-hover bg-menu-light p-2 py-4 shadow shadow-menu-dark">
+        <div className="grid w-full max-w-xl grid-cols-2 items-center gap-2 gap-y-4 rounded-lg border border-menu-hover bg-menu-light p-2 py-4 shadow-sm shadow-menu-dark">
             <div className="col-span-2 flex flex-col items-center gap-2 pb-4">
                 {props.user.imageUrl ? (
                     <div className="relative h-[160px] w-[140px] md:h-[220px] md:w-[180px]">
@@ -26,11 +26,11 @@ export default function UserForm(props: { user: User }) {
                             src={props.user.imageUrl}
                             alt={props.user.name}
                             fill
-                            className="rounded-lg object-cover shadow shadow-menu-dark"
+                            className="rounded-lg object-cover shadow-sm shadow-menu-dark"
                         />
                     </div>
                 ) : (
-                    <div className="flex h-[160px] w-[140px] items-center justify-center rounded-lg bg-menu-hover shadow shadow-menu-dark md:h-[220px] md:w-[180px]">
+                    <div className="flex h-[160px] w-[140px] items-center justify-center rounded-lg bg-menu-hover shadow-sm shadow-menu-dark md:h-[220px] md:w-[180px]">
                         <p className="flex h-full w-full items-center justify-center text-[100px] text-text-muted">
                             ?
                         </p>

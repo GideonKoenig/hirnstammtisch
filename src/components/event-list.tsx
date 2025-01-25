@@ -58,7 +58,7 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                     onFocus={(event) => event.target.select()}
                     type="text"
                     placeholder="Looking for an event?"
-                    className="col-span-2 w-full rounded-xl border border-menu-light bg-menu-dark p-2 px-3 shadow shadow-menu-dark placeholder:text-text-muted/80 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    className="col-span-2 w-full rounded-xl border border-menu-light bg-menu-dark p-2 px-3 shadow-sm shadow-menu-dark placeholder:text-text-muted/80 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
                 />
 
                 <div className="flex max-w-60 flex-row items-center gap-1">

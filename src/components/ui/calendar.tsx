@@ -36,7 +36,7 @@ function Calendar({
                 nav_button_previous: "",
                 nav_button_next: "",
 
-                table: "w-full !m-0",
+                table: "w-full m-0!",
                 head_row: "flex",
                 head_cell: "text-text-muted rounded-md w-12 font-normal",
 

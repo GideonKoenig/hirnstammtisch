@@ -26,19 +26,19 @@ export default function Login() {
 
     return (
         <div className="w-dvh flex h-dvh flex-col items-center justify-center p-2">
-            <div className="flex flex-col gap-4 rounded-lg border border-menu-hover bg-menu-light p-4 shadow shadow-menu-dark">
+            <div className="flex flex-col gap-4 rounded-lg border border-menu-hover bg-menu-light p-4 shadow-sm shadow-menu-dark">
                 <p className="w-full text-center text-2xl font-bold">Login</p>
                 <p className="pr-28">To continue please tell us your name.</p>
                 <form className="flex flex-col gap-4" onSubmit={saveName}>
                     <input
                         name="name"
-                        className="w-full rounded-md border border-menu-light bg-menu-dark p-2 px-4 shadow shadow-menu-dark placeholder:text-text-muted focus-visible:outline-none"
+                        className="w-full rounded-md border border-menu-light bg-menu-dark p-2 px-4 shadow-sm shadow-menu-dark placeholder:text-text-muted focus-visible:outline-hidden"
                         type="text"
                         placeholder="Your Name"
                     />
                     <button
                         disabled={loading}
-                        className="hover:bg-accent-dark disabled:bg-accent-dark flex w-full flex-row items-center justify-center gap-1 rounded-lg bg-blue-500 p-1 shadow shadow-menu-dark hover:bg-blue-500/80 hover:text-text-muted disabled:bg-blue-500/80 disabled:text-text-muted"
+                        className="hover:bg-accent-dark disabled:bg-accent-dark flex w-full flex-row items-center justify-center gap-1 rounded-lg bg-blue-500 p-1 shadow-sm shadow-menu-dark hover:bg-blue-500/80 hover:text-text-muted disabled:bg-blue-500/80 disabled:text-text-muted"
                         type="submit"
                     >
                         <LoaderCircle

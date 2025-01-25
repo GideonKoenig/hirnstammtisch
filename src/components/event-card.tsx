@@ -11,7 +11,7 @@ export function EventCard(props: {
     return (
         <div
             className={cn(
-                "flex flex-col rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark",
+                "flex flex-col rounded-lg border border-menu-hover bg-menu-light p-2 shadow-sm shadow-menu-dark",
                 props.className,
             )}
         >

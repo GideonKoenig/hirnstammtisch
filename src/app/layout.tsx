@@ -68,12 +68,12 @@ export default function RootLayout({
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="w-dvh flex h-dvh flex-col-reverse bg-menu-main text-text-normal lg:flex-col">
+            <body className="bg-menu-main text-text-normal flex h-dvh w-dvw flex-col-reverse lg:flex-col">
                 <UploadThingProvider
                     routerConfig={extractRouterConfig(fileRouter)}
                 />
                 <NavigationBar username={username} />
-                <main className="flex-grow overflow-hidden">
+                <main className="grow overflow-hidden">
                     <StatusProvider>{children}</StatusProvider>
                 </main>
             </body>

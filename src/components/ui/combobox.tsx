@@ -40,7 +40,7 @@ export function ComboBox(props: {
                         variant="outline"
                         role="combobox"
                         aria-expanded={open}
-                        className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark disabled:pointer-events-auto disabled:cursor-not-allowed"
+                        className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow-sm shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark disabled:pointer-events-auto disabled:cursor-not-allowed"
                     >
                         {props.initialValue}
                         <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 text-text-normal opacity-50" />
@@ -67,7 +67,7 @@ export function ComboBox(props: {
                                             setOpen(false);
                                         }}
                                     >
-                                        <p className="flex-grow">{option}</p>
+                                        <p className="grow">{option}</p>
                                         <CheckIcon
                                             data-state={
                                                 props.initialValue === option

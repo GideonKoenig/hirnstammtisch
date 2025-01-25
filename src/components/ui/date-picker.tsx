@@ -27,7 +27,7 @@ export function DatePicker(props: {
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "justify-between bg-menu-light p-2 px-4 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal disabled:pointer-events-auto disabled:cursor-not-allowed",
+                        "justify-between bg-menu-light p-2 px-4 text-left font-normal shadow-sm shadow-menu-dark hover:bg-menu-hover hover:text-text-normal disabled:pointer-events-auto disabled:cursor-not-allowed",
                         props.className,
                     )}
                 >

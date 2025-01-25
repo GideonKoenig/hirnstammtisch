@@ -28,7 +28,7 @@ export function EventForm(props: {
     return (
         <div
             className={cn(
-                "relative flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow shadow-menu-dark",
+                "relative flex w-full flex-col gap-2 rounded-lg border border-menu-hover bg-menu-light p-2 shadow-sm shadow-menu-dark",
                 props.className,
             )}
         >
@@ -47,7 +47,7 @@ export function EventForm(props: {
             </div>
 
             <EditableTextField
-                className="flex-grow"
+                className="grow"
                 value={props.event.description}
                 onChange={(newValue) => {
                     void updateEvent(props.event.id, {
@@ -101,7 +101,7 @@ export function EventForm(props: {
                 <p className="text-sm text-text-muted">Event Date:</p>
                 <DatePicker
                     initialValue={props.event.eventAt}
-                    className="border border-menu-hover bg-menu-dark shadow shadow-menu-dark hover:bg-menu-dark focus:bg-menu-dark"
+                    className="border border-menu-hover bg-menu-dark shadow-sm shadow-menu-dark hover:bg-menu-dark focus:bg-menu-dark"
                     label={props.event.eventAt?.toLocaleDateString("de-DE", {
                         day: "2-digit",
                         month: "2-digit",
