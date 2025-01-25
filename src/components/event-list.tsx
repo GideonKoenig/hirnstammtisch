@@ -11,8 +11,10 @@ import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { addEvent } from "~/lib/server-actions";
 import { readCookie } from "~/lib/utils";
+import { useStatus } from "~/components/status-provider";
 
 export function EventList(props: { events: Event[]; users: User[] }) {
+    const { isOffline } = useStatus();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [speaker, setSpeaker] = useState<string>("Anyone");
     const [showAll, setShowAll] = useState<boolean>(false);
@@ -51,11 +53,12 @@ export function EventList(props: { events: Event[]; users: User[] }) {
             <div className="grid w-full max-w-3xl grid-cols-[auto_10rem] items-center gap-4 gap-x-6 p-3">
                 <input
                     value={searchTerm}
+                    disabled={isOffline}
                     onChange={(event) => setSearchTerm(event.target.value)}
                     onFocus={(event) => event.target.select()}
                     type="text"
                     placeholder="Looking for an event?"
-                    className="col-span-2 w-full rounded-xl border border-menu-light bg-menu-dark p-2 px-3 shadow shadow-menu-dark placeholder:text-text-muted/80 focus-visible:outline-none"
+                    className="col-span-2 w-full rounded-xl border border-menu-light bg-menu-dark p-2 px-3 shadow shadow-menu-dark placeholder:text-text-muted/80 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 />
 
                 <div className="flex max-w-60 flex-row items-center gap-1">
@@ -84,11 +87,17 @@ export function EventList(props: { events: Event[]; users: User[] }) {
 
                 <div className="flex flex-row gap-2">
                     <Switch
-                        className="ml-2 bg-menu-light"
+                        disabled={isOffline}
+                        className="ml-2 bg-menu-light disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-50"
                         checked={showAll}
                         onCheckedChange={setShowAll}
                     />
-                    <p className="text-sm text-text-muted">Show all events</p>
+                    <p
+                        data-offline={isOffline}
+                        className="text-sm text-text-muted data-[offline=true]:cursor-not-allowed data-[offline=true]:opacity-50"
+                    >
+                        Show all events
+                    </p>
                 </div>
             </div>
 
@@ -107,7 +116,9 @@ export function EventList(props: { events: Event[]; users: User[] }) {
             </ScrollArea>
 
             <Button
+                data-offline={isOffline}
                 className="absolute bottom-4 right-4 bg-accent shadow-lg shadow-menu-dark hover:bg-accent/80"
+                disabled={isOffline}
                 onMouseDown={() => {
                     void addEvent({
                         description: "New event",

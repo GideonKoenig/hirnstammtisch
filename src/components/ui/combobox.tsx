@@ -12,6 +12,7 @@ import { cn } from "~/lib/utils";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { CommandInput } from "~/components/ui/command";
+import { useStatus } from "~/components/status-provider";
 
 export function ComboBox(props: {
     initialValue: string;
@@ -20,6 +21,7 @@ export function ComboBox(props: {
     sortOptions?: boolean;
     className?: string;
 }) {
+    const { isOffline } = useStatus();
     const [open, setOpen] = useState(false);
     const sortedOptions = props.sortOptions
         ? props.options.sort((a, b) => {
@@ -33,12 +35,12 @@ export function ComboBox(props: {
     return (
         <div className={cn("w-full", props.className)}>
             <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild disabled={isOffline}>
                     <Button
                         variant="outline"
                         role="combobox"
                         aria-expanded={open}
-                        className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark"
+                        className="z-0 w-full justify-between border-menu-hover bg-menu-dark shadow shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark disabled:pointer-events-auto disabled:cursor-not-allowed"
                     >
                         {props.initialValue}
                         <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 text-text-normal opacity-50" />

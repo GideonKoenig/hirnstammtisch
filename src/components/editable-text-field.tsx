@@ -2,6 +2,7 @@
 
 import { PencilIcon } from "lucide-react";
 import { useRef, useState, type KeyboardEvent } from "react";
+import { useStatus } from "~/components/status-provider";
 import { cn } from "~/lib/utils";
 
 export default function EditableTextField(props: {
@@ -12,6 +13,7 @@ export default function EditableTextField(props: {
     hideButton?: boolean;
     className?: string;
 }) {
+    const { isOffline } = useStatus();
     const [isEditing, setIsEditing] = useState(false);
     const calculatedValue =
         (props.value?.trim() === "" ? undefined : props.value?.trim()) ??
@@ -58,11 +60,14 @@ export default function EditableTextField(props: {
             )}
         >
             <p
+                data-offline={isOffline}
                 data-editing={isEditing}
                 data-placeholder={placeholderUsed}
                 data-size={props.size}
-                className="max-w-full whitespace-pre-wrap break-words rounded border border-transparent p-1 text-base data-[editing=true]:border-menu-hover data-[size=sm]:text-sm data-[size=xs]:text-xs data-[placeholder=true]:text-text-muted"
-                onMouseDown={startEditing}
+                className="max-w-full whitespace-pre-wrap break-words rounded border border-transparent p-1 text-base data-[offline=true]:cursor-not-allowed data-[editing=true]:border-menu-hover data-[size=sm]:text-sm data-[size=xs]:text-xs data-[placeholder=true]:text-text-muted"
+                onMouseDown={() => {
+                    if (!isOffline) startEditing();
+                }}
             >
                 {currentValue}
             </p>
@@ -81,9 +86,10 @@ export default function EditableTextField(props: {
 
             {!props.hideButton && (
                 <button
+                    disabled={isOffline}
                     onMouseDown={startEditing}
                     data-editing={isEditing}
-                    className="absolute right-1 top-2 opacity-0 transition-opacity group-hover:opacity-100 data-[editing=true]:hidden"
+                    className="absolute right-1 top-2 opacity-0 transition-opacity disabled:cursor-not-allowed group-hover:opacity-100 disabled:group-hover:opacity-50 data-[editing=true]:hidden"
                     aria-label="Edit text"
                 >
                     <PencilIcon className="h-4 w-4 stroke-text-muted" />

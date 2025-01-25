@@ -10,12 +10,14 @@ import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/ui/date-picker";
 import { Button } from "~/components/ui/button";
 import { X } from "lucide-react";
+import { useStatus } from "~/components/status-provider";
 
 export function EventForm(props: {
     event: Event;
     users: User[];
     className?: string;
 }) {
+    const { isOffline } = useStatus();
     const eventSpeaker = props.users.find(
         (user) => user.id === props.event.speaker,
     );
@@ -32,9 +34,10 @@ export function EventForm(props: {
         >
             <div className="absolute -right-2 -top-4 lg:-right-4">
                 <Button
+                    disabled={isOffline}
                     variant="ghost"
                     size="icon"
-                    className="h-6 w-6 bg-transparent p-1 hover:bg-transparent"
+                    className="h-6 w-6 bg-transparent p-1 hover:bg-transparent disabled:pointer-events-auto disabled:cursor-not-allowed"
                     onMouseDown={() => {
                         void deleteEvent(props.event.id);
                     }}

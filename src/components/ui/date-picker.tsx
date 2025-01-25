@@ -10,6 +10,7 @@ import {
     PopoverTrigger,
 } from "~/components/ui/popover";
 import { useState } from "react";
+import { useStatus } from "~/components/status-provider";
 
 export function DatePicker(props: {
     className?: string;
@@ -17,15 +18,16 @@ export function DatePicker(props: {
     initialValue: Date | undefined | null;
     onChange?: (date?: Date) => void | Promise<void>;
 }) {
+    const { isOffline } = useStatus();
     const [open, setOpen] = useState<boolean>(false);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
+            <PopoverTrigger asChild disabled={isOffline}>
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "justify-between bg-menu-light p-2 px-4 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal",
+                        "justify-between bg-menu-light p-2 px-4 text-left font-normal shadow shadow-menu-dark hover:bg-menu-hover hover:text-text-normal disabled:pointer-events-auto disabled:cursor-not-allowed",
                         props.className,
                     )}
                 >
