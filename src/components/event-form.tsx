@@ -10,7 +10,7 @@ import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/ui/date-picker";
 import { Button } from "~/components/ui/button";
 import { X } from "lucide-react";
-import { usePwa } from "~/components/provider-pwa";
+import { usePwa } from "~/components/pwa-provider";
 
 export function EventForm(props: {
     event: Event;

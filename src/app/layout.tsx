@@ -8,7 +8,8 @@ import { cookies } from "next/headers";
 import { NextSSRPlugin as UploadThingProvider } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { fileRouter } from "~/app/api/uploadthing/core";
-import { PwaProvider } from "~/components/provider-pwa";
+import { PwaProvider } from "~/components/pwa-provider";
+import { PwaInstallPopup } from "~/components/pwa-install-popup";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
@@ -69,14 +70,15 @@ export default async function RootLayout({
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="bg-menu-main text-text-normal flex h-dvh w-dvw flex-col-reverse lg:flex-col">
-                <UploadThingProvider
-                    routerConfig={extractRouterConfig(fileRouter)}
-                />
-                <NavigationBar username={username} />
-                <main className="grow overflow-hidden">
-                    <PwaProvider>{children}</PwaProvider>
-                </main>
+            <body className="bg-menu-main text-text-normal relative flex h-dvh w-dvw flex-col-reverse lg:flex-col">
+                <PwaProvider>
+                    <UploadThingProvider
+                        routerConfig={extractRouterConfig(fileRouter)}
+                    />
+                    <PwaInstallPopup />
+                    <NavigationBar username={username} />
+                    <main className="grow overflow-hidden">{children}</main>
+                </PwaProvider>
             </body>
         </html>
     );

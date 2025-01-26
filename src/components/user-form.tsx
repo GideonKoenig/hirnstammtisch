@@ -7,22 +7,42 @@ import EditableTextField from "~/components/editable-text-field";
 import { removeProfileImage, updateUser } from "~/lib/server-actions";
 import { UploadButton } from "~/lib/uploadthing";
 import { Button } from "~/components/ui/button";
-import { LoaderCircle, X } from "lucide-react";
+import { Download, LoaderCircle, LogOut, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { usePwa } from "~/components/provider-pwa";
+import { usePwa } from "~/components/pwa-provider";
 import { useState } from "react";
-import { UserSignout } from "~/components/user-signout";
+import { deleteCookie } from "~/lib/utils";
 
 export default function UserForm(props: { user: User }) {
     const router = useRouter();
-    const { isOffline } = usePwa();
+    const { isOffline, installPrompt, isInstallable } = usePwa();
     const [loading, setLoading] = useState(false);
 
     return (
         <div className="border-menu-hover bg-menu-light shadow-menu-dark grid w-full max-w-xl grid-cols-2 items-center gap-2 gap-y-4 rounded-lg border p-2 py-4 shadow-sm">
             <div className="relative col-span-2 flex flex-col items-center gap-2 pb-4">
-                <div className="absolute top-0 right-0">
-                    <UserSignout />
+                <div className="absolute top-0 right-0 flex flex-col items-start gap-2">
+                    <button
+                        className="hover:bg-menu-hover flex w-full flex-row items-center gap-1 rounded-md bg-transparent p-2 text-sm"
+                        onMouseDown={() => {
+                            deleteCookie("username");
+                            router.push("/");
+                        }}
+                    >
+                        <LogOut className="h-4 w-4" />
+                        Sign Out
+                    </button>
+
+                    <button
+                        data-show={isInstallable}
+                        className="hover:bg-menu-hover hidden w-full flex-row items-center gap-1 rounded-md bg-transparent p-2 text-sm data-[show=true]:flex"
+                        onMouseDown={async () => {
+                            await installPrompt();
+                        }}
+                    >
+                        <Download className="h-4 w-4" />
+                        Install App
+                    </button>
                 </div>
 
                 {props.user.imageUrl ? (

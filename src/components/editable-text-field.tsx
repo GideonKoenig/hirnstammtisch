@@ -2,7 +2,7 @@
 
 import { PencilIcon } from "lucide-react";
 import { useRef, useState, type KeyboardEvent } from "react";
-import { usePwa } from "~/components/provider-pwa";
+import { usePwa } from "~/components/pwa-provider";
 import { cn } from "~/lib/utils";
 
 export default function EditableTextField(props: {

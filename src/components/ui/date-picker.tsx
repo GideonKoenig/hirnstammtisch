@@ -10,7 +10,7 @@ import {
     PopoverTrigger,
 } from "~/components/ui/popover";
 import { useState } from "react";
-import { usePwa } from "~/components/provider-pwa";
+import { usePwa } from "~/components/pwa-provider";
 
 export function DatePicker(props: {
     className?: string;

@@ -11,7 +11,7 @@ import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { addEvent } from "~/lib/server-actions";
 import { readCookie } from "~/lib/utils";
-import { usePwa } from "~/components/provider-pwa";
+import { usePwa } from "~/components/pwa-provider";
 
 export function EventList(props: { events: Event[]; users: User[] }) {
     const { isOffline } = usePwa();

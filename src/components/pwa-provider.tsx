@@ -17,11 +17,16 @@ interface InstallPromptEvent extends Event {
     prompt(): Promise<void>;
 }
 
+interface InstallPromptCallback {
+    onSuccess?: () => void;
+    onDismiss?: () => void;
+}
+
 type PwaContextType = {
     isOffline: boolean;
     deferredPrompt: InstallPromptEvent | null;
     isInstallable: boolean;
-    installPrompt: () => Promise<void>;
+    installPrompt: (callback?: InstallPromptCallback) => Promise<void>;
 };
 
 const PwaContext = createContext<PwaContextType>({
@@ -55,8 +60,16 @@ export const PwaProvider = ({ children }: { children: React.ReactNode }) => {
             "beforeinstallprompt",
             (event) => {
                 event.preventDefault();
-                setDeferredPrompt(event);
-                setIsInstallable(true);
+                const isMobile =
+                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                        navigator.userAgent,
+                    );
+                if (isMobile) {
+                    setDeferredPrompt(event);
+                    setIsInstallable(true);
+                } else {
+                    setIsInstallable(false);
+                }
             },
             {
                 signal,
@@ -76,13 +89,16 @@ export const PwaProvider = ({ children }: { children: React.ReactNode }) => {
         };
     }, []);
 
-    const installPrompt = async () => {
+    const installPrompt = async (callback?: InstallPromptCallback) => {
         if (!deferredPrompt) return;
         await deferredPrompt.prompt();
         const outcome = await deferredPrompt.userChoice;
         if (outcome.outcome === "accepted") {
             setDeferredPrompt(null);
             setIsInstallable(false);
+            callback?.onSuccess?.();
+        } else {
+            callback?.onDismiss?.();
         }
     };
 

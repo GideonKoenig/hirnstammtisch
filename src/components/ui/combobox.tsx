@@ -12,7 +12,7 @@ import { cn } from "~/lib/utils";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { CommandInput } from "~/components/ui/command";
-import { usePwa } from "~/components/provider-pwa";
+import { usePwa } from "~/components/pwa-provider";
 
 export function ComboBox(props: {
     initialValue: string;
