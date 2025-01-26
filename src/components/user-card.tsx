@@ -52,6 +52,7 @@ export async function UserCard(props: { user: User }) {
                         src={props.user.imageUrl}
                         alt={props.user.name}
                         fill
+                        sizes="(max-width: 768px) 140px, (max-width: 1024px) 180px"
                         className="shadow-menu-dark rounded-lg object-cover shadow-sm"
                     />
                 </div>

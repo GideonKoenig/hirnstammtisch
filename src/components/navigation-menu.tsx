@@ -9,7 +9,7 @@ export function NavigationBar(props: { username: string | undefined }) {
     const path = usePathname();
 
     return (
-        <div className="lg:border-menu-light grid w-full grid-cols-5 items-center gap-1 lg:grid-cols-7 lg:gap-4 lg:border-b">
+        <div className="border-menu-light grid w-full grid-cols-5 items-center gap-1 border-t lg:grid-cols-7 lg:gap-4 lg:border-b">
             <Link
                 data-active={path === "/"}
                 className="hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent lg:text-accent lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main flex flex-col items-center rounded px-4 py-2 lg:flex-row lg:gap-2 lg:py-0"
