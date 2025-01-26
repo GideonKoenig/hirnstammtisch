@@ -11,6 +11,7 @@ import { LoaderCircle, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { usePwa } from "~/components/provider-pwa";
 import { useState } from "react";
+import { UserSignout } from "~/components/user-signout";
 
 export default function UserForm(props: { user: User }) {
     const router = useRouter();
@@ -19,7 +20,11 @@ export default function UserForm(props: { user: User }) {
 
     return (
         <div className="border-menu-hover bg-menu-light shadow-menu-dark grid w-full max-w-xl grid-cols-2 items-center gap-2 gap-y-4 rounded-lg border p-2 py-4 shadow-sm">
-            <div className="col-span-2 flex flex-col items-center gap-2 pb-4">
+            <div className="relative col-span-2 flex flex-col items-center gap-2 pb-4">
+                <div className="absolute top-0 right-0">
+                    <UserSignout />
+                </div>
+
                 {props.user.imageUrl ? (
                     <div className="relative h-[160px] w-[140px] md:h-[220px] md:w-[180px]">
                         <Image
