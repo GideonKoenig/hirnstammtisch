@@ -14,6 +14,7 @@ import { usePwa } from "~/components/pwa-provider";
 
 export function EventForm(props: {
     event: Event;
+    events: Event[];
     users: User[];
     className?: string;
 }) {
@@ -100,6 +101,7 @@ export function EventForm(props: {
 
                 <p className="text-text-muted text-sm">Event Date:</p>
                 <DatePicker
+                    events={props.events}
                     initialValue={props.event.eventAt}
                     className="border-menu-hover bg-menu-dark shadow-menu-dark hover:bg-menu-dark focus:bg-menu-dark border shadow-sm"
                     label={props.event.eventAt?.toLocaleDateString("de-DE", {

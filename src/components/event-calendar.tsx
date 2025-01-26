@@ -47,6 +47,7 @@ export default function EventCalendar(props: {
                     <EventForm
                         className="w-full shadow-md"
                         event={selectedEvent}
+                        events={props.events}
                         users={props.users}
                     />
                 </div>

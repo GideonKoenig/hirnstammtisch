@@ -11,10 +11,12 @@ import {
 } from "~/components/ui/popover";
 import { useState } from "react";
 import { usePwa } from "~/components/pwa-provider";
+import { type Event } from "~/lib/data-types";
 
 export function DatePicker(props: {
     className?: string;
     label?: string;
+    events?: Event[];
     initialValue: Date | undefined | null;
     onChange?: (date?: Date) => void | Promise<void>;
 }) {
@@ -43,13 +45,20 @@ export function DatePicker(props: {
                         if (props.onChange) await props.onChange(date);
                         setOpen(false);
                     }}
-                    initialFocus
                     modifiers={{
-                        hasEvent: props.initialValue ?? [],
+                        initialValue: props.initialValue ?? [],
+                        hasEvent: props.events
+                            ?.map((event) => event.eventAt)
+                            .filter(
+                                (event) =>
+                                    event !== undefined && event !== null,
+                            ),
                     }}
                     modifiersClassNames={{
-                        hasEvent:
+                        initialValue:
                             "underline aria-selected:text-accent-light text-accent-light",
+                        hasEvent:
+                            "underline aria-selected:text-accent text-accent",
                     }}
                 />
             </PopoverContent>
