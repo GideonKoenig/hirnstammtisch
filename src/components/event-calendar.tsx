@@ -16,7 +16,8 @@ export default function EventCalendar(props: {
     );
     const selectedEvent = props.events.find(
         (event) =>
-            event.eventAt?.toDateString() === selectedDate?.toDateString(),
+            event.eventAt?.toDateString() === selectedDate?.toDateString() &&
+            selectedDate !== undefined,
     );
 
     return (
@@ -26,7 +27,7 @@ export default function EventCalendar(props: {
                 selected={selectedDate}
                 onSelect={setSelectedDate}
                 className={cn(
-                    "rounded-md border border-menu-light shadow-md shadow-menu-dark",
+                    "border-menu-light shadow-menu-dark rounded-md border shadow-md",
                     props.className,
                 )}
                 modifiers={{

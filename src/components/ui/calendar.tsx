@@ -21,21 +21,21 @@ function Calendar({
             locale={de}
             weekStartsOn={1}
             showOutsideDays={showOutsideDays}
-            className={cn("p-3", className)}
+            className={cn("p-2", className)}
             classNames={{
-                months: "flex flex-col",
-                month: "space-y-6 space-x-6 flex flex-col gap-8 items-center",
+                months: "relative",
+                month: "flex flex-col gap-6 items-center",
                 month_caption:
-                    "flex flex-row w-full justify-center text-text-normal items-center relative mx-auto",
+                    "flex flex-row w-full h-8 justify-center text-text-normal items-center relative mx-auto",
                 caption_label: "text-base font-medium w-full text-center",
-                nav: "flex flex-row w-full h-full items-center justify-between",
+                nav: "flex flex-row absolute w-full items-center justify-between",
                 button_next: cn(
                     buttonVariants({ variant: "outline" }),
-                    "h-8 w-8 bg-transparent p-0 text-text-muted  border-menu-hover focus:bg-transparent focus:text-text-muted hover:bg-transparent hover:text-text-muted",
+                    "h-8 w-8 z-10 bg-transparent p-0 text-text-muted  border-menu-hover focus:bg-transparent focus:text-text-muted hover:bg-transparent hover:text-text-muted",
                 ),
                 button_previous: cn(
                     buttonVariants({ variant: "outline" }),
-                    "h-8 w-8 bg-transparent p-0 text-text-muted  border-menu-hover focus:bg-transparent focus:text-text-muted hover:bg-transparent hover:text-text-muted",
+                    "h-8 w-8 z-10 bg-transparent p-0 text-text-muted  border-menu-hover focus:bg-transparent focus:text-text-muted hover:bg-transparent hover:text-text-muted",
                 ),
 
                 month_grid: "w-full m-0!",
