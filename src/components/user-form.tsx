@@ -3,7 +3,7 @@
 import { Separator } from "~/components/ui/separator";
 import { type User } from "~/lib/data-types";
 import Image from "next/image";
-import EditableTextField from "~/components/editable-text-field";
+import EditableTextField from "~/components/ui/editable-text-field";
 import { removeProfileImage, updateUser } from "~/lib/server-actions";
 import { UploadButton } from "~/lib/uploadthing";
 import { Button } from "~/components/ui/button";

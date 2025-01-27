@@ -4,7 +4,7 @@ import { ComboBox } from "~/components/ui/combobox";
 import { cn } from "~/lib/utils";
 import { DEFAULT_USER, type Event } from "~/lib/data-types";
 import { type User } from "~/lib/data-types";
-import EditableTextField from "~/components/editable-text-field";
+import EditableTextField from "~/components/ui/editable-text-field";
 import { deleteEvent, updateEvent } from "~/lib/server-actions";
 import { Separator } from "~/components/ui/separator";
 import { DatePicker } from "~/components/ui/date-picker";

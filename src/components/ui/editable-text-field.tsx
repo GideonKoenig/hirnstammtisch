@@ -64,7 +64,7 @@ export default function EditableTextField(props: {
                 data-editing={isEditing}
                 data-placeholder={placeholderUsed}
                 data-size={props.size}
-                className="data-[editing=true]:border-menu-hover data-[placeholder=true]:text-text-muted max-w-full rounded border border-transparent p-1 text-base break-words whitespace-pre-wrap data-[offline=true]:cursor-not-allowed data-[size=sm]:text-sm data-[size=xs]:text-xs"
+                className="data-[editing=true]:border-menu-hover data-[placeholder=true]:text-text-muted group-hover:border-menu-hover max-w-full rounded border border-transparent p-1 text-base break-words whitespace-pre-wrap data-[offline=true]:cursor-not-allowed data-[size=sm]:text-sm data-[size=xs]:text-xs"
                 onMouseDown={() => {
                     if (!isOffline) startEditing();
                 }}
