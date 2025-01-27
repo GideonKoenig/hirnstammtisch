@@ -17,13 +17,13 @@ const DataContext = createContext<ContextType>({
     users: [],
     activeUser: undefined,
     setEvents: () => {
-        console.log("Uninitialized setEvents");
+        console.log("DataProvider used outside of context");
     },
     setUsers: () => {
-        console.log("Uninitialized setUsers");
+        console.log("DataProvider used outside of context");
     },
     setActiveUser: () => {
-        console.log("Uninitialized setActiveUser");
+        console.log("DataProvider used outside of context");
     },
 });
 

@@ -16,7 +16,6 @@ export function PwaInstallPopupIos() {
     const isStandalone =
         typeof window !== "undefined" &&
         (window.navigator as SafariNavigator).standalone === true;
-    console.log(isStandalone);
     const [forcePwa, setForcePwa] = useState<boolean>(() => {
         return searchParams.get("force_pwa") === "true";
     });
