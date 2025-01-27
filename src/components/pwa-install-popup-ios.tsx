@@ -4,11 +4,19 @@ import { useLocalStorage } from "~/lib/hooks";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+interface SafariNavigator extends Navigator {
+    standalone?: boolean;
+}
+
 export function PwaInstallPopupIos() {
     const searchParams = useSearchParams();
     const isIos =
         typeof window !== "undefined" &&
         /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isStandalone =
+        typeof window !== "undefined" &&
+        (window.navigator as SafariNavigator).standalone === true;
+    console.log(isStandalone);
     const [forcePwa, setForcePwa] = useState<boolean>(() => {
         return searchParams.get("force_pwa") === "true";
     });
@@ -19,7 +27,7 @@ export function PwaInstallPopupIos() {
 
     return (
         <div
-            data-show={isIos && (!isDismissed || forcePwa)}
+            data-show={isIos && !isStandalone && (!isDismissed || forcePwa)}
             className="bg-menu-dark/90 shadow-menu-dark absolute top-0 left-0 z-20 hidden h-dvh w-dvw flex-col items-center p-8 pt-16 shadow-md data-[show=true]:flex"
         >
             <div className="bg-menu-main flex w-full max-w-md flex-col items-center gap-4 rounded-lg p-6 shadow-md">
