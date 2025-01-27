@@ -1,10 +1,10 @@
 "use client";
 
 import { Bookmark, Calendar, Home, Text, User } from "lucide-react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useData } from "~/components/data-provider";
+import { Link } from "~/components/ui/fast-link";
 
 export function NavigationBar() {
     const path = usePathname();
