@@ -4,9 +4,11 @@ import { Bookmark, Calendar, Home, Text, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useData } from "~/components/data-provider";
 
-export function NavigationBar(props: { username: string | undefined }) {
+export function NavigationBar() {
     const path = usePathname();
+    const { activeUser } = useData();
 
     return (
         <div className="border-menu-light grid w-full grid-cols-5 items-center gap-1 border-t lg:grid-cols-7 lg:gap-4 lg:border-b">
@@ -66,7 +68,7 @@ export function NavigationBar(props: { username: string | undefined }) {
             <div className="hidden lg:block" />
 
             <Link
-                data-hidden={props.username === undefined}
+                data-hidden={activeUser === undefined}
                 data-active={path === "/profile"}
                 className="hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent data-[active=true]:hover:bg-menu-hover lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main lg:data-[active=true]:text-text-normal lg:data-[active=true]:hover:bg-menu-main flex flex-col items-center rounded px-4 py-2 data-[hidden=true]:hidden lg:py-4"
                 href="/profile"
@@ -77,7 +79,7 @@ export function NavigationBar(props: { username: string | undefined }) {
                 </p>
             </Link>
             <Link
-                data-hidden={props.username !== undefined}
+                data-hidden={activeUser !== undefined}
                 data-active={path === "/login"}
                 className="hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent data-[active=true]:hover:bg-menu-hover lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main lg:data-[active=true]:text-text-normal lg:data-[active=true]:hover:bg-menu-main flex flex-col items-center rounded px-4 py-2 data-[hidden=true]:hidden lg:py-4"
                 href="/login"

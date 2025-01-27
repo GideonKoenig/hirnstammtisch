@@ -1,5 +1,4 @@
 import "~/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
 import PlausibleProvider from "next-plausible";
 import { type Viewport, type Metadata } from "next";
@@ -10,6 +9,8 @@ import { extractRouterConfig } from "uploadthing/server";
 import { fileRouter } from "~/app/api/uploadthing/core";
 import { PwaProvider } from "~/components/pwa-provider";
 import { PwaInstallPopup } from "~/components/pwa-install-popup";
+import { DataProvider } from "~/components/data-provider";
+import { db } from "~/server/db";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
@@ -64,6 +65,10 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     const cookieStore = await cookies();
     const username = cookieStore.get("username")?.value;
+    const [events, users] = await Promise.all([
+        db.query.EventsTable.findMany(),
+        db.query.UserTable.findMany(),
+    ]);
 
     return (
         <html lang="en" className={`${GeistSans.variable}`}>
@@ -71,14 +76,20 @@ export default async function RootLayout({
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
             <body className="bg-menu-main text-text-normal relative flex h-dvh w-dvw flex-col-reverse lg:flex-col">
-                <PwaProvider>
-                    <UploadThingProvider
-                        routerConfig={extractRouterConfig(fileRouter)}
-                    />
-                    <PwaInstallPopup />
-                    <NavigationBar username={username} />
-                    <main className="grow overflow-hidden">{children}</main>
-                </PwaProvider>
+                <DataProvider
+                    events={events}
+                    users={users}
+                    activeUserName={username}
+                >
+                    <PwaProvider>
+                        <UploadThingProvider
+                            routerConfig={extractRouterConfig(fileRouter)}
+                        />
+                        <PwaInstallPopup />
+                        <NavigationBar />
+                        <main className="grow overflow-hidden">{children}</main>
+                    </PwaProvider>
+                </DataProvider>
             </body>
         </html>
     );

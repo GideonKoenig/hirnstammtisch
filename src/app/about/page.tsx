@@ -1,20 +1,7 @@
-import { UserCard } from "~/components/user-card";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { db } from "~/server/db";
+import { UserList } from "~/components/user-list";
 
 export default async function About() {
-    const [events, userListRaw] = await Promise.all([
-        db.query.EventsTable.findMany({
-            where: (events, { isNotNull }) => isNotNull(events.eventAt),
-        }),
-
-        db.query.UserTable.findMany(),
-    ]);
-
-    const userList = userListRaw
-        .filter((user) => events.some((event) => event.speaker === user.id))
-        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-
     return (
         <ScrollArea className="h-full w-full">
             <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-4 p-4">
@@ -29,9 +16,7 @@ export default async function About() {
 
                 <p className="pb-2 text-2xl font-bold">Members</p>
 
-                {userList.map((user) => (
-                    <UserCard key={user.id} user={user} />
-                ))}
+                <UserList />
             </div>
         </ScrollArea>
     );

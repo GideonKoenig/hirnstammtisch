@@ -1,20 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { type Event, type User } from "~/lib/data-types";
 import { EventForm } from "~/components/event-form";
 import { Calendar } from "~/components/ui/calendar";
 import { cn } from "~/lib/utils";
+import { useData } from "~/components/data-provider";
 
-export default function EventCalendar(props: {
-    events: Event[];
-    users: User[];
-    className?: string;
-}) {
+export default function EventCalendar(props: { className?: string }) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(
         new Date(),
     );
-    const selectedEvent = props.events.find(
+    const { events, users } = useData({
+        prepareEvents: (events) => events.filter((event) => !event.deleted),
+    });
+    const selectedEvent = events.find(
         (event) =>
             event.eventAt?.toDateString() === selectedDate?.toDateString() &&
             selectedDate !== undefined,
@@ -31,7 +30,7 @@ export default function EventCalendar(props: {
                     props.className,
                 )}
                 modifiers={{
-                    hasEvent: props.events
+                    hasEvent: events
                         .map((event) => event.eventAt)
                         .filter(
                             (event) => event !== undefined && event !== null,
@@ -47,8 +46,8 @@ export default function EventCalendar(props: {
                     <EventForm
                         className="w-full shadow-md"
                         event={selectedEvent}
-                        events={props.events}
-                        users={props.users}
+                        events={events}
+                        users={users}
                     />
                 </div>
             )}

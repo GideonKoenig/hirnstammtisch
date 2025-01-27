@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { type User, type Event } from "../lib/data-types";
+import { DEFAULT_USER } from "../lib/data-types";
 import { EventForm } from "~/components/event-form";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Switch } from "~/components/ui/switch";
@@ -10,43 +10,79 @@ import { X } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { addEvent } from "~/lib/server-actions";
-import { readCookie } from "~/lib/utils";
 import { usePwa } from "~/components/pwa-provider";
+import { useData } from "~/components/data-provider";
 
-export function EventList(props: { events: Event[]; users: User[] }) {
+export function EventList() {
     const { isOffline } = usePwa();
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [speaker, setSpeaker] = useState<string>("Anyone");
     const [showAll, setShowAll] = useState<boolean>(false);
-    const events = showAll
-        ? props.events
-        : props.events.filter((event) => {
-              if (!event.eventAt) return true;
-              const eventDate = event.eventAt;
-              const today = new Date();
+    const { activeUser, users } = useData({
+        prepareUsers: (users) => [...users, DEFAULT_USER],
+    });
+    const { events } = useData({
+        prepareEvents: (events) =>
+            events
+                .filter((event) => !event.deleted)
+                .filter((event) => {
+                    if (showAll) return true;
+                    if (event.eventAt === undefined) return true;
+                    if (event.eventAt === null) return true;
 
-              eventDate.setHours(0, 0, 0, 0);
-              today.setHours(0, 0, 0, 0);
+                    const eventDate = event.eventAt;
+                    const today = new Date();
 
-              return eventDate >= today;
-          });
+                    eventDate.setHours(0, 0, 0, 0);
+                    today.setHours(0, 0, 0, 0);
 
-    const filteredEvents = events
-        .filter((event) =>
-            event.description?.toLowerCase().includes(searchTerm.toLowerCase()),
-        )
-        .filter((event) => {
-            if (speaker === "Anyone") return true;
-            const speakerId = props.users.find(
-                (user) => user.name === speaker,
-            )?.id;
-            return event.speaker === speakerId;
-        });
+                    return eventDate >= today;
+                })
+                .filter((event) =>
+                    event.description
+                        ?.toLowerCase()
+                        .includes(searchTerm.toLowerCase()),
+                )
+                .filter((event) => {
+                    if (speaker === "Anyone") return true;
+                    const speakerId = users.find(
+                        (user) => user.name === speaker,
+                    )?.id;
+                    return event.speaker === speakerId;
+                })
+                .sort((a, b) => {
+                    const speakerA = users.find(
+                        (user) => user.id === a.speaker,
+                    )!;
+                    const speakerB = users.find(
+                        (user) => user.id === b.speaker,
+                    )!;
 
-    const currentUserName = readCookie("username")!;
-    const currentUser: User = props.users.find(
-        (user) => user.name === currentUserName,
-    )!;
+                    // Check if either event is new
+                    if (a.description === "New event") return -1;
+                    if (b.description === "New event") return 1;
+
+                    // Check if either speaker is the current user
+                    const isASpeakerCurrentUser =
+                        speakerA.name === activeUser?.name;
+                    const isBSpeakerCurrentUser =
+                        speakerB.name === activeUser?.name;
+
+                    // Current user's events should come first
+                    if (isASpeakerCurrentUser && !isBSpeakerCurrentUser)
+                        return -1;
+                    if (!isASpeakerCurrentUser && isBSpeakerCurrentUser)
+                        return 1;
+
+                    // If same speaker, sort by creation date
+                    if (a.speaker === b.speaker) {
+                        return b.createdAt.getTime() - a.createdAt.getTime();
+                    }
+
+                    // Otherwise sort by speaker id
+                    return speakerA.id - speakerB.id;
+                }),
+    });
 
     return (
         <div className="relative flex h-full w-full flex-col items-center">
@@ -66,7 +102,7 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                         className="text-text-muted w-full"
                         initialValue={speaker}
                         onChange={setSpeaker}
-                        options={props.users
+                        options={users
                             .filter((user) =>
                                 events.some(
                                     (event) => event.speaker === user.id,
@@ -105,12 +141,12 @@ export function EventList(props: { events: Event[]; users: User[] }) {
 
             <ScrollArea className="h-full w-full p-4 py-0">
                 <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 py-4 md:grid-cols-2">
-                    {filteredEvents.map((event) => (
+                    {events.map((event) => (
                         <EventForm
                             key={event.id}
                             event={event}
-                            events={props.events}
-                            users={props.users}
+                            events={events}
+                            users={users}
                         />
                     ))}
                 </div>
@@ -123,8 +159,8 @@ export function EventList(props: { events: Event[]; users: User[] }) {
                 onMouseDown={() => {
                     void addEvent({
                         description: "New event",
-                        speaker: currentUser.id,
-                        suggestedBy: currentUser.id,
+                        speaker: activeUser!.id,
+                        suggestedBy: activeUser!.id,
                         deleted: false,
                     });
                 }}

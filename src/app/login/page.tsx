@@ -3,10 +3,12 @@
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { useData } from "~/components/data-provider";
 import { addUser } from "~/lib/server-actions";
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false);
+    const { setActiveUser } = useData();
     const router = useRouter();
 
     const saveName = async (event: FormEvent) => {
@@ -20,6 +22,7 @@ export default function Login() {
         }
 
         await addUser(username.trim());
+        setActiveUser(username.trim());
         document.cookie = `username=${username.trim()}`;
         router.push("/");
     };

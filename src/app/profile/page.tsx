@@ -1,23 +1,18 @@
+"use client";
+
 import { redirect } from "next/navigation";
-import { db } from "~/server/db";
 import UserForm from "~/components/user-form";
-import { readCookie } from "~/server/utils";
+import { useData } from "~/components/data-provider";
 
-export default async function Profil() {
-    const userName = await readCookie("username");
+export default function Profil() {
+    const { activeUser } = useData();
 
-    const user = await db.query.UserTable.findFirst({
-        where: (user, { eq }) => eq(user.name, userName ?? ""),
-    });
-
-    if (!user) {
-        return redirect("/login");
-    }
+    if (!activeUser) redirect("/login");
 
     return (
         <div className="h-full w-full p-2">
             <div className="mx-auto flex w-full max-w-xl">
-                <UserForm user={user} />
+                <UserForm user={activeUser} />
             </div>
         </div>
     );

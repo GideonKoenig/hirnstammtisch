@@ -1,17 +1,18 @@
+"use client";
+
+import { useData } from "~/components/data-provider";
 import { type User } from "~/lib/data-types";
 import { formatWeekDistance } from "~/lib/date";
 import Image from "next/image";
-import { db } from "~/server/db";
 
-export async function UserCard(props: { user: User }) {
-    const events = await db.query.EventsTable.findMany({
-        where: (topics, { isNotNull, eq, and }) => {
-            return and(
-                isNotNull(topics.eventAt),
-                eq(topics.speaker, props.user.id),
-            );
-        },
-        orderBy: (topics, { asc }) => [asc(topics.eventAt)],
+export function UserCard(props: { user: User }) {
+    const { events } = useData({
+        prepareEvents: (events) =>
+            events
+                .filter((event) => event.eventAt !== null)
+                .filter((event) => event.eventAt !== undefined)
+                .filter((event) => event.speaker === props.user.id)
+                .sort((a, b) => a.eventAt!.getTime() - b.eventAt!.getTime()),
     });
 
     return (

@@ -12,9 +12,11 @@ import { useRouter } from "next/navigation";
 import { usePwa } from "~/components/pwa-provider";
 import { useState } from "react";
 import { deleteCookie } from "~/lib/utils";
+import { useData } from "~/components/data-provider";
 
 export default function UserForm(props: { user: User }) {
     const router = useRouter();
+    const { setActiveUser } = useData();
     const { isOffline, installPrompt, isInstallable } = usePwa();
     const [loading, setLoading] = useState(false);
 
@@ -26,7 +28,7 @@ export default function UserForm(props: { user: User }) {
                         className="hover:bg-menu-hover flex w-full flex-row items-center gap-1 rounded-md bg-transparent p-2 text-sm"
                         onMouseDown={() => {
                             deleteCookie("username");
-                            router.push("/");
+                            setActiveUser(undefined);
                         }}
                     >
                         <LogOut className="h-4 w-4" />
