@@ -11,6 +11,7 @@ import { PwaProvider } from "~/components/pwa-provider";
 import { PwaInstallPopup } from "~/components/pwa-install-popup";
 import { DataProvider } from "~/components/data-provider";
 import { db } from "~/server/db";
+import { PwaInstallPopupIos } from "~/components/pwa-install-popup-ios";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
@@ -86,6 +87,7 @@ export default async function RootLayout({
                             routerConfig={extractRouterConfig(fileRouter)}
                         />
                         <PwaInstallPopup />
+                        <PwaInstallPopupIos />
                         <NavigationBar />
                         <main className="grow overflow-hidden">{children}</main>
                     </PwaProvider>
