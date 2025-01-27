@@ -121,7 +121,7 @@ export function EventForm(props: {
                 <p className="text-text-muted text-sm">Presentation URL:</p>
                 <EditableTextField
                     hideButton
-                    className="max-h-6 w-full"
+                    className="max-h-8 w-full"
                     size="sm"
                     placeholder="Insert presentation url"
                     value={props.event.presentationUrl}
