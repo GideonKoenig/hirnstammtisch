@@ -5,9 +5,7 @@ import { type User, type Event } from "~/lib/data-types";
 
 type ContextType = {
     events: Event[];
-    setEvents: (events: Event[]) => void;
     users: User[];
-    setUsers: (users: User[]) => void;
     activeUser: User | undefined;
     setActiveUser: (username: string | undefined) => void;
 };
@@ -16,12 +14,6 @@ const DataContext = createContext<ContextType>({
     events: [],
     users: [],
     activeUser: undefined,
-    setEvents: () => {
-        console.log("DataProvider used outside of context");
-    },
-    setUsers: () => {
-        console.log("DataProvider used outside of context");
-    },
     setActiveUser: () => {
         console.log("DataProvider used outside of context");
     },
@@ -47,25 +39,22 @@ export const DataProvider = (props: {
     users: User[];
     activeUserName: string | undefined;
 }) => {
-    const [events, setEvents] = useState<Event[]>(props.events);
-    const [users, setUsers] = useState<User[]>(props.users);
+    console.log("ran data provider");
     const [activeUser, setActiveUserRaw] = useState<User | undefined>(
         props.activeUserName
-            ? users.find((user) => user.name === props.activeUserName)
+            ? props.users.find((user) => user.name === props.activeUserName)
             : undefined,
     );
 
     const setActiveUser = (username: string | undefined) => {
-        setActiveUserRaw(users.find((user) => user.name === username));
+        setActiveUserRaw(props.users.find((user) => user.name === username));
     };
 
     return (
         <DataContext.Provider
             value={{
-                events,
-                setEvents,
-                users,
-                setUsers,
+                events: props.events,
+                users: props.users,
                 activeUser,
                 setActiveUser,
             }}
