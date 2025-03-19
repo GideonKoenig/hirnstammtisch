@@ -76,7 +76,7 @@ export default async function RootLayout({
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="bg-menu-main text-text-normal relative flex h-dvh w-dvw flex-col-reverse lg:flex-col">
+            <body className="bg-menu-main text-text-normal relative flex h-dvh w-dvw flex-col-reverse overflow-hidden lg:flex-col">
                 <DataProvider
                     events={events}
                     users={users}
