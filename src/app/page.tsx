@@ -2,7 +2,6 @@
 
 import { EventCard } from "~/components/event-card";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { getWeekDistance } from "~/lib/date";
 import { useData } from "~/components/data-provider";
 
 export default function HomePage() {
@@ -13,16 +12,17 @@ export default function HomePage() {
                 .filter((event) => event.eventAt !== undefined),
     });
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const curentEvents = events
         .filter((event) => {
-            const weekDistance = getWeekDistance(event.eventAt!);
-            return weekDistance >= 0;
+            return event.eventAt!.getTime() >= today.getTime();
         })
         .sort((a, b) => a.eventAt!.getTime() - b.eventAt!.getTime());
     const pastEvents = events
         .filter((event) => {
-            const weekDistance = getWeekDistance(event.eventAt!);
-            return weekDistance < 0;
+            return event.eventAt!.getTime() < today.getTime();
         })
         .sort((a, b) => b.eventAt!.getTime() - a.eventAt!.getTime());
 

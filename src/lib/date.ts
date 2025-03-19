@@ -23,11 +23,19 @@ export function getUnique(dates: (Date | undefined)[]) {
     return uniqueDates;
 }
 
-export function getWeekDistance(date: Date) {
+export function getWeekDistance(eventDate: Date) {
+    const date = new Date(eventDate);
     const today = new Date();
+
+    date.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    date.setDate(date.getDate() - date.getDay());
+    today.setDate(today.getDate() - today.getDay());
+
     const diffTime = date.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return Math.floor(diffDays / 7);
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    return Math.round(diffDays / 7);
 }
 
 export function formatWeekDistance(date: Date) {
