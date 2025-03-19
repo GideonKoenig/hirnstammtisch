@@ -15,16 +15,16 @@ export default function Login() {
         event.preventDefault();
         setLoading(true);
         const formData = new FormData(event.target as HTMLFormElement);
-        const username = formData.get("name") as string;
-        if (username.trim() === "") {
+        const username = (formData.get("name") as string).trim();
+        if (username === "") {
             setLoading(false);
             return;
         }
 
-        await addUser(username.trim());
-        setActiveUser(username.trim());
+        await addUser(username);
+        setActiveUser(username);
 
-        document.cookie = `username=${username.trim()}; max-age=31536000; path=/; SameSite=Strict`;
+        document.cookie = `username=${username}; max-age=31536000; path=/; SameSite=Strict`;
 
         router.push("/");
     };
