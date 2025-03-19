@@ -110,7 +110,7 @@ export function EventForm(props: {
                         year: "numeric",
                     })}
                     onChange={(value) => {
-                        value?.setHours(23);
+                        value?.setHours(22);
                         void updateEvent(props.event.id, {
                             ...props.event,
                             eventAt: value ?? null,
