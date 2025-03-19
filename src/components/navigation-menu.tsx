@@ -8,7 +8,7 @@ import { Link } from "~/components/ui/fast-link";
 
 export function NavigationBar() {
     const path = usePathname();
-    const { activeUser } = useData();
+    const data = useData();
 
     return (
         <div className="border-menu-light grid w-full grid-cols-5 items-center gap-1 border-t lg:grid-cols-7 lg:gap-4 lg:border-b">
@@ -68,9 +68,9 @@ export function NavigationBar() {
             <div className="hidden lg:block" />
 
             <Link
-                data-hidden={activeUser === undefined}
+                data-hidden={data.activeUser === undefined}
                 data-active={path === "/profile"}
-                className="hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent data-[active=true]:hover:bg-menu-hover lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main lg:data-[active=true]:text-text-normal lg:data-[active=true]:hover:bg-menu-main flex flex-col items-center rounded px-4 py-2 data-[hidden=true]:hidden lg:py-4"
+                className={`hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent data-[active=true]:hover:bg-menu-hover lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main lg:data-[active=true]:text-text-normal lg:data-[active=true]:hover:bg-menu-main flex-col items-center rounded px-4 py-2 lg:py-4 ${data.activeUser === undefined ? "hidden" : "flex"}`}
                 href="/profile"
             >
                 <User className="aspect-square h-4 md:h-5 lg:hidden" />
@@ -79,14 +79,14 @@ export function NavigationBar() {
                 </p>
             </Link>
             <Link
-                data-hidden={activeUser !== undefined}
+                data-hidden={data.activeUser !== undefined}
                 data-active={path === "/login"}
-                className="hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent data-[active=true]:hover:bg-menu-hover lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main lg:data-[active=true]:text-text-normal lg:data-[active=true]:hover:bg-menu-main flex flex-col items-center rounded px-4 py-2 data-[hidden=true]:hidden lg:py-4"
+                className={`hover:bg-menu-hover data-[active=true]:bg-menu-hover data-[active=true]:text-accent data-[active=true]:hover:bg-menu-hover lg:hover:bg-menu-main lg:data-[active=true]:bg-menu-main lg:data-[active=true]:text-text-normal lg:data-[active=true]:hover:bg-menu-main ${data.activeUser === undefined ? "flex" : "hidden"} flex-col items-center rounded px-4 py-2 lg:py-4`}
                 href="/login"
             >
                 <User className="aspect-square h-4 md:h-5 lg:hidden" />
                 <p className="text-xs md:text-base lg:text-lg lg:font-bold">
-                    Login
+                    Login {data.activeUser?.name}
                 </p>
             </Link>
         </div>

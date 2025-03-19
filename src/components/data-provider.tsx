@@ -1,7 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { type User, type Event } from "~/lib/data-types";
+import {
+    deleteCookie,
+    deleteLocalStorage,
+    readCookie,
+    readLocalStorage,
+    setCookie,
+    setLocalStorage,
+} from "~/lib/utils";
 
 type ContextType = {
     events: Event[];
@@ -39,15 +47,28 @@ export const DataProvider = (props: {
     users: User[];
     activeUserName: string | undefined;
 }) => {
-    console.log("ran data provider");
-    const [activeUser, setActiveUserRaw] = useState<User | undefined>(
-        props.activeUserName
-            ? props.users.find((user) => user.name === props.activeUserName)
-            : undefined,
-    );
+    const [activeUser, setActiveUserRaw] = useState<User | undefined>(() => {
+        const username =
+            props.activeUserName ??
+            readCookie("username") ??
+            readLocalStorage("username");
+        return username
+            ? props.users.find((user) => user.name === username)
+            : undefined;
+    });
 
     const setActiveUser = (username: string | undefined) => {
-        setActiveUserRaw(props.users.find((user) => user.name === username));
+        if (username) {
+            setActiveUserRaw(
+                props.users.find((user) => user.name === username),
+            );
+            setCookie("username", username);
+            setLocalStorage("username", username);
+        } else {
+            setActiveUserRaw(undefined);
+            deleteCookie("username");
+            deleteLocalStorage("username");
+        }
     };
 
     return (

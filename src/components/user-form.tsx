@@ -11,7 +11,6 @@ import { Download, LoaderCircle, LogOut, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { usePwa } from "~/components/pwa-provider";
 import { useState } from "react";
-import { deleteCookie } from "~/lib/utils";
 import { useData } from "~/components/data-provider";
 
 export default function UserForm(props: { user: User }) {
@@ -27,7 +26,6 @@ export default function UserForm(props: { user: User }) {
                     <button
                         className="hover:bg-menu-hover flex w-full flex-row items-center gap-1 rounded-md bg-transparent p-2 text-sm"
                         onMouseDown={() => {
-                            deleteCookie("username");
                             setActiveUser(undefined);
                         }}
                     >

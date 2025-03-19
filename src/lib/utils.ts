@@ -5,6 +5,12 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+export function setCookie(name: string, value: string) {
+    if (typeof document !== "undefined") {
+        document.cookie = `${name}=${value}; max-age=31536000; path=/; SameSite=Strict`;
+    }
+}
+
 export function readCookie(name: string) {
     if (typeof document !== "undefined") {
         const value = `; ${document.cookie}`;
@@ -12,6 +18,25 @@ export function readCookie(name: string) {
         if (parts.length === 2) {
             return parts.pop()?.split(";").shift() ?? undefined;
         }
+    }
+    return undefined;
+}
+
+export function setLocalStorage(name: string, value: string) {
+    if (typeof localStorage !== "undefined") {
+        localStorage.setItem(name, value);
+    }
+}
+
+export function deleteLocalStorage(name: string) {
+    if (typeof localStorage !== "undefined") {
+        localStorage.removeItem(name);
+    }
+}
+
+export function readLocalStorage(name: string) {
+    if (typeof localStorage !== "undefined") {
+        return localStorage.getItem(name);
     }
     return undefined;
 }
