@@ -24,7 +24,7 @@ export default function Login() {
         await addUser(username);
         setActiveUser(username);
 
-        document.cookie = `username=${username}; max-age=31536000; path=/; SameSite=Strict`;
+        document.cookie = `username=${username}; max-age=31536000; path=/; SameSite=Lax`;
 
         router.push("/");
     };
