@@ -5,8 +5,8 @@ import { type DialogProps } from "@radix-ui/react-dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Command as CommandPrimitive } from "cmdk";
 
-import { cn } from "~/lib/utils";
-import { Dialog, DialogContent } from "~/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 const Command = React.forwardRef<
     React.ComponentRef<typeof CommandPrimitive>,
@@ -15,7 +15,7 @@ const Command = React.forwardRef<
     <CommandPrimitive
         ref={ref}
         className={cn(
-            "bg-menu-main text-text-normal flex h-full w-full flex-col overflow-hidden rounded-md",
+            "bg-bg text-text flex h-full w-full flex-col overflow-hidden rounded-md",
             className,
         )}
         {...props}
@@ -42,14 +42,14 @@ const CommandInput = React.forwardRef<
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
     <div
-        className="border-menu-light flex items-center border-b px-3"
+        className="border-border flex items-center border-b px-3"
         cmdk-input-wrapper=""
     >
         <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         <CommandPrimitive.Input
             ref={ref}
             className={cn(
-                "placeholder:text-text-muted flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
+                "text-text placeholder:text-text-muted flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
                 className,
             )}
             {...props}
@@ -81,7 +81,7 @@ const CommandEmpty = React.forwardRef<
 >((props, ref) => (
     <CommandPrimitive.Empty
         ref={ref}
-        className="py-6 text-center text-sm"
+        className="text-text-muted py-6 text-center text-sm"
         {...props}
     />
 ));
@@ -95,7 +95,7 @@ const CommandGroup = React.forwardRef<
     <CommandPrimitive.Group
         ref={ref}
         className={cn(
-            "text-text-normal [&_[cmdk-group-heading]]:text-text-muted overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
+            "text-text [&_[cmdk-group-heading]]:text-text-muted overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
             className,
         )}
         {...props}
@@ -110,7 +110,7 @@ const CommandSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <CommandPrimitive.Separator
         ref={ref}
-        className={cn("bg-menu-main -mx-1 h-px", className)}
+        className={cn("bg-border -mx-1 h-px", className)}
         {...props}
     />
 ));
@@ -123,7 +123,7 @@ const CommandItem = React.forwardRef<
     <CommandPrimitive.Item
         ref={ref}
         className={cn(
-            "data-[selected=true]:bg-menu-hover data-[selected=true]:text-text-normal relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
+            "text-text data-[selected=true]:bg-bg-muted data-[selected=true]:text-text relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
             className,
         )}
         {...props}

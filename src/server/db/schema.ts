@@ -3,54 +3,88 @@ import {
     boolean,
     index,
     integer,
-    pgTableCreator,
-    serial,
+    pgEnum,
+    pgTable,
+    text,
     timestamp,
-    varchar,
 } from "drizzle-orm/pg-core";
+import { user } from "@/server/db/auth-schema";
+export * from "@/server/db/auth-schema";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = pgTableCreator((name) => `hirnstammtisch_${name}`);
+export const visibilityEnum = pgEnum("visibility", [
+    "everyone",
+    "members",
+    "guests",
+]);
 
-export const EventsTable = createTable(
-    "events",
+export const event = pgTable(
+    "event",
     {
-        id: serial("id").primaryKey(),
-        description: varchar("description").notNull(),
-        suggestedBy: integer("suggested_by")
+        id: text("id")
+            .primaryKey()
+            .$defaultFn(() => crypto.randomUUID()),
+        title: text("title").notNull(),
+        speaker: text("speaker")
             .notNull()
-            .references(() => UserTable.id),
-        speaker: integer("speaker")
-            .notNull()
-            .references(() => UserTable.id),
-        presentationUrl: varchar("presentation_url", { length: 512 }),
-        deleted: boolean("deleted").notNull(),
-        eventAt: timestamp("event_at", { withTimezone: true }),
+            .references(() => user.id),
+        recording: text("recording").references(() => asset.id),
+        slidesUrl: text("slides_url"),
+        deleted: boolean("deleted").notNull().default(false),
+        maxAttendees: integer("max_attendees"),
+        date: timestamp("date", { withTimezone: true }),
+        speakerNotes: text("speaker_notes"),
         createdAt: timestamp("created_at", { withTimezone: true })
             .default(sql`CURRENT_TIMESTAMP`)
             .notNull(),
+        updatedAt: timestamp("updated_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
     },
-    (topic) => ({
-        idIndex: index("topics_idx").on(topic.id),
-    }),
+    (event) => [index("events_idx").on(event.id)],
 );
 
-export const UserTable = createTable(
-    "user",
+export const eventAttendee = pgTable(
+    "event_attendee",
     {
-        id: serial("id").primaryKey(),
-        name: varchar("name", { length: 256 }).notNull(),
-        imageUrl: varchar("image_url", { length: 512 }),
+        eventId: text("event_id").references(() => event.id),
+        userId: text("user_id").references(() => user.id),
         createdAt: timestamp("created_at", { withTimezone: true })
             .default(sql`CURRENT_TIMESTAMP`)
             .notNull(),
     },
-    (user) => ({
-        idIndex: index("user_idx").on(user.id),
-    }),
+    (eventAttendee) => [
+        index("event_attendee_idx").on(
+            eventAttendee.eventId,
+            eventAttendee.userId,
+        ),
+    ],
+);
+
+export const asset = pgTable("asset", {
+    id: text("id")
+        .primaryKey()
+        .$defaultFn(() => crypto.randomUUID()),
+    uploadthingId: text("uploadthing_id").notNull(),
+    url: text("url").notNull(),
+    uploadedBy: text("uploaded_by").references(() => user.id),
+    createdAt: timestamp("created_at", { withTimezone: true })
+        .default(sql`CURRENT_TIMESTAMP`)
+        .notNull(),
+});
+
+export const preference = pgTable(
+    "preference",
+    {
+        userId: text("user_id")
+            .notNull()
+            .references(() => user.id),
+        slidesVisibility: visibilityEnum("slides_visibility").notNull(),
+        recordingsVisibility: visibilityEnum("recordings_visibility").notNull(),
+        membershipVisibility: visibilityEnum("membership_visibility").notNull(),
+        speakerStatusVisibility: visibilityEnum(
+            "speaker_status_visibility",
+        ).notNull(),
+        attendanceVisibility: visibilityEnum("attendance_visibility").notNull(),
+    },
+    (preference) => [index("preference_idx").on(preference.userId)],
 );

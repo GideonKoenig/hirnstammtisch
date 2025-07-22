@@ -38,7 +38,8 @@ export function getWeekDistance(eventDate: Date) {
     return Math.round(diffDays / 7);
 }
 
-export function formatWeekDistance(date: Date) {
+export function formatWeekDistance(date?: Date | null) {
+    if (!date) return "";
     const weekDistance = getWeekDistance(date);
     if (weekDistance === 0) return "This week";
     if (weekDistance === 1) return "Next week";
@@ -46,3 +47,34 @@ export function formatWeekDistance(date: Date) {
     if (weekDistance < 0) return `${Math.abs(weekDistance)} weeks ago`;
     return `In ${weekDistance} weeks`;
 }
+
+export function formatTimestamp(date?: Date | null) {
+    if (!date) return "No date";
+    return `${formatDate(date)} ${formatTime(date)}`;
+}
+
+export const formatDate = (date?: Date | null, short?: boolean) => {
+    if (!date) return "No date";
+
+    if (short) {
+        return new Intl.DateTimeFormat("de-DE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        }).format(new Date(date));
+    }
+    return new Intl.DateTimeFormat("de-DE", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    }).format(new Date(date));
+};
+
+export const formatTime = (date?: Date | null) => {
+    if (!date) return "";
+    return new Intl.DateTimeFormat("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+    }).format(new Date(date));
+};

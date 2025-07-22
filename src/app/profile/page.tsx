@@ -1,19 +1,27 @@
-"use client";
-
 import { redirect } from "next/navigation";
-import UserForm from "~/components/user-form";
-import { useData } from "~/components/data-provider";
+import { getSession } from "@/server/utils";
+import { headers } from "next/headers";
+import { ProfileHeader } from "@/components/profile/profile-header";
+import { ProfileImage } from "@/components/profile/profile-image";
+import { ProfileInfo } from "@/components/profile/profile-info";
+import { ProfilePreferences } from "@/components/profile/profile-preferences";
+import { api, HydrateClient } from "@/trpc/server";
 
-export default function Profil() {
-    const { activeUser } = useData();
+export default async function Profile() {
+    const session = await getSession(await headers());
+    if (!session?.user) redirect("/signin");
 
-    if (!activeUser) redirect("/login");
+    void api.preference.get.prefetch({ userId: session.user.id });
+    void api.user.getImage.prefetch({ id: session.user.id });
 
     return (
-        <div className="h-full w-full p-2">
-            <div className="mx-auto flex w-full max-w-xl">
-                <UserForm user={activeUser} />
+        <HydrateClient>
+            <div className="mx-auto grid w-full max-w-4xl grid-cols-1 gap-8 lg:grid-cols-3">
+                <ProfileHeader className="lg:col-span-3" />
+                <ProfileImage className="lg:col-span-1" />
+                <ProfileInfo className="lg:col-span-2" />
+                <ProfilePreferences className="lg:col-span-3" />
             </div>
-        </div>
+        </HydrateClient>
     );
 }

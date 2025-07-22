@@ -41,6 +41,15 @@ export default [
             },
         },
 
+        settings: {
+            "import/resolver": {
+                typescript: {
+                    alwaysTryTypes: true,
+                    project: "./tsconfig.json",
+                },
+            },
+        },
+
         rules: {
             "@typescript-eslint/array-type": "off",
             "@typescript-eslint/consistent-type-definitions": "off",
@@ -86,6 +95,21 @@ export default [
             ],
 
             "react-compiler/react-compiler": "error",
+
+            "import/no-relative-packages": "error",
+            "import/no-relative-parent-imports": "off",
+            "no-restricted-imports": [
+                "error",
+                {
+                    patterns: [
+                        {
+                            group: ["../*", "./*"],
+                            message:
+                                "Relative imports are not allowed. Please use absolute imports with @ alias instead.",
+                        },
+                    ],
+                },
+            ],
         },
     },
 ];

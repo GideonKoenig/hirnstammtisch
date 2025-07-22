@@ -8,12 +8,12 @@ const config = {
             {
                 hostname: "utfs.io",
             },
+            {
+                hostname: "lh3.googleusercontent.com",
+            },
         ],
     },
     experimental: {
-        turbo: {
-            rules: {},
-        },
         reactCompiler: true,
     },
 };
@@ -21,6 +21,7 @@ const config = {
 const withSerwist = withSerwistInit({
     swSrc: "src/sw.ts",
     swDest: "public/sw.js",
+    disable: process.env.NODE_ENV === "development",
 });
 
 const withPlausible = withPlausibleProxy({

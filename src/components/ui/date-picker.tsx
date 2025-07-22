@@ -1,65 +1,71 @@
 "use client";
 
 import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "~/lib/utils";
-import { Button } from "~/components/ui/button";
-import { Calendar } from "~/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "~/components/ui/popover";
+} from "@/components/ui/popover";
 import { useState } from "react";
-import { usePwa } from "~/components/pwa-provider";
-import { type Event } from "~/lib/data-types";
+import { formatDate } from "@/lib/date";
 
 export function DatePicker(props: {
     className?: string;
-    label?: string;
-    events?: Event[];
-    initialValue: Date | undefined | null;
+    placeholder?: string;
+    selectedDate?: Date | null;
+    highlightedDates?: Date[];
+    disabled?: boolean;
     onChange?: (date?: Date) => void | Promise<void>;
 }) {
-    const { isOffline } = usePwa();
     const [open, setOpen] = useState<boolean>(false);
+
+    const displayValue = props.selectedDate
+        ? formatDate(props.selectedDate, true)
+        : (props.placeholder ?? "Select date");
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild disabled={isOffline}>
+            <PopoverTrigger asChild disabled={props.disabled}>
                 <Button
-                    variant={"outline"}
+                    variant="outline"
                     className={cn(
-                        "bg-menu-light shadow-menu-dark hover:bg-menu-hover hover:text-text-normal justify-between p-2 px-4 text-left font-normal shadow-sm disabled:pointer-events-auto disabled:cursor-not-allowed",
+                        "border-border bg-bg hover:bg-bg-muted w-full justify-between text-sm font-normal",
                         props.className,
                     )}
                 >
-                    {props.label ?? "-"}
-                    <CalendarIcon className="text-text-normal h-4 w-4 stroke-1" />
+                    <span
+                        className={
+                            props.selectedDate ? "text-text" : "text-text-muted"
+                        }
+                    >
+                        {displayValue}
+                    </span>
+                    <CalendarIcon className="h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
+            <PopoverContent
+                className="border-border bg-bg z-[100] w-auto p-0 shadow-lg"
+                align="start"
+            >
                 <Calendar
                     mode="single"
-                    selected={props.initialValue ?? undefined}
+                    selected={props.selectedDate ?? undefined}
                     onSelect={async (date?: Date) => {
                         if (props.onChange) await props.onChange(date);
                         setOpen(false);
                     }}
                     modifiers={{
-                        initialValue: props.initialValue ?? [],
-                        hasEvent: props.events
-                            ?.map((event) => event.eventAt)
-                            .filter(
-                                (event) =>
-                                    event !== undefined && event !== null,
-                            ),
+                        highlighted: props.highlightedDates ?? [],
                     }}
                     modifiersClassNames={{
-                        initialValue:
-                            "underline aria-selected:text-accent-light text-accent-light",
-                        hasEvent:
-                            "underline aria-selected:text-accent text-accent",
+                        highlighted:
+                            "relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:bg-accent after:rounded-full",
                     }}
+                    enableDropdownNavigation={false}
+                    className="border-border bg-bg"
                 />
             </PopoverContent>
         </Popover>

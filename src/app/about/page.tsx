@@ -1,23 +1,17 @@
-import { ScrollArea } from "~/components/ui/scroll-area";
-import { UserList } from "~/components/user-list";
+import { AboutHeader } from "@/components/about/about-header";
+import { MemberList } from "@/components/about/member-list";
+import { api, HydrateClient } from "@/trpc/server";
 
 export default async function About() {
+    void api.user.getAll.prefetch();
+    void api.event.getAll.prefetch();
+
     return (
-        <ScrollArea className="h-full w-full">
-            <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-4 p-4">
-                <p className="text-2xl font-bold">About</p>
-                <p>
-                    The HirnstammTisch is a small group of people who meet
-                    regularly to discuss interesting topics. We meet every
-                    Tuesday at 19:00 at Gideon&apos;s place.
-                </p>
-
-                <div className="h-4" />
-
-                <p className="pb-2 text-2xl font-bold">Members</p>
-
-                <UserList />
+        <HydrateClient>
+            <div className="mx-auto max-w-4xl">
+                <AboutHeader />
+                <MemberList />
             </div>
-        </ScrollArea>
+        </HydrateClient>
     );
 }

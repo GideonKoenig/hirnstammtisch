@@ -1,0 +1,962 @@
+[
+    {
+        "id": 0,
+        "description": "What is our goal?",
+        "created_at": "2024-10-01 20:16:53.806+00",
+        "deleted": false,
+        "event_at": "2024-10-08 21:00:00+00",
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 2
+    },
+    {
+        "id": 1,
+        "description": "How do websites and the internet work?",
+        "created_at": "2024-10-08 20:16:53.806+00",
+        "deleted": false,
+        "event_at": "2024-10-22 21:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1b1pQ7orNBkmAVBS90E_hfaBDrREh-5wlOTdO-cSXHR0/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 4,
+        "description": "Where do ethics come from? Meta-ethical theories.",
+        "created_at": "2024-10-16 20:18:53.806+00",
+        "deleted": false,
+        "event_at": "2024-10-29 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1o5Xc9Z-kXLbkdaiG9EbL7M6AgdMbJ5X15vB-SYeJenM/edit?usp=drivesdk",
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 9,
+        "description": "What does IQ really mesaure?",
+        "created_at": "2024-10-29 20:04:17.509+00",
+        "deleted": false,
+        "event_at": "2024-11-05 22:00:00+00",
+        "presentation_url": "https://1drv.ms/p/c/17887fc4f61c0b2b/Ef21CcoeFqNBj7wkorFyTy8BDvLIKFgb72YFIX-ONuERtQ?e=cgkuR4",
+        "suggested_by": 6,
+        "speaker": 6
+    },
+    {
+        "id": 5,
+        "description": "Near death experiences and consciousness.",
+        "created_at": "2024-10-29 18:16:05.643+00",
+        "deleted": false,
+        "event_at": "2024-11-12 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1B_5hYtzUKaDyYgmhdjFPI20qeb6CgS46v5TXjeoUUgA/edit?usp=sharing",
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 10,
+        "description": "How we almost killed Mathematics?",
+        "created_at": "2024-11-05 19:41:29.683+00",
+        "deleted": false,
+        "event_at": "2024-11-19 22:00:00+00",
+        "presentation_url": null,
+        "suggested_by": 7,
+        "speaker": 7
+    },
+    {
+        "id": 22,
+        "description": "Modern Trust: The what how and why of money politics.",
+        "created_at": "2024-12-04 07:08:25.55+00",
+        "deleted": false,
+        "event_at": "2024-12-03 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/17DjqcgSkr5RDRDPydpHymnOFSFF3D2o0ZYDTHdEgJcA/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 14,
+        "description": "Why mormonism is a scam: Mormonism 101",
+        "created_at": "2024-11-12 20:13:24.305+00",
+        "deleted": false,
+        "event_at": "2024-12-10 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1fnKKxAFX288RA7yPlFt1qdHYVPVYeCvLd7DkaA0adXc/edit?usp=drive_link",
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 13,
+        "description": "Why proofs of GOD are disappointing...",
+        "created_at": "2024-11-12 20:10:32.459+00",
+        "deleted": false,
+        "event_at": "2024-12-17 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1w7SkiZw7WOGcR_Wmml4c_Ea6LYEe-7hrwn_7n_TdfcM/edit?usp=sharing",
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 23,
+        "description": "Being perfect made easy.",
+        "created_at": "2024-12-17 21:30:06.939+00",
+        "deleted": false,
+        "event_at": "2025-01-07 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1esENb33b2b-pGtJS-oEICZM5hSltrom4UN_FLT8a6Mo/edit?usp=sharing",
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 7,
+        "description": "Why modern art is not trash.",
+        "created_at": "2024-10-29 19:30:32.04+00",
+        "deleted": false,
+        "event_at": "2025-01-14 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1fITMizENHIljuq-HCVNOfLYaitGZxA_GiWPcTG5UUSA/edit#slide=id.p2",
+        "suggested_by": 2,
+        "speaker": 4
+    },
+    {
+        "id": 30,
+        "description": "How Pink Floyd discovered art.",
+        "created_at": "2025-01-14 20:54:21.04+00",
+        "deleted": true,
+        "event_at": "2025-01-28 21:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1iN7yq6LghpQ9AbHEuKVjM0cxVMtLJp-3hGST5qOezrs/edit?usp=sharing",
+        "suggested_by": 10,
+        "speaker": 10
+    },
+    {
+        "id": 31,
+        "description": "Modern Trust: Why debt is good.",
+        "created_at": "2025-01-24 21:26:01.214+00",
+        "deleted": false,
+        "event_at": "2025-02-04 21:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1q5IDvq6e3LJavmh3gXV858kzOljqWLEJwXO2ACVFpMY/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 15,
+        "description": "How did North Korea steal swedish cars?",
+        "created_at": "2024-11-12 20:14:21.638+00",
+        "deleted": true,
+        "event_at": "2025-02-18 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1U9Wj1r_P0QmyiHIWU32kr7El3j-LJJkzzcwIX4Udh9s/edit?usp=sharing",
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 28,
+        "description": "Why there is no unhealthy food.",
+        "created_at": "2025-01-12 15:18:58.016+00",
+        "deleted": false,
+        "event_at": "2025-03-11 21:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1G1CO4HoPdt87uJBH9VnFUOq-lTYn69jQKT1pl7RQidw/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 60,
+        "description": "Why do we need moral theories, if we all know what to do anyways? ",
+        "created_at": "2025-02-06 16:31:44.281+00",
+        "deleted": false,
+        "event_at": "2025-03-18 21:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1FKNti_ZyVe1O_DNN5MMO4icPw4lNnp_6vSR8dL7UnyE/edit",
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 64,
+        "description": "Manly man stuff.",
+        "created_at": "2025-03-18 21:27:02.165+00",
+        "deleted": false,
+        "event_at": "2025-03-25 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1G1CO4HoPdt87uJBH9VnFUOq-lTYn69jQKT1pl7RQidw/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 65,
+        "description": "Are you guys interested in pigeons?",
+        "created_at": "2025-04-04 14:52:09.811+00",
+        "deleted": false,
+        "event_at": "2025-04-07 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1J7cXM1hlKDle7XhV2mdS8sxnVSPvpl_NRphJTM_mPaM/edit?usp=sharing",
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 68,
+        "description": "Why Unicorns exist.",
+        "created_at": "2025-04-08 20:06:32.504+00",
+        "deleted": true,
+        "event_at": "2025-04-15 20:00:00+00",
+        "presentation_url": null,
+        "suggested_by": 7,
+        "speaker": 7
+    },
+    {
+        "id": 71,
+        "description": "Australia vs. Emus",
+        "created_at": "2025-04-27 18:20:10.272+00",
+        "deleted": false,
+        "event_at": "2025-04-28 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1GuZAXup5FZPkSJvz9xHLH-Tu_PKSJburB86gAIyDcBE/edit?slide=id.g3519613a1bc_0_5#slide=id.g3519613a1bc_0_5",
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 61,
+        "description": "What do Belle Delphine and Martin Luther have in common?",
+        "created_at": "2025-02-06 16:31:55.742+00",
+        "deleted": false,
+        "event_at": "2025-05-12 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/14o0r--R3JIPpUw6uAT2MA8a6ZQ9Ak-3csnC2K9-unag/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 62,
+        "description": "What makes good horror.",
+        "created_at": "2025-02-18 21:04:08.018+00",
+        "deleted": false,
+        "event_at": "2025-05-19 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1f_-SdPeADR_kkCdP0XkFwWIqftYfUZ85ywd4cMaN2Wc/edit?usp=sharing",
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 69,
+        "description": "The history of earth, life and humans.",
+        "created_at": "2025-04-22 11:02:41.175+00",
+        "deleted": false,
+        "event_at": "2025-05-26 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1RZ4IP_2amBZRJMK2V5VUzJeNHRuad-Yj1_dTJ660-IY/edit?usp=sharing",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 74,
+        "description": "How do painkillers work?",
+        "created_at": "2025-06-03 19:19:04.165+00",
+        "deleted": false,
+        "event_at": "2025-06-02 22:00:00+00",
+        "presentation_url": "https://docs.google.com/presentation/d/1U9Wj1r_P0QmyiHIWU32kr7El3j-LJJkzzcwIX4Udh9s/edit?usp=sharing",
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 52,
+        "description": "By attending this event you vow to having no affiliations to Anish Kapoor.",
+        "created_at": "2025-01-28 22:48:49.272+00",
+        "deleted": false,
+        "event_at": "2025-06-10 20:00:00+00",
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 86,
+        "description": "The foundation of mathematics",
+        "created_at": "2025-06-03 19:30:36.121+00",
+        "deleted": false,
+        "event_at": "2025-06-16 22:00:00+00",
+        "presentation_url": "https://drive.google.com/file/d/15UaWQi9AGf-w0KavZtAsX7nsLjycu-m2/view?usp=sharing",
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 91,
+        "description": "Why are sunfish so weird?",
+        "created_at": "2025-06-24 19:43:44.345+00",
+        "deleted": false,
+        "event_at": "2025-06-24 20:00:00+00",
+        "presentation_url": null,
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 24,
+        "description": "How does a car engine work?",
+        "created_at": "2024-12-31 11:48:00.004+00",
+        "deleted": false,
+        "event_at": "2025-07-08 20:00:00+00",
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 38,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:17.218513+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 42,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:31.987269+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 36,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:16.263351+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 45,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:33.096527+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 56,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:52.233493+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 46,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:44.525002+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 47,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:45.110864+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 48,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:45.416979+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 49,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:45.588244+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 50,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:48.350924+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 51,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:48.906884+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 35,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:14.510763+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 34,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:13.777623+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 37,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:16.768955+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 33,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:12.070191+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 41,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:20.335967+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 32,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:10.081284+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 43,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:32.469314+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 55,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:51.891236+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 54,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:51.010089+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 53,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:50.128726+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 19,
+        "description": "How war makes art repetitive.",
+        "created_at": "2024-11-19 20:28:40.732+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 10,
+        "speaker": 10
+    },
+    {
+        "id": 44,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:32.914265+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 6,
+        "description": "Why is moral theoriy helpful, if we all know what is right and wrong anyways? ",
+        "created_at": "2024-10-29 19:11:40.69+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 57,
+        "description": "New event",
+        "created_at": "2025-01-29 09:08:21.48243+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 11,
+        "description": "Taxes. Why you pay them and how to think about them.",
+        "created_at": "2024-11-07 12:04:58.452+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": "",
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 29,
+        "description": "Mormons 102",
+        "created_at": "2025-01-14 20:51:07.655+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 12,
+        "description": "What did the federal government do the last couple years?",
+        "created_at": "2024-11-07 20:53:48.853+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 20,
+        "description": "How do I get from 0s and 1s to a picture on my screen?",
+        "created_at": "2024-12-03 20:04:32.03+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 40,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:19.429054+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 58,
+        "description": "New event",
+        "created_at": "2025-01-29 09:17:42.496513+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 39,
+        "description": "New event",
+        "created_at": "2025-01-28 22:48:17.379255+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 25,
+        "description": "The real reasons to dislike Trump.",
+        "created_at": "2025-01-04 01:17:56.194+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 63,
+        "description": "Why Eren Jaeger is an idiot.",
+        "created_at": "2025-03-11 21:07:23.398+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 21,
+        "description": "Why Jerusalem is a clock bomb?",
+        "created_at": "2024-12-03 20:25:02.649+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 10,
+        "speaker": 10
+    },
+    {
+        "id": 16,
+        "description": "Something about autism.",
+        "created_at": "2024-11-12 20:14:53.892+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 75,
+        "description": "Why you don't have to feel bad for breathing.",
+        "created_at": "2025-06-03 19:23:03.612+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 67,
+        "description": "Antisemitism and other fun facts about Vienna.",
+        "created_at": "2025-04-08 20:03:12.098+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 7,
+        "speaker": 7
+    },
+    {
+        "id": 85,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:32.529022+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 3,
+        "description": "What kinds of beer are there and how are they made?",
+        "created_at": "2024-10-08 20:19:53.806+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 84,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:31.149624+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 83,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:30.696802+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 82,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:29.519279+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 81,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:28.848634+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 59,
+        "description": "New event",
+        "created_at": "2025-02-06 16:28:50.756238+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 70,
+        "description": "New event",
+        "created_at": "2025-04-27 18:20:09.101723+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 80,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:28.309892+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 79,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:26.847153+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 78,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:25.067881+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 77,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:23.956557+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 76,
+        "description": "New event",
+        "created_at": "2025-06-03 19:30:19.57288+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 92,
+        "description": "Why modern architecture is trash.",
+        "created_at": "2025-06-24 19:58:34.691+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    },
+    {
+        "id": 2,
+        "description": "How do I get from 0s and 1s to a picture on my screen?",
+        "created_at": "2024-10-08 20:18:53.806+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 66,
+        "description": "Humans through the ages.",
+        "created_at": "2025-04-08 20:02:04.858+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 27,
+        "description": "being",
+        "created_at": "2025-01-07 18:26:23.489+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 26,
+        "description": "Being perfect made easy!",
+        "created_at": "2025-01-07 15:40:08.554+00",
+        "deleted": true,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 87,
+        "description": "Warum wir bestrafen?",
+        "created_at": "2025-06-04 06:20:08.078+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 88,
+        "description": "Are we smarter than our ancestors?",
+        "created_at": "2025-06-05 13:58:03.727+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 6
+    },
+    {
+        "id": 93,
+        "description": "How to be perfecter made easier part two.",
+        "created_at": "2025-06-24 19:59:46.274+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 2,
+        "speaker": 2
+    },
+    {
+        "id": 18,
+        "description": "Is toxic positivity stunting your growth?",
+        "created_at": "2024-11-12 20:33:55.051+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 72,
+        "description": "About ancient Egyptian archeologists.",
+        "created_at": "2025-05-27 20:04:33+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 73,
+        "description": "The history of religions.",
+        "created_at": "2025-06-01 19:34:54.657+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 94,
+        "description": "Datenschutz uund äh  änd-tsu-änd Verschlüsselung",
+        "created_at": "2025-06-24 20:11:23.102+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 89,
+        "description": "To see the catastrophe.",
+        "created_at": "2025-06-10 19:30:30.61+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 10,
+        "speaker": 10
+    },
+    {
+        "id": 95,
+        "description": "Practical Typography",
+        "created_at": "2025-06-24 20:20:10.18+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 14,
+        "speaker": 14
+    },
+    {
+        "id": 17,
+        "description": "How Satan uses overconsumption.",
+        "created_at": "2024-11-12 20:15:56.858+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 3,
+        "speaker": 3
+    },
+    {
+        "id": 90,
+        "description": "One small step.",
+        "created_at": "2025-06-20 13:28:34.472+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 1,
+        "speaker": 1
+    },
+    {
+        "id": 8,
+        "description": "How does the Enneagram of personality work?",
+        "created_at": "2024-10-29 19:59:21.449+00",
+        "deleted": false,
+        "event_at": null,
+        "presentation_url": null,
+        "suggested_by": 4,
+        "speaker": 4
+    }
+]

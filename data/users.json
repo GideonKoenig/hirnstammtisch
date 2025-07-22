@@ -1,0 +1,68 @@
+[
+    {
+        "id": 1,
+        "name": "Gideon",
+        "created_at": "2024-10-16 16:27:17.946+00",
+        "image_url": "https://utfs.io/f/hxphWprHIgRKzCqwU92NKDYokLR9XC2iPIGFwts81zvjVpr7"
+    },
+    {
+        "id": 2,
+        "name": "Silas",
+        "created_at": "2024-10-16 16:33:51.277826+00",
+        "image_url": "https://utfs.io/f/hxphWprHIgRKbfuU3BddCBi3Ge6aFARDUkjuyoh0VKNn1TYc"
+    },
+    {
+        "id": 3,
+        "name": "Clara",
+        "created_at": "2024-10-18 15:40:44.363354+00",
+        "image_url": null
+    },
+    {
+        "id": 4,
+        "name": "Junia",
+        "created_at": "2024-10-18 15:53:28.963824+00",
+        "image_url": null
+    },
+    {
+        "id": 5,
+        "name": "Elea",
+        "created_at": "2024-10-29 15:37:41.807015+00",
+        "image_url": null
+    },
+    {
+        "id": 6,
+        "name": "Ángel",
+        "created_at": "2024-10-29 20:04:11.056192+00",
+        "image_url": null
+    },
+    {
+        "id": 7,
+        "name": "Timo",
+        "created_at": "2024-11-05 19:47:20.317335+00",
+        "image_url": null
+    },
+    {
+        "id": 8,
+        "name": "Jenna",
+        "created_at": "2024-11-20 21:49:05.969625+00",
+        "image_url": null
+    },
+    {
+        "id": 9,
+        "name": "Noemi",
+        "created_at": "2024-12-24 20:19:58.940642+00",
+        "image_url": null
+    },
+    {
+        "id": 10,
+        "name": "Gerard",
+        "created_at": "2025-01-04 01:19:02.740547+00",
+        "image_url": null
+    },
+    {
+        "id": 14,
+        "name": "Azar",
+        "created_at": "2025-06-03 19:29:39.490391+00",
+        "image_url": null
+    }
+]

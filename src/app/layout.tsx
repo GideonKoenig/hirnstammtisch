@@ -1,17 +1,18 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import PlausibleProvider from "next-plausible";
 import { type Viewport, type Metadata } from "next";
-import { NavigationBar } from "~/components/navigation-menu";
+import { NavigationBar } from "@/components/navigation-menu";
 import { cookies } from "next/headers";
 import { NextSSRPlugin as UploadThingProvider } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
-import { fileRouter } from "~/app/api/uploadthing/core";
-import { PwaProvider } from "~/components/pwa-provider";
-import { PwaInstallPopup } from "~/components/pwa-install-popup";
-import { DataProvider } from "~/components/data-provider";
-import { db } from "~/server/db";
-import { PwaInstallPopupIos } from "~/components/pwa-install-popup-ios";
+import { fileRouter } from "@/app/api/uploadthing/core";
+import { PwaProvider } from "@/components/pwa/pwa-provider";
+import { PwaInstallPopup } from "@/components/pwa/pwa-install-popup";
+import { PwaInstallPopupIos } from "@/components/pwa/pwa-install-popup-ios";
+import { Toaster } from "@/components/ui/sonner";
+import { TRPCReactProvider } from "@/trpc/react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
@@ -66,33 +67,37 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
     const cookieStore = await cookies();
     const username = cookieStore.get("username")?.value;
-    const [events, users] = await Promise.all([
-        db.query.EventsTable.findMany(),
-        db.query.UserTable.findMany(),
-    ]);
 
     return (
-        <html lang="en" className={`${GeistSans.variable}`}>
+        <html
+            lang="en"
+            suppressHydrationWarning
+            className={`${GeistSans.variable}`}
+        >
             <head>
                 <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
             </head>
-            <body className="bg-menu-main text-text-normal relative flex h-dvh w-dvw flex-col-reverse overflow-hidden lg:flex-col">
-                <DataProvider
-                    events={events}
-                    users={users}
-                    activeUserName={username}
-                >
-                    <PwaProvider>
+            <TRPCReactProvider>
+                <PwaProvider>
+                    <body className="bg-bg text-text relative h-dvh w-dvw overflow-hidden">
                         <UploadThingProvider
                             routerConfig={extractRouterConfig(fileRouter)}
                         />
+                        <ScrollArea className="h-full w-full">
+                            <div className="flex min-h-dvh flex-col">
+                                <NavigationBar className="hidden lg:grid" />
+                                <main className="flex grow flex-col p-4 sm:p-6 lg:p-8">
+                                    {children}
+                                </main>
+                                <NavigationBar className="bg-bg sticky bottom-0 lg:hidden" />
+                            </div>
+                        </ScrollArea>
+                        <Toaster closeButton />
                         <PwaInstallPopup />
                         <PwaInstallPopupIos />
-                        <NavigationBar />
-                        <main className="grow overflow-auto">{children}</main>
-                    </PwaProvider>
-                </DataProvider>
-            </body>
+                    </body>
+                </PwaProvider>
+            </TRPCReactProvider>
         </html>
     );
 }

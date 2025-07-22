@@ -8,69 +8,85 @@ import {
 } from "@radix-ui/react-popover";
 import { Command, CommandList, CommandGroup, CommandItem } from "cmdk";
 import { CheckIcon } from "lucide-react";
-import { cn } from "~/lib/utils";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Button } from "~/components/ui/button";
-import { CommandInput } from "~/components/ui/command";
-import { usePwa } from "~/components/pwa-provider";
+import { Button } from "@/components/ui/button";
+import { CommandInput } from "@/components/ui/command";
+
+type Option = {
+    value: string;
+    displayValue: string;
+};
 
 export function ComboBox(props: {
-    initialValue: string;
-    onChange: (value: string) => void;
-    options: string[];
-    sortOptions?: boolean;
+    value: string;
+    onValueChange: (value: string) => void;
+    options: Option[];
+    placeholder?: string;
     className?: string;
 }) {
-    const { isOffline } = usePwa();
     const [open, setOpen] = useState(false);
-    const sortedOptions = props.sortOptions
-        ? props.options.sort((a, b) => {
-              if (a === "Anyone") return -1;
-              if (b === "Anyone") return 1;
-              return a.localeCompare(b);
-          })
-        : props.options;
-    const selectedOptions = props.sortOptions ? sortedOptions : props.options;
+
+    const selectedOption = props.options.find(
+        (option) => option.value === props.value,
+    );
+    const displayValue =
+        selectedOption?.displayValue ?? props.placeholder ?? "Select option...";
+    const isPlaceholder = !selectedOption;
 
     return (
         <div className={cn("w-full", props.className)}>
             <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild disabled={isOffline}>
+                <PopoverTrigger asChild>
                     <Button
                         variant="outline"
                         role="combobox"
                         aria-expanded={open}
-                        className="border-menu-hover bg-menu-dark shadow-menu-dark hover:bg-menu-dark hover:text-text-normal focus:bg-menu-dark z-0 w-full justify-between shadow-sm disabled:pointer-events-auto disabled:cursor-not-allowed"
+                        className="border-border bg-bg hover:bg-bg-muted w-full justify-between text-sm"
                     >
-                        {props.initialValue}
-                        <CaretSortIcon className="text-text-normal ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <span
+                            className={
+                                isPlaceholder ? "text-text-muted" : "text-text"
+                            }
+                        >
+                            {displayValue}
+                        </span>
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent
                     align="end"
-                    className="border-menu-light bg-menu-dark shadow-menu-dark z-20 mt-2 w-[250px] rounded border p-0 shadow-lg"
+                    className="border-border bg-bg z-[100] mt-2 w-[calc(var(--radix-popover-trigger-width)+2px)] rounded border p-0 shadow-lg"
                 >
                     <Command className="w-full">
                         <CommandInput
-                            placeholder="Search User..."
+                            placeholder={props.placeholder ?? "Search..."}
                             className="h-9"
                         />
                         <CommandList className="w-full p-2">
                             <CommandGroup className="w-full">
-                                {selectedOptions.map((option, index) => (
+                                {props.options.map((option) => (
                                     <CommandItem
-                                        className="hover:bg-menu-hover flex w-full cursor-pointer flex-row items-center justify-between rounded px-3 py-1"
-                                        key={index}
-                                        value={option}
-                                        onSelect={(value) => {
-                                            props.onChange(value);
+                                        className="hover:bg-bg-muted flex w-full cursor-pointer flex-row items-center justify-between rounded px-3 py-1"
+                                        key={option.value}
+                                        value={option.displayValue}
+                                        onSelect={() => {
+                                            if (props.value === option.value) {
+                                                props.onValueChange("");
+                                            } else {
+                                                props.onValueChange(
+                                                    option.value,
+                                                );
+                                            }
                                             setOpen(false);
                                         }}
                                     >
-                                        <p className="grow">{option}</p>
+                                        <p className="grow">
+                                            {option.displayValue}
+                                        </p>
                                         <CheckIcon
                                             data-state={
-                                                props.initialValue === option
+                                                props.value === option.value
                                                     ? "show"
                                                     : "hide"
                                             }

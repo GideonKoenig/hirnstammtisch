@@ -1,22 +1,12 @@
-import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
-import { db } from "~/server/db";
-import { UserTable } from "~/server/db/schema";
+import { UploadThingError, UTApi } from "uploadthing/server";
+import { db } from "@/server/db";
+import { getSession } from "@/server/utils";
+import { headers } from "next/headers";
+import { asset } from "@/server/db/schema";
+import { tryCatchAsync } from "@/lib/try-catch";
 
 const f = createUploadthing();
-
-const auth = async () => {
-    const username = (await cookies()).get("username")?.value;
-    if (!username) return undefined;
-
-    const user = await db.query.UserTable.findFirst({
-        where: (users, { eq }) => eq(users.name, username),
-    });
-    return user;
-};
 
 export const fileRouter = {
     imageUploader: f({
@@ -26,20 +16,70 @@ export const fileRouter = {
         },
     })
         .middleware(async () => {
-            const user = await auth();
-            // eslint-disable-next-line @typescript-eslint/only-throw-error
-            if (!user) throw new UploadThingError("Unauthorized");
-
-            return { user: user };
+            const session = await getSession(await headers());
+            if (!session?.user) throw new UploadThingError("Unauthorized");
+            return { user: session.user };
         })
         .onUploadComplete(async ({ metadata, file }) => {
-            await db
-                .update(UserTable)
-                .set({
-                    imageUrl: file.url,
+            const assetElement = await tryCatchAsync(() =>
+                db
+                    .insert(asset)
+                    .values({
+                        uploadthingId: file.key,
+                        url: file.ufsUrl,
+                        uploadedBy: metadata.user.id,
+                    })
+                    .returning(),
+            )
+                .onError(async () => {
+                    const utapi = new UTApi();
+                    await utapi.deleteFiles(file.key);
                 })
-                .where(eq(UserTable.id, metadata.user.id));
-            revalidatePath("/profile");
+                .unwrap({
+                    expectation: "expectSingle",
+                    errorMessage: "Failed to save uploaded image to database",
+                });
+
+            return { assetId: assetElement.id };
+        }),
+
+    videoAudioUploader: f({
+        video: {
+            maxFileSize: "1GB",
+            maxFileCount: 1,
+        },
+        audio: {
+            maxFileSize: "128MB",
+            maxFileCount: 1,
+        },
+    })
+        .middleware(async () => {
+            const session = await getSession(await headers());
+            if (!session?.user) throw new UploadThingError("Unauthorized");
+            return { user: session.user };
+        })
+        .onUploadComplete(async ({ metadata, file }) => {
+            const assetElement = await tryCatchAsync(() =>
+                db
+                    .insert(asset)
+                    .values({
+                        uploadthingId: file.key,
+                        url: file.ufsUrl,
+                        uploadedBy: metadata.user.id,
+                    })
+                    .returning(),
+            )
+                .onError(async () => {
+                    const utapi = new UTApi();
+                    await utapi.deleteFiles(file.key);
+                })
+                .unwrap({
+                    expectation: "expectSingle",
+                    errorMessage:
+                        "Failed to save uploaded video/audio to database",
+                });
+
+            return { assetId: assetElement.id };
         }),
 } satisfies FileRouter;
 
