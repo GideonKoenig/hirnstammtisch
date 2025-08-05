@@ -1,6 +1,6 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { asset, event, user, preference } from "@/server/db/schema";
-import { type RedactedField } from "@/lib/permissions/redact-fields";
+import { type asset, event, user, type preference } from "@/server/db/schema";
+import { type RedactedField } from "@/lib/permissions/types";
 
 export const EventSchema = createSelectSchema(event);
 export const EventInsertSchema = createInsertSchema(event);

@@ -4,9 +4,9 @@ import {
     createContext,
     useContext,
     useState,
-    ReactNode,
-    Dispatch,
-    SetStateAction,
+    type ReactNode,
+    type Dispatch,
+    type SetStateAction,
 } from "react";
 import { type ClientEvent, type Event } from "@/lib/types";
 
@@ -27,19 +27,9 @@ export const useEvents = () => {
     const context = useContext(EventContext);
 
     if (!context) {
-        return {
-            modalOpen: false,
-            activeEvent: {} as Partial<Event>,
-            setActiveEvent: (() => {}) as Dispatch<
-                SetStateAction<Partial<Event>>
-            >,
-            search: "",
-            pastEvents: false,
-            openModal: () => {},
-            closeModal: () => {},
-            setSearch: () => {},
-            setPastEvents: () => {},
-        };
+        throw new Error(
+            "useEvents must be used within an EventContextProvider",
+        );
     }
 
     const {
@@ -57,8 +47,14 @@ export const useEvents = () => {
         const eventForForm = event
             ? {
                   ...event,
-                  slidesUrl: event.slidesUrl?.value ?? null,
-                  recording: event.recording?.value ?? null,
+                  slidesUrl:
+                      event.slidesUrl && !event.slidesUrl.redacted
+                          ? event.slidesUrl.value
+                          : null,
+                  recording:
+                      event.recording && !event.recording.redacted
+                          ? event.recording.value
+                          : null,
               }
             : {};
         setActiveEvent(eventForForm);

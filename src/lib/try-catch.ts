@@ -7,7 +7,7 @@ export class Success<T> {
         return this.data;
     }
 
-    unwrapOr<U>(defaultValue: U): T {
+    unwrapOr<U>(_defaultValue: U): T {
         return this.data;
     }
 }
@@ -18,7 +18,9 @@ export class Failure<E> {
     constructor(public readonly error: E) {}
 
     unwrap(): never {
-        throw this.error;
+        throw this.error instanceof Error
+            ? this.error
+            : new Error(String(this.error));
     }
 
     unwrapOr<U>(defaultValue: U): U {
@@ -28,11 +30,11 @@ export class Failure<E> {
 
 export type Result<T, E> = Success<T> | Failure<E>;
 
-function isPromise<T = any>(value: unknown): value is Promise<T> {
+function isPromise<T = unknown>(value: unknown): value is Promise<T> {
     return (
         !!value &&
         (typeof value === "object" || typeof value === "function") &&
-        typeof (value as any).then === "function"
+        typeof (value as { then?: unknown }).then === "function"
     );
 }
 
@@ -53,7 +55,7 @@ export function tryCatch<T, E = Error>(
             if (isPromise(result)) {
                 return result
                     .then((data: T) => new Success(data))
-                    .catch((error: E) => new Failure(error as E));
+                    .catch((error: unknown) => new Failure(error as E));
             }
 
             return new Success(result);
@@ -64,5 +66,5 @@ export function tryCatch<T, E = Error>(
 
     return operation
         .then((data: T) => new Success(data))
-        .catch((error: E) => new Failure(error as E));
+        .catch((error: unknown) => new Failure(error as E));
 }

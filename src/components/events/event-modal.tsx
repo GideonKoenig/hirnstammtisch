@@ -19,7 +19,7 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { Eye, Upload, X, LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Event } from "@/lib/types";
+import type { Event } from "@/lib/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Todo: BIG TODO. The uploading of recordings is kinda messed up right now. Its way to complicated and the issue is, that if i upload an asset but then close the modal, it needs to get deleted. also, when i want to "remove" a recording from a event, then i need to do it immediately, and the "save" doesnt do anything, because i need to modify the event before saving it, because i cant delete the asset otherwise, because of a foreign key constraint. so i guess in need to handle the upload and linking, or unlinking and deletion on the hitting of the save button. this makes the handling through recordingId on active element much more difficult though.
@@ -40,7 +40,7 @@ export function EventModal() {
 
     const createEvent = api.event.create.useMutation({
         onSuccess: () => {
-            utils.event.getAll.invalidate();
+            void utils.event.getAll.invalidate();
             setNotesVisible(false);
             setActiveEvent({});
             closeModal();
@@ -52,7 +52,7 @@ export function EventModal() {
 
     const updateEvent = api.event.update.useMutation({
         onSuccess: () => {
-            utils.event.getAll.invalidate();
+            void utils.event.getAll.invalidate();
             setNotesVisible(false);
             setActiveEvent({});
             closeModal();

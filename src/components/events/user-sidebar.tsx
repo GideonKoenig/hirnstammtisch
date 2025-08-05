@@ -2,10 +2,15 @@
 
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
+import { toast } from "sonner";
 
 export function UserSidebar(props: { className?: string }) {
-    const { data: events = [] } = api.event.getAll.useQuery();
-    const { data: users = [] } = api.user.getAll.useQuery();
+    const { data: events = [], error: eventsError } =
+        api.event.getAll.useQuery();
+    const { data: users = [], error: usersError } = api.user.getAll.useQuery();
+
+    if (eventsError) toast.error(eventsError.message);
+    if (usersError) toast.error(usersError.message);
 
     const elements = events
         .map((e) => users.filter((u) => u.id === e.speaker))

@@ -4,6 +4,7 @@ import { getSession } from "@/server/utils";
 import { Button } from "@/components/ui/button";
 import { db } from "@/server/db";
 import { event } from "@/server/db/schema";
+import { sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 async function deleteAllEvents() {
@@ -14,7 +15,7 @@ async function deleteAllEvents() {
         throw new Error("Unauthorized");
     }
 
-    await db.delete(event);
+    await db.delete(event).where(sql`1=1`);
     revalidatePath("/admin");
 }
 
@@ -248,7 +249,7 @@ export default async function AdminPage() {
                             type="submit"
                             className="bg-green-600 hover:bg-green-700"
                         >
-                            Migrate Gideon's Events
+                            {"Migrate Gideon's Events"}
                         </Button>
                     </form>
                 </div>

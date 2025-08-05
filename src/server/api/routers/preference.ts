@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-    createTRPCRouter,
-    protectedProcedure,
-    publicProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { preference } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
@@ -12,7 +8,7 @@ import { PREFERENCES_DEFAULT } from "@/lib/permissions/preferences";
 import { VisibilityOptionsZod } from "@/lib/permissions/types";
 
 export const preferenceRouter = createTRPCRouter({
-    get: protectedProcedure("guest").query(async ({ ctx, input }) => {
+    get: protectedProcedure("guest").query(async ({ ctx }) => {
         const result = await tryCatch(
             ctx.db
                 .select()

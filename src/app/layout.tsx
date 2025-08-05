@@ -3,7 +3,6 @@ import { GeistSans } from "geist/font/sans";
 import PlausibleProvider from "next-plausible";
 import { type Viewport, type Metadata } from "next";
 import { NavigationBar } from "@/components/navigation-menu";
-import { cookies } from "next/headers";
 import { NextSSRPlugin as UploadThingProvider } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { fileRouter } from "@/app/api/uploadthing/core";
@@ -65,9 +64,6 @@ export const viewport: Viewport = {
 export default async function RootLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const cookieStore = await cookies();
-    const username = cookieStore.get("username")?.value;
-
     return (
         <html
             lang="en"

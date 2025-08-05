@@ -23,7 +23,7 @@ export function UserAvatar(props: {
 
     if (error) toast.error(error.message);
 
-    let fallback: React.ReactNode = (
+    const fallback: React.ReactNode = (
         <User2 className={cn("h-6 w-6", props.fallbackClassName)} />
     );
 

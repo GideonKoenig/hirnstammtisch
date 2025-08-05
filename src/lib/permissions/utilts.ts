@@ -1,4 +1,4 @@
-import { UserRole, VisibilityOption } from "@/lib/permissions/types";
+import type { UserRole, VisibilityOption } from "@/lib/permissions/types";
 
 export function checkAccess(
     userRole: UserRole = "none",

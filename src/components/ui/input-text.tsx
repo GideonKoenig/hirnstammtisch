@@ -53,7 +53,7 @@ export function InputText(props: {
                             props.inputClassName,
                         )}
                         onKeyDown={(e) => {
-                            if (e.key === "Enter") handleSave();
+                            if (e.key === "Enter") void handleSave();
                             if (e.key === "Escape") handleCancel();
                         }}
                         placeholder={props.placeholder}
@@ -63,7 +63,7 @@ export function InputText(props: {
                     <Button
                         variant="ghost"
                         size="icon"
-                        onClick={handleSave}
+                        onClick={() => void handleSave()}
                         className="text-success hover:bg-success/20 h-8 w-8"
                         disabled={props.disabled}
                     >

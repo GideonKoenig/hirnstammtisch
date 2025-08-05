@@ -54,7 +54,7 @@ export function EventList(props: { showSpeakerNames?: boolean }) {
 
     return (
         <div className="flex flex-col gap-2">
-            {eventsFiltered.map((event, index) => {
+            {eventsFiltered.map((event) => {
                 const speaker = getSpeaker(event, users)!;
                 const showSpeaker = lastSpeaker !== speaker;
                 lastSpeaker = speaker;

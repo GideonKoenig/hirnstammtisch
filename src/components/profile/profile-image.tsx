@@ -28,7 +28,7 @@ export function ProfileImage(props: { className?: string }) {
     if (!user) return null;
 
     const imageSource = user.useProviderImage ? "Google" : "Custom";
-    const hasImage = user.imageId || user.useProviderImage;
+    const hasImage = user.imageId ?? user.useProviderImage;
 
     return (
         <div
@@ -75,10 +75,10 @@ export function ProfileImage(props: { className?: string }) {
                                         result[0]?.serverData?.assetId;
                                     if (!assetId)
                                         toast.error("Failed to upload image");
-                                    authClient.updateUser({
+                                    void authClient.updateUser({
                                         imageId: assetId,
                                     });
-                                    utils.user.getImage.invalidate();
+                                    void utils.user.getImage.invalidate();
                                     setIsLoading(false);
                                 }}
                             />
@@ -91,11 +91,11 @@ export function ProfileImage(props: { className?: string }) {
                                             size="sm"
                                             className="h-12 w-12 rounded-full p-0"
                                             disabled={isOffline}
-                                            onMouseDown={async () => {
-                                                authClient.updateUser({
+                                            onMouseDown={() => {
+                                                void authClient.updateUser({
                                                     useProviderImage: true,
                                                 });
-                                                utils.user.getImage.invalidate();
+                                                void utils.user.getImage.invalidate();
                                             }}
                                         >
                                             <User2 className="h-5 w-5" />
@@ -171,10 +171,10 @@ export function ProfileImage(props: { className?: string }) {
                     onClientUploadComplete={(result) => {
                         const assetId = result[0]?.serverData?.assetId;
                         if (!assetId) toast.error("Failed to upload image");
-                        authClient.updateUser({
+                        void authClient.updateUser({
                             imageId: assetId,
                         });
-                        utils.user.getImage.invalidate();
+                        void utils.user.getImage.invalidate();
                         setIsLoading(false);
                     }}
                 />
@@ -184,11 +184,11 @@ export function ProfileImage(props: { className?: string }) {
                         variant="outline"
                         className="h-10 px-4"
                         disabled={isOffline}
-                        onMouseDown={async () => {
-                            authClient.updateUser({
+                        onMouseDown={() => {
+                            void authClient.updateUser({
                                 useProviderImage: true,
                             });
-                            utils.user.getImage.invalidate();
+                            void utils.user.getImage.invalidate();
                         }}
                     >
                         Use Google

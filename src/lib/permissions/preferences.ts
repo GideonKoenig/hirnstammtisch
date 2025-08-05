@@ -1,4 +1,4 @@
-import { PreferenceItem, VisibilityOption } from "@/lib/permissions/types";
+import type { PreferenceItem, VisibilityOption } from "@/lib/permissions/types";
 import { Globe, Users } from "lucide-react";
 
 export const VISIBILITY_OPTIONS = [

@@ -1,10 +1,6 @@
 import { z } from "zod";
-import {
-    createTRPCRouter,
-    protectedProcedure,
-    publicProcedure,
-} from "@/server/api/trpc";
-import { asset, event, preference, user } from "@/server/db/schema";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { asset, user } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { UTApi } from "uploadthing/server";
 import { TRPCError } from "@trpc/server";

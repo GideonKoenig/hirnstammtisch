@@ -6,7 +6,7 @@ import { cn, useUser } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PREFERENCES, VISIBILITY_OPTIONS } from "@/lib/permissions/preferences";
-import {
+import type {
     PreferenceItem,
     VisibilityOption,
     PreferenceKey,
@@ -93,7 +93,7 @@ export function ProfilePreferences(props: { className?: string }) {
             toast.error(error.message);
         },
         onSettled() {
-            utils.preference.get.invalidate();
+            void utils.preference.get.invalidate();
         },
     });
 

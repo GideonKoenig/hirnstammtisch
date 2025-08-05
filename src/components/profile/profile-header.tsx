@@ -40,7 +40,7 @@ export function ProfileHeader(props: { className?: string }) {
                 <Button
                     variant="accent"
                     onMouseDown={() => {
-                        authClient.signOut();
+                        void authClient.signOut();
                         router.push("/signin");
                     }}
                 >

@@ -8,35 +8,35 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
     const [isLoading, setIsLoading] = useState(true);
 
     const updateValue = (newValue: T) => {
-        tryCatch(() => localStorage.setItem(key, JSON.stringify(newValue)))
-            .onError((error) => {
-                console.error(`Failed to save ${key} to localStorage:`, error);
-            })
-            .onSuccess(() => {
-                setValue(newValue);
-            })
-            .execute();
+        const result = tryCatch(() =>
+            localStorage.setItem(key, JSON.stringify(newValue)),
+        );
+        if (!result.success) {
+            console.error(
+                `Failed to save ${key} to localStorage:`,
+                result.error,
+            );
+            return;
+        }
+        setValue(newValue);
     };
 
     useEffect(() => {
-        const stored = tryCatch(() => localStorage.getItem(key)).unwrap({
-            defaultValue: null,
-        });
+        const stored = tryCatch(() => localStorage.getItem(key)).unwrapOr(null);
 
         if (stored) {
-            const parseResult = tryCatch(() => JSON.parse(stored) as T)
-                .onSuccess((data) => {
-                    setValue(data);
-                })
-                .onError((error) => {
-                    console.warn(
-                        `Failed to parse ${key} from localStorage:`,
-                        error,
-                    );
-                    localStorage.setItem(key, JSON.stringify(defaultValue));
-                    setValue(defaultValue);
-                })
-                .execute();
+            const parseResult = tryCatch(() => JSON.parse(stored) as T);
+
+            if (!parseResult.success) {
+                console.warn(
+                    `Failed to parse ${key} from localStorage:`,
+                    parseResult.error,
+                );
+                localStorage.setItem(key, JSON.stringify(defaultValue));
+                setValue(defaultValue);
+            } else {
+                setValue(parseResult.data);
+            }
         } else {
             localStorage.setItem(key, JSON.stringify(defaultValue));
             setValue(defaultValue);

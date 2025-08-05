@@ -1,4 +1,4 @@
-import { UserRole, VisibilityOption } from "@/lib/permissions/types";
+import type { UserRole, VisibilityOption } from "@/lib/permissions/types";
 import { checkVisibility } from "@/lib/permissions/utilts";
 
 export function createRedactedField<T>(

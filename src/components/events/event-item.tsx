@@ -12,7 +12,7 @@ import {
     Lock,
     X,
 } from "lucide-react";
-import { ClientEvent } from "@/lib/types";
+import type { ClientEvent } from "@/lib/types";
 import { formatDate, formatWeekDistance } from "@/lib/date";
 import { api } from "@/trpc/react";
 import { UserAvatar } from "@/components/ui/user-avatar";
@@ -33,7 +33,7 @@ export function EventCard(props: {
     });
     const deleteEvent = api.event.delete.useMutation({
         onSuccess: () => {
-            utils.event.getAll.invalidate();
+            void utils.event.getAll.invalidate();
         },
     });
 

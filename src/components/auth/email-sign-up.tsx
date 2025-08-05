@@ -20,16 +20,18 @@ export function EmailSignUp() {
                 const email = formData.get("email") as string;
                 const password = formData.get("password") as string;
 
-                tryCatch(() =>
+                const result = await tryCatch(
                     authClient.signUp.email({
                         name,
                         email,
                         password,
                         callbackURL: "/profile",
                     }),
-                )
-                    .onError(toast.error)
-                    .execute();
+                );
+
+                if (!result.success) {
+                    toast.error(result.error.message);
+                }
 
                 setLoading(false);
             }}

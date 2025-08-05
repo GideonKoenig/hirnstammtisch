@@ -11,8 +11,8 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { db } from "@/server/db";
 import { auth } from "@/server/auth";
-import { User } from "@/lib/auth-client";
-import { UserRole } from "@/lib/permissions/types";
+import type { User } from "@/lib/auth-client";
+import type { UserRole } from "@/lib/permissions/types";
 import { checkAccess } from "@/lib/permissions/utilts";
 
 /**

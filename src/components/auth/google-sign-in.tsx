@@ -11,16 +11,18 @@ export function GoogleSignIn() {
 
     return (
         <button
-            onMouseDown={() => {
+            onMouseDown={async () => {
                 setLoading(true);
-                tryCatch(() =>
+                const result = await tryCatch(
                     authClient.signIn.social({
                         provider: "google",
                         callbackURL: "/profile",
                     }),
-                )
-                    .onError(toast.error)
-                    .execute();
+                );
+
+                if (!result.success) {
+                    toast.error(result.error.message);
+                }
                 setLoading(false);
             }}
             className={cn(

@@ -1,7 +1,7 @@
 "use client";
 
 import { EventCard } from "@/components/events/event-item";
-import { ClientEvent } from "@/lib/types";
+import type { ClientEvent } from "@/lib/types";
 import { formatDate } from "@/lib/date";
 import { Calendar } from "lucide-react";
 import { useEvents } from "@/components/events/event-context";

@@ -1,6 +1,5 @@
 import { EventCard } from "@/components/events/event-item";
 import { api } from "@/trpc/server";
-import { type ClientEvent } from "@/lib/types";
 
 export default async function HomePage() {
     const events = await api.event.getAll();
