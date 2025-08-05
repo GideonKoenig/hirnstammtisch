@@ -11,8 +11,9 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 import { db } from "@/server/db";
 import { auth } from "@/server/auth";
-import { type UserRole } from "@/lib/permissions";
 import { User } from "@/lib/auth-client";
+import { UserRole } from "@/lib/permissions/types";
+import { checkAccess } from "@/lib/permissions/utilts";
 
 /**
  * 1. CONTEXT
@@ -119,12 +120,16 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure
-    .use(timingMiddleware)
-    .use(async ({ ctx, next }) => {
+export const protectedProcedure = (role?: UserRole) =>
+    t.procedure.use(timingMiddleware).use(async ({ ctx, next }) => {
         if (!ctx.session?.user) {
             throw new TRPCError({ code: "UNAUTHORIZED" });
         }
+
+        if (role && !checkAccess(ctx.session.user.role, role)) {
+            throw new TRPCError({ code: "UNAUTHORIZED" });
+        }
+
         return next({
             ctx: {
                 ...ctx,

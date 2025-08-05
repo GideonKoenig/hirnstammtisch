@@ -9,15 +9,12 @@ import {
     type ClientEvent,
     type ClientUser,
 } from "@/lib/types";
-import {
-    createRedactedField,
-    defaultPreferences,
-    getUserRole,
-} from "@/lib/permissions";
+import { createRedactedField } from "@/lib/permissions/redact-fields";
 import { type User } from "@/lib/auth-client";
 import { preference } from "@/server/db/schema";
 import { db } from "@/server/db";
-import { tryCatchAsync } from "@/lib/try-catch";
+import { parseUserRole } from "@/lib/permissions/utilts";
+import { PREFERENCES_DEFAULT } from "@/lib/permissions/preferences";
 
 export async function readCookie(name: string) {
     const cookieStore = await cookies();
@@ -29,12 +26,7 @@ export function getPathname(headers: Headers) {
     if (xPathname) return xPathname;
 
     const referer = headers.get("referer");
-    if (referer) {
-        return tryCatch(() => new URL(referer).pathname).unwrap({
-            defaultValue: "/",
-        });
-    }
-
+    if (referer) return tryCatch(() => new URL(referer).pathname).unwrapOr("/");
     return "/";
 }
 
@@ -50,12 +42,11 @@ export async function redactEvent<T extends Event | Event[]>(
 ): Promise<T extends Event[] ? ClientEvent[] : ClientEvent> {
     type ReturnType = T extends Event[] ? ClientEvent[] : ClientEvent;
 
-    const viewerRole = getUserRole(viewer?.role);
+    const viewerRole = parseUserRole(viewer?.role);
 
     // Fetch all preferences at once
-    const preferences = await tryCatchAsync(async () => {
-        return await db.select().from(preference);
-    }).unwrap();
+    const result = await tryCatch(db.select().from(preference));
+    const preferences = result.unwrapOr([]);
 
     const preferencesMap = new Map<string, Preference>();
     for (const pref of preferences) {
@@ -64,7 +55,7 @@ export async function redactEvent<T extends Event | Event[]>(
 
     const redactSingleEvent = (event: Event) => {
         const eventPreferences =
-            preferencesMap.get(event.speaker) ?? defaultPreferences;
+            preferencesMap.get(event.speaker) ?? PREFERENCES_DEFAULT;
 
         return {
             ...event,
@@ -76,7 +67,7 @@ export async function redactEvent<T extends Event | Event[]>(
             recording: createRedactedField(
                 event.recording,
                 viewerRole,
-                eventPreferences.recordingsVisibility,
+                "members",
             ),
         };
     };
@@ -94,12 +85,11 @@ export async function redactUser<T extends User | User[]>(
 ): Promise<T extends User[] ? ClientUser[] : ClientUser> {
     type ReturnType = T extends User[] ? ClientUser[] : ClientUser;
 
-    const viewerRole = getUserRole(viewer?.role);
+    const viewerRole = parseUserRole(viewer?.role);
 
     // Fetch all preferences at once
-    const preferences = await tryCatchAsync(async () => {
-        return await db.select().from(preference);
-    }).unwrap();
+    const result = await tryCatch(db.select().from(preference));
+    const preferences = result.unwrapOr([]);
 
     const preferencesMap = new Map<string, Preference>();
     for (const pref of preferences) {
@@ -108,7 +98,7 @@ export async function redactUser<T extends User | User[]>(
 
     const redactSingleUser = (userData: User) => {
         const userPreferences =
-            preferencesMap.get(userData.id) ?? defaultPreferences;
+            preferencesMap.get(userData.id) ?? PREFERENCES_DEFAULT;
 
         return {
             ...userData,

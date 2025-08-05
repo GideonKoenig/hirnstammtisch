@@ -180,9 +180,6 @@ export function EventModal() {
                                     onMouseDown={() => {
                                         deleteAsset.mutate({
                                             id: activeEvent.recording!,
-                                            context: {
-                                                type: "recording",
-                                            },
                                         });
                                         handleUpdateEvent({
                                             recording: null,
@@ -225,7 +222,12 @@ export function EventModal() {
                                     }}
                                     onClientUploadComplete={(result) => {
                                         const assetId =
-                                            result[0]!.serverData.assetId;
+                                            result[0]?.serverData?.assetId;
+                                        if (!assetId)
+                                            toast.error(
+                                                "Failed to upload recording",
+                                            );
+
                                         handleUpdateEvent({
                                             recording: assetId,
                                         });

@@ -7,149 +7,112 @@ import {
 import { asset, event, preference, user } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { UTApi } from "uploadthing/server";
-import { tryCatchAsync } from "@/lib/try-catch";
 import { TRPCError } from "@trpc/server";
-import {
-    hasPermission,
-    getUserRole,
-    defaultPreferences,
-} from "@/lib/permissions";
+import { tryCatch } from "@/lib/try-catch";
+import { parseUserRole, checkVisibility } from "@/lib/permissions/utilts";
 
 export const assetRouter = createTRPCRouter({
-    get: publicProcedure
-        .input(
-            z.object({
-                id: z.string(),
-                context: z.object({
-                    type: z.enum(["recording"]),
-                    eventId: z.string(),
-                }),
-            }),
-        )
+    getRecording: protectedProcedure("member")
+        .input(z.object({ id: z.string() }))
         .query(async ({ ctx, input }) => {
-            if (input.context.type === "recording") {
-                const contextData = await tryCatchAsync(
-                    async () =>
-                        await ctx.db
-                            .select({
-                                recordingsVisibility:
-                                    preference.recordingsVisibility,
-                            })
-                            .from(event)
-                            .leftJoin(
-                                preference,
-                                eq(preference.userId, event.speaker),
-                            )
-                            .where(eq(event.id, input.context.eventId))
-                            .limit(1),
-                ).unwrap({
-                    expectation: "expectSingle",
-                    notFoundMessage: "Event not found",
-                    errorMessage: "Failed to fetch event recording permissions",
+            const result = await tryCatch(
+                ctx.db
+                    .select({ assetData: asset })
+                    .from(asset)
+                    .where(eq(asset.id, input.id))
+                    .limit(1),
+            );
+            const data = result.unwrap();
+            if (data.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message:
+                        data.length === 0
+                            ? "Asset not found"
+                            : "Found assets with overlapping ids",
                 });
-
-                const userRole = getUserRole(ctx.session?.user?.role);
-                const visibilityLevel =
-                    contextData.recordingsVisibility ??
-                    defaultPreferences.recordingsVisibility;
-                const hasAccess = hasPermission(userRole, visibilityLevel);
-
-                if (!hasAccess)
-                    throw new TRPCError({
-                        code: "FORBIDDEN",
-                        message:
-                            "You do not have permission to access this recording",
-                    });
             }
-
-            const assetData = await tryCatchAsync(
-                async () =>
-                    await ctx.db
-                        .select()
-                        .from(asset)
-                        .where(eq(asset.id, input.id))
-                        .limit(1),
-            ).unwrap({
-                expectation: "expectSingle",
-                notFoundMessage: "Asset not found",
-                errorMessage: "Failed to fetch asset",
-            });
-
+            const { assetData } = data[0]!;
             return assetData;
         }),
 
-    delete: protectedProcedure
-        .input(
-            z.object({
-                id: z.string(),
-                context: z.union([
-                    z.object({
-                        type: z.literal("recording"),
-                    }),
-                    z.object({
-                        type: z.literal("profile-image"),
-                    }),
-                ]),
-            }),
-        )
+    delete: protectedProcedure("guest")
+        .input(z.object({ id: z.string() }))
         .mutation(async ({ ctx, input }) => {
-            const context = input.context;
-            if (context.type === "recording") {
-                const userRole = getUserRole(ctx.session?.user?.role);
-                const hasAccess = hasPermission(userRole, "members");
+            const result = await tryCatch(
+                ctx.db
+                    .select({ assetData: asset })
+                    .from(asset)
+                    .where(eq(asset.id, input.id))
+                    .limit(1),
+            );
+            const data = result.unwrap();
+            if (data.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message:
+                        data.length === 0
+                            ? "Asset not found"
+                            : "Found assets with overlapping ids",
+                });
+            }
+            const { assetData } = data[0]!;
 
+            if (assetData.type === "recording") {
+                const userRole = parseUserRole(ctx.session?.user?.role);
+                const hasAccess = checkVisibility(userRole, "members");
                 if (!hasAccess)
                     throw new TRPCError({
                         code: "FORBIDDEN",
                         message: "You must be a member to delete recordings",
                     });
-            } else if (input.context.type === "profile-image") {
-                const userData = await tryCatchAsync(
-                    async () =>
-                        await ctx.db
-                            .select({ imageId: user.imageId })
-                            .from(user)
-                            .where(eq(user.id, ctx.session.user.id))
-                            .limit(1),
-                ).unwrap({
-                    expectation: "expectSingle",
-                    notFoundMessage: "User not found",
-                    errorMessage: "Failed to verify profile image ownership",
-                });
-
-                if (userData.imageId !== input.id)
+            } else if (assetData.type === "profile-image") {
+                const userData = await tryCatch(
+                    ctx.db
+                        .select({ imageId: user.imageId })
+                        .from(user)
+                        .where(eq(user.id, ctx.session.user.id))
+                        .limit(1),
+                );
+                const data = userData.unwrap();
+                if (data.length !== 1) {
+                    throw new TRPCError({
+                        code: "NOT_FOUND",
+                        message:
+                            data.length === 0
+                                ? "User not found"
+                                : "Found users with overlapping ids",
+                    });
+                }
+                const { imageId } = data[0]!;
+                if (imageId !== input.id)
                     throw new TRPCError({
                         code: "FORBIDDEN",
                         message: "You can only delete your own profile images",
                     });
             }
 
-            const assetElement = await tryCatchAsync(
-                async () =>
-                    await ctx.db
-                        .select()
-                        .from(asset)
-                        .where(eq(asset.id, input.id))
-                        .limit(1),
-            ).unwrap({
-                expectation: "expectSingle",
-                notFoundMessage: "Asset not found",
-                errorMessage: "Failed to fetch asset for deletion",
-            });
+            const utapi = new UTApi();
+            const utDelete = await tryCatch(
+                utapi.deleteFiles(assetData.uploadthingId),
+            );
+            if (!utDelete.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Uploadthing failed to delete asset",
+                });
+            }
 
-            await tryCatchAsync(async () => {
-                const utapi = new UTApi();
-                const utDelete = await utapi.deleteFiles(
-                    assetElement.uploadthingId,
-                );
-                if (!utDelete.success)
-                    throw new TRPCError({
-                        code: "INTERNAL_SERVER_ERROR",
-                        message: "Uploadthing failed to delete asset",
-                    });
+            const dbDelete = await tryCatch(
+                ctx.db.delete(asset).where(eq(asset.id, input.id)),
+            );
+            if (!dbDelete.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Database failed to delete asset",
+                });
+            }
 
-                await ctx.db.delete(asset).where(eq(asset.id, input.id));
-            }).unwrap({ errorMessage: "Failed to delete asset" });
             return;
         }),
 });

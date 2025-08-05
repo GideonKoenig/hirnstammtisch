@@ -11,7 +11,7 @@ export default async function Profile() {
     const session = await getSession(await headers());
     if (!session?.user) redirect("/signin");
 
-    void api.preference.get.prefetch({ userId: session.user.id });
+    void api.preference.get.prefetch();
     void api.user.getImage.prefetch({ id: session.user.id });
 
     return (

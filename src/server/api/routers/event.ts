@@ -6,30 +6,24 @@ import {
 } from "@/server/api/trpc";
 import { event } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
-import { tryCatchAsync } from "@/lib/try-catch";
 import { TRPCError } from "@trpc/server";
 import { redactEvent } from "@/server/utils";
-import { getUserRole, isSpeakerOrAdmin } from "@/lib/permissions";
+import { tryCatch } from "@/lib/try-catch";
 
 export const eventRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
-        const events = await tryCatchAsync(async () => {
-            return await ctx.db
-                .select()
-                .from(event)
-                .where(eq(event.deleted, false));
-        }).unwrap({ errorMessage: "Failed to fetch events" });
-
+        const result = await tryCatch(
+            ctx.db.select().from(event).where(eq(event.deleted, false)),
+        );
+        const events = result.unwrap();
         const redactedEvents = await redactEvent(events, ctx.session?.user);
-
         return redactedEvents;
     }),
 
-    create: protectedProcedure
+    create: protectedProcedure("member")
         .input(
             z.object({
                 title: z.string().min(1),
-                suggestedBy: z.string(),
                 speaker: z.string(),
                 slidesUrl: z.string().nullish(),
                 maxAttendees: z.number().int().positive().nullish(),
@@ -38,18 +32,21 @@ export const eventRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ ctx, input }) => {
-            await tryCatchAsync(async () => {
-                await ctx.db.insert(event).values(input);
-            }).unwrap({ errorMessage: "Failed to create event" });
+            const result = await tryCatch(ctx.db.insert(event).values(input));
+            if (!result.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to create event",
+                });
+            }
             return;
         }),
 
-    update: protectedProcedure
+    update: protectedProcedure("member")
         .input(
             z.object({
                 id: z.string(),
                 title: z.string().min(1).optional(),
-                suggestedBy: z.string().optional(),
                 speaker: z.string().optional(),
                 recording: z.string().nullable().optional(),
                 slidesUrl: z.string().nullable().optional(),
@@ -59,25 +56,36 @@ export const eventRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ ctx, input }) => {
-            await tryCatchAsync(async () => {
-                const { id, ...updateData } = input;
-                await ctx.db
+            const result = await tryCatch(
+                ctx.db
                     .update(event)
-                    .set({ ...updateData, updatedAt: new Date() })
-                    .where(eq(event.id, id));
-            }).unwrap({ errorMessage: "Failed to update event" });
+                    .set({ ...input, updatedAt: new Date() })
+                    .where(eq(event.id, input.id)),
+            );
+            if (!result.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to update event",
+                });
+            }
             return;
         }),
 
-    delete: protectedProcedure
+    delete: protectedProcedure("member")
         .input(z.object({ id: z.string() }))
         .mutation(async ({ ctx, input }) => {
-            await tryCatchAsync(async () => {
-                await ctx.db
+            const result = await tryCatch(
+                ctx.db
                     .update(event)
                     .set({ deleted: true, updatedAt: new Date() })
-                    .where(eq(event.id, input.id));
-            }).unwrap({ errorMessage: "Failed to delete event" });
+                    .where(eq(event.id, input.id)),
+            );
+            if (!result.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to delete event",
+                });
+            }
             return;
         }),
 });

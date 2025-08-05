@@ -6,64 +6,66 @@ import {
 } from "@/server/api/trpc";
 import { user, asset } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
-import { tryCatchAsync } from "@/lib/try-catch";
 import { TRPCError } from "@trpc/server";
 import { redactUser } from "@/server/utils";
+import { tryCatch } from "@/lib/try-catch";
 
 export const userRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
-        const users = await tryCatchAsync(async () => {
-            return await ctx.db.select().from(user);
-        }).unwrap({ errorMessage: "Failed to fetch users" });
-
+        const result = await tryCatch(ctx.db.select().from(user));
+        const users = result.unwrap();
         const redactedUsers = await redactUser(users, ctx.session?.user);
-
         return redactedUsers;
     }),
 
     getById: publicProcedure
         .input(z.object({ id: z.string() }))
         .query(async ({ ctx, input }) => {
-            const users = await tryCatchAsync(async () => {
-                return await ctx.db
+            const result = await tryCatch(
+                ctx.db
                     .select()
                     .from(user)
                     .where(eq(user.id, input.id))
-                    .limit(1);
-            }).unwrap({
-                expectation: "expectSingle",
-                notFoundMessage: "User not found",
-            });
-
-            return users;
+                    .limit(1),
+            );
+            const users = result.unwrap();
+            if (users.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "User not found",
+                });
+            }
+            const redactedUser = await redactUser(users[0]!, ctx.session?.user);
+            return redactedUser;
         }),
 
-    getImage: protectedProcedure
-        .input(z.object({ id: z.string().optional() }).optional())
+    getImage: protectedProcedure("member")
+        .input(z.object({ id: z.string() }))
         .query(async ({ ctx, input }) => {
-            const userId = input?.id ?? ctx.session.user.id;
-            const userData = await tryCatchAsync(
-                async () =>
-                    await ctx.db
-                        .select({
-                            id: user.id,
-                            name: user.name,
-                            image: user.image,
-                            useProviderImage: user.useProviderImage,
-                            assetUrl: asset.url,
-                        })
-                        .from(user)
-                        .leftJoin(asset, eq(asset.id, user.imageId))
-                        .where(eq(user.id, userId))
-                        .limit(1),
-            ).unwrap({
-                expectation: "expectSingle",
-                notFoundMessage: "User not found",
-                errorMessage: "Failed to fetch user profile image",
-            });
-            const imageUrl = userData.useProviderImage
-                ? (userData.image?.replace(/=s\d+-c$/, "=s512-c") ?? null)
-                : (userData.assetUrl ?? null);
+            const result = await tryCatch(
+                ctx.db
+                    .select({
+                        image: user.image,
+                        useProviderImage: user.useProviderImage,
+                        assetUrl: asset.url,
+                    })
+                    .from(user)
+                    .leftJoin(asset, eq(asset.id, user.imageId))
+                    .where(eq(user.id, input.id))
+                    .limit(1),
+            );
+            const data = result.unwrap();
+            if (data.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "User not found",
+                });
+            }
+            const imageData = data[0]!;
+
+            const imageUrl = imageData.useProviderImage
+                ? (imageData.image?.replace(/=s\d+-c$/, "=s512-c") ?? null)
+                : (imageData.assetUrl ?? null);
             return imageUrl;
         }),
 });

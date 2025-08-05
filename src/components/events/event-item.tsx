@@ -18,7 +18,7 @@ import { api } from "@/trpc/react";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { type User } from "@/lib/auth-client";
 import { ResponsiveTooltip } from "@/components/ui/responsive-tooltip";
-import { hasRoleLevel } from "@/lib/permissions";
+import { checkAccess } from "@/lib/permissions/utilts";
 import { useUser } from "@/lib/utils";
 
 export function EventCard(props: {
@@ -56,7 +56,7 @@ export function EventCard(props: {
                     </div>
                 </div>
 
-                {props.showActions && hasRoleLevel("member", user?.role) && (
+                {props.showActions && checkAccess(user?.role, "member") && (
                     <div className="flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
                         <Button
                             variant="outline"
@@ -168,22 +168,20 @@ function SlidesLinkCard(props: { event: ClientEvent }) {
 }
 
 function RecordingDownloadCard(props: { event: ClientEvent }) {
+    const user = useUser();
+    const userIsMember = checkAccess(user?.role, "member");
     const { value, redacted } = props.event.recording;
-    const asset = api.asset.get.useQuery(
+    const asset = api.asset.getRecording.useQuery(
         {
             id: value!,
-            context: {
-                type: "recording",
-                eventId: props.event.id,
-            },
         },
-        { enabled: !!value && !redacted },
+        { enabled: !!value && !redacted && userIsMember },
     );
 
     const hasValue = !!value;
     const isRedacted = redacted;
 
-    if (isRedacted) {
+    if (isRedacted || !userIsMember) {
         return (
             <ResponsiveTooltip
                 content={

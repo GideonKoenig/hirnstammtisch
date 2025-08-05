@@ -72,7 +72,7 @@ export function ProfileImage(props: { className?: string }) {
                                 }}
                                 onClientUploadComplete={(result) => {
                                     const assetId =
-                                        result[0]?.serverData.assetId;
+                                        result[0]?.serverData?.assetId;
                                     if (!assetId)
                                         toast.error("Failed to upload image");
                                     authClient.updateUser({
@@ -120,9 +120,6 @@ export function ProfileImage(props: { className?: string }) {
                                     if (user.imageId) {
                                         deleteAsset.mutate({
                                             id: user.imageId,
-                                            context: {
-                                                type: "profile-image",
-                                            },
                                         });
                                     }
                                     await authClient.updateUser({
@@ -172,7 +169,7 @@ export function ProfileImage(props: { className?: string }) {
                         setIsLoading(false);
                     }}
                     onClientUploadComplete={(result) => {
-                        const assetId = result[0]?.serverData.assetId;
+                        const assetId = result[0]?.serverData?.assetId;
                         if (!assetId) toast.error("Failed to upload image");
                         authClient.updateUser({
                             imageId: assetId,
@@ -207,9 +204,6 @@ export function ProfileImage(props: { className?: string }) {
                         if (user.imageId) {
                             deleteAsset.mutate({
                                 id: user.imageId,
-                                context: {
-                                    type: "profile-image",
-                                },
                             });
                         }
                         await authClient.updateUser({

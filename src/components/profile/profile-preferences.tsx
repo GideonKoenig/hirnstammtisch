@@ -1,74 +1,16 @@
 "use client";
 
-import { Eye, Globe, Shield, Users } from "lucide-react";
+import { Shield } from "lucide-react";
 import { api } from "@/trpc/react";
 import { cn, useUser } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-
-type VisibilityOption = "everyone" | "guests" | "members";
-
-type PreferenceKey =
-    | "slidesVisibility"
-    | "recordingsVisibility"
-    | "membershipVisibility"
-    | "speakerStatusVisibility"
-    | "attendanceVisibility";
-
-interface PreferenceItem {
-    key: PreferenceKey;
-    label: string;
-    description: string;
-}
-
-const VISIBILITY_OPTIONS = [
-    {
-        value: "everyone" as const,
-        label: "Everyone",
-        icon: Globe,
-        description: "Visible to all users",
-    },
-    {
-        value: "guests" as const,
-        label: "Guests",
-        icon: Eye,
-        description: "Visible to guests and above",
-    },
-    {
-        value: "members" as const,
-        label: "Members Only",
-        icon: Users,
-        description: "Only visible to members",
-    },
-] as const;
-
-const PREFERENCES: PreferenceItem[] = [
-    {
-        key: "slidesVisibility",
-        label: "Slides",
-        description: "Who can acess your presentation slides",
-    },
-    {
-        key: "recordingsVisibility",
-        label: "Recordings",
-        description: "Who can acess your recorded presentations",
-    },
-    // {
-    //     key: "membershipVisibility",
-    //     label: "Membership",
-    //     description: "Who can see that you are a member",
-    // },
-    // {
-    //     key: "speakerStatusVisibility",
-    //     label: "Speaker Status",
-    //     description: "Who can see your speaker status",
-    // },
-    // {
-    //     key: "attendanceVisibility",
-    //     label: "Attendance Visibility",
-    //     description: "Who can see which events you have attended",
-    // },
-];
+import { PREFERENCES, VISIBILITY_OPTIONS } from "@/lib/permissions/preferences";
+import {
+    PreferenceItem,
+    VisibilityOption,
+    PreferenceKey,
+} from "@/lib/permissions/types";
 
 function PreferenceRow(props: {
     preference: PreferenceItem;
@@ -121,37 +63,37 @@ function PreferenceRow(props: {
 
 export function ProfilePreferences(props: { className?: string }) {
     const user = useUser();
-    const userId = user?.id ?? "";
     const utils = api.useUtils();
 
     const { data: preferences, error } = api.preference.get.useQuery(
+        undefined,
         {
-            userId,
-        },
-        {
-            enabled: !!userId,
+            enabled: !!user,
         },
     );
     if (error) toast.error(error.message);
 
     const updatePreference = api.preference.update.useMutation({
         async onMutate(newPreference) {
-            await utils.preference.get.cancel({ userId });
-            const prevData = utils.preference.get.getData({ userId });
-            utils.preference.get.setData({ userId }, (old) => {
-                if (!old) return old;
-                return { ...old, ...newPreference };
-            });
+            await utils.preference.get.cancel();
+            const prevData = utils.preference.get.getData();
+            utils.preference.get.setData(
+                undefined,
+                (old: typeof preferences) => {
+                    if (!old) return old;
+                    return { ...old, ...newPreference };
+                },
+            );
             return { prevData };
         },
         onError(error, newPreference, ctx) {
             if (ctx?.prevData) {
-                utils.preference.get.setData({ userId }, ctx.prevData);
+                utils.preference.get.setData(undefined, ctx.prevData);
             }
             toast.error(error.message);
         },
         onSettled() {
-            utils.preference.get.invalidate({ userId });
+            utils.preference.get.invalidate();
         },
     });
 
@@ -186,7 +128,6 @@ export function ProfilePreferences(props: { className?: string }) {
                         currentValue={currentValue}
                         onUpdate={(key, value) => {
                             updatePreference.mutate({
-                                userId: user.id,
                                 [key]: value,
                             });
                         }}

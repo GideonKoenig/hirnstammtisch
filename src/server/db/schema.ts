@@ -11,10 +11,11 @@ import {
 import { user } from "@/server/db/auth-schema";
 export * from "@/server/db/auth-schema";
 
-export const visibilityEnum = pgEnum("visibility", [
-    "everyone",
-    "members",
-    "guests",
+export const visibilityEnum = pgEnum("visibility", ["everyone", "members"]);
+
+export const assetTypeEnum = pgEnum("asset_type", [
+    "recording",
+    "profile-image",
 ]);
 
 export const event = pgTable(
@@ -64,6 +65,7 @@ export const asset = pgTable("asset", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
+    type: assetTypeEnum("type").notNull(),
     uploadthingId: text("uploadthing_id").notNull(),
     url: text("url").notNull(),
     uploadedBy: text("uploaded_by").references(() => user.id),
@@ -79,12 +81,6 @@ export const preference = pgTable(
             .notNull()
             .references(() => user.id),
         slidesVisibility: visibilityEnum("slides_visibility").notNull(),
-        recordingsVisibility: visibilityEnum("recordings_visibility").notNull(),
-        membershipVisibility: visibilityEnum("membership_visibility").notNull(),
-        speakerStatusVisibility: visibilityEnum(
-            "speaker_status_visibility",
-        ).notNull(),
-        attendanceVisibility: visibilityEnum("attendance_visibility").notNull(),
     },
     (preference) => [index("preference_idx").on(preference.userId)],
 );
