@@ -11,7 +11,10 @@ export const preferenceRouter = createTRPCRouter({
     get: protectedProcedure("guest").query(async ({ ctx }) => {
         const result = await tryCatch(
             ctx.db
-                .select()
+                .select({
+                    userId: preference.userId,
+                    slidesVisibility: preference.slidesVisibility,
+                })
                 .from(preference)
                 .where(eq(preference.userId, ctx.session.user.id))
                 .limit(1),
@@ -24,24 +27,7 @@ export const preferenceRouter = createTRPCRouter({
             });
         }
         if (preferences.length === 1) return preferences[0]!;
-
-        const newPreferences = await tryCatch(
-            ctx.db
-                .insert(preference)
-                .values({
-                    userId: ctx.session.user.id,
-                    ...PREFERENCES_DEFAULT,
-                })
-                .returning(),
-        );
-        const data = newPreferences.unwrap();
-        if (data.length !== 1) {
-            throw new TRPCError({
-                code: "INTERNAL_SERVER_ERROR",
-                message: "Failed to create user preferences",
-            });
-        }
-        return data[0]!;
+        return { userId: ctx.session.user.id, ...PREFERENCES_DEFAULT };
     }),
 
     update: protectedProcedure("guest")
@@ -51,16 +37,39 @@ export const preferenceRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ ctx, input }) => {
-            const result = await tryCatch(
+            const updated = await tryCatch(
                 ctx.db
                     .update(preference)
                     .set(input)
-                    .where(eq(preference.userId, ctx.session.user.id)),
+                    .where(eq(preference.userId, ctx.session.user.id))
+                    .returning({ userId: preference.userId }),
             );
-            if (!result.success) {
+            if (!updated.success) {
                 throw new TRPCError({
                     code: "INTERNAL_SERVER_ERROR",
                     message: "Failed to update user preferences",
+                });
+            }
+            const updatedRows = updated.unwrap();
+            if (updatedRows.length === 1) return;
+
+            const inserted = await tryCatch(
+                ctx.db
+                    .insert(preference)
+                    .values({ userId: ctx.session.user.id, ...input })
+                    .returning({ userId: preference.userId }),
+            );
+            if (!inserted.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to create user preferences",
+                });
+            }
+            const insertedRows = inserted.unwrap();
+            if (insertedRows.length !== 1) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Invalid preference insert result",
                 });
             }
             return;

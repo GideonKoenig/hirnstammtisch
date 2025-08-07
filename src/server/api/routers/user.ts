@@ -14,7 +14,11 @@ export const userRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
         const result = await tryCatch(ctx.db.select().from(user));
         const users = result.unwrap();
-        const redactedUsers = await redactUser(users, ctx.session?.user);
+        const redactedUsers = await redactUser(
+            users,
+            ctx.session?.user,
+            ctx.db,
+        );
         return redactedUsers;
     }),
 
@@ -35,11 +39,15 @@ export const userRouter = createTRPCRouter({
                     message: "User not found",
                 });
             }
-            const redactedUser = await redactUser(users[0]!, ctx.session?.user);
+            const redactedUser = await redactUser(
+                users[0]!,
+                ctx.session?.user,
+                ctx.db,
+            );
             return redactedUser;
         }),
 
-    getImage: protectedProcedure("member")
+    getImage: protectedProcedure()
         .input(z.object({ id: z.string() }))
         .query(async ({ ctx, input }) => {
             const result = await tryCatch(

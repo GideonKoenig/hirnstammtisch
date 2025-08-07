@@ -13,19 +13,24 @@ const config = {
             },
         ],
     },
+    turbopack: {},
     experimental: {
         reactCompiler: true,
     },
 };
 
+const isDev = process.env.NODE_ENV === "development";
+
 const withSerwist = withSerwistInit({
     swSrc: "src/sw.ts",
     swDest: "public/sw.js",
-    disable: process.env.NODE_ENV === "development",
+    disable: isDev,
 });
 
 const withPlausible = withPlausibleProxy({
     customDomain: "https://plausible.gko.gg",
 });
 
-export default withSerwist(withPlausible(config));
+export default isDev
+    ? withPlausible(config)
+    : withSerwist(withPlausible(config));

@@ -2,7 +2,8 @@
 
 import { Shield } from "lucide-react";
 import { api } from "@/trpc/react";
-import { cn, useUser } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { useUser } from "@/lib/use-user";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PREFERENCES, VISIBILITY_OPTIONS } from "@/lib/permissions/preferences";

@@ -12,7 +12,8 @@ import { UploadButton } from "@/lib/uploadthing";
 import { LoaderCircle, Upload, X, User2 } from "lucide-react";
 import { usePwa } from "@/components/pwa/pwa-provider";
 import { api } from "@/trpc/react";
-import { cn, useUser } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { useUser } from "@/lib/use-user";
 import { toast } from "sonner";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { authClient } from "@/lib/auth-client";
@@ -77,6 +78,7 @@ export function ProfileImage(props: { className?: string }) {
                                         toast.error("Failed to upload image");
                                     void authClient.updateUser({
                                         imageId: assetId,
+                                        useProviderImage: false,
                                     });
                                     void utils.user.getImage.invalidate();
                                     setIsLoading(false);
@@ -118,7 +120,7 @@ export function ProfileImage(props: { className?: string }) {
                                 onMouseDown={async () => {
                                     setIsLoading(true);
                                     if (user.imageId) {
-                                        deleteAsset.mutate({
+                                        await deleteAsset.mutateAsync({
                                             id: user.imageId,
                                         });
                                     }
@@ -173,6 +175,7 @@ export function ProfileImage(props: { className?: string }) {
                         if (!assetId) toast.error("Failed to upload image");
                         void authClient.updateUser({
                             imageId: assetId,
+                            useProviderImage: false,
                         });
                         void utils.user.getImage.invalidate();
                         setIsLoading(false);
@@ -202,7 +205,7 @@ export function ProfileImage(props: { className?: string }) {
                     onMouseDown={async () => {
                         setIsLoading(true);
                         if (user.imageId) {
-                            deleteAsset.mutate({
+                            await deleteAsset.mutateAsync({
                                 id: user.imageId,
                             });
                         }

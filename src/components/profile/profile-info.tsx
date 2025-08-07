@@ -1,7 +1,8 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { cn, useUser } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { useUser } from "@/lib/use-user";
 import { InputText } from "@/components/ui/input-text";
 import { RoleBadge } from "@/components/ui/role-badge";
 

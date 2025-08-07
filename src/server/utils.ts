@@ -8,11 +8,12 @@ import {
     type Preference,
     type ClientEvent,
     type ClientUser,
+    type DbUser,
 } from "@/lib/types";
 import { createRedactedField } from "@/lib/permissions/redact-fields";
 import { type User } from "@/lib/auth-client";
 import { preference } from "@/server/db/schema";
-import { db } from "@/server/db";
+import { type db } from "@/server/db";
 import { parseUserRole } from "@/lib/permissions/utilts";
 import { PREFERENCES_DEFAULT } from "@/lib/permissions/preferences";
 
@@ -39,12 +40,13 @@ export async function getSession(headers: Headers) {
 export async function redactEvent<T extends Event | Event[]>(
     events: T,
     viewer: User | null | undefined,
+    ctx: typeof db,
 ): Promise<T extends Event[] ? ClientEvent[] : ClientEvent> {
     type ReturnType = T extends Event[] ? ClientEvent[] : ClientEvent;
     const viewerRole = parseUserRole(viewer?.role);
 
-    // Fetch all preferences at once
-    const result = await tryCatch(db.select().from(preference));
+    // Fetch all preferences at once from context db
+    const result = await tryCatch(ctx.select().from(preference));
     const preferences = result.unwrapOr([]);
 
     const preferencesMap = new Map<string, Preference>();
@@ -78,24 +80,19 @@ export async function redactEvent<T extends Event | Event[]>(
     return redactSingleEvent(events) as ReturnType;
 }
 
-export async function redactUser<T extends User | User[]>(
+export async function redactUser<T extends DbUser | DbUser[]>(
     users: T,
     _viewer: User | null | undefined,
-): Promise<T extends User[] ? ClientUser[] : ClientUser> {
-    type ReturnType = T extends User[] ? ClientUser[] : ClientUser;
+    _ctx: typeof db,
+): Promise<T extends DbUser[] ? ClientUser[] : ClientUser> {
+    type ReturnType = T extends DbUser[] ? ClientUser[] : ClientUser;
 
-    // Fetch all preferences at once
-    const result = await tryCatch(db.select().from(preference));
-    const preferences = result.unwrapOr([]);
-
-    const preferencesMap = new Map<string, Preference>();
-    for (const pref of preferences) {
-        preferencesMap.set(pref.userId, pref);
-    }
-
-    const redactSingleUser = (userData: User) => {
+    const redactSingleUser = (userData: DbUser): ClientUser => {
         return {
-            ...userData,
+            id: userData.id,
+            name: userData.name,
+            role: parseUserRole(userData.role),
+            createdAt: userData.createdAt,
         };
     };
 

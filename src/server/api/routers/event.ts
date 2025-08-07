@@ -16,7 +16,11 @@ export const eventRouter = createTRPCRouter({
             ctx.db.select().from(event).where(eq(event.deleted, false)),
         );
         const events = result.unwrap();
-        const redactedEvents = await redactEvent(events, ctx.session?.user);
+        const redactedEvents = await redactEvent(
+            events,
+            ctx.session?.user,
+            ctx.db,
+        );
         return redactedEvents;
     }),
 
@@ -56,16 +60,24 @@ export const eventRouter = createTRPCRouter({
             }),
         )
         .mutation(async ({ ctx, input }) => {
-            const result = await tryCatch(
+            const updated = await tryCatch(
                 ctx.db
                     .update(event)
                     .set({ ...input, updatedAt: new Date() })
-                    .where(eq(event.id, input.id)),
+                    .where(eq(event.id, input.id))
+                    .returning({ id: event.id }),
             );
-            if (!result.success) {
+            if (!updated.success) {
                 throw new TRPCError({
                     code: "INTERNAL_SERVER_ERROR",
                     message: "Failed to update event",
+                });
+            }
+            const rows = updated.unwrap();
+            if (rows.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "Event not found",
                 });
             }
             return;
@@ -74,16 +86,24 @@ export const eventRouter = createTRPCRouter({
     delete: protectedProcedure("member")
         .input(z.object({ id: z.string() }))
         .mutation(async ({ ctx, input }) => {
-            const result = await tryCatch(
+            const deletedRes = await tryCatch(
                 ctx.db
                     .update(event)
                     .set({ deleted: true, updatedAt: new Date() })
-                    .where(eq(event.id, input.id)),
+                    .where(eq(event.id, input.id))
+                    .returning({ id: event.id }),
             );
-            if (!result.success) {
+            if (!deletedRes.success) {
                 throw new TRPCError({
                     code: "INTERNAL_SERVER_ERROR",
                     message: "Failed to delete event",
+                });
+            }
+            const rows = deletedRes.unwrap();
+            if (rows.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "Event not found",
                 });
             }
             return;

@@ -1,6 +1,6 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { type asset, event, user, type preference } from "@/server/db/schema";
-import { type RedactedField } from "@/lib/permissions/types";
+import { type UserRole, type RedactedField } from "@/lib/permissions/types";
 
 export const EventSchema = createSelectSchema(event);
 export const EventInsertSchema = createInsertSchema(event);
@@ -19,6 +19,11 @@ export type ClientEvent = Omit<Event, "slidesUrl" | "recording"> & {
     recording: RedactedField<string | null>;
 };
 
-export type ClientUser = Omit<typeof user.$inferSelect, "updatedAt"> & {
-    updatedAt: Date;
+export type DbUser = typeof user.$inferSelect;
+
+export type ClientUser = {
+    id: string;
+    name: string;
+    role: UserRole;
+    createdAt: Date;
 };

@@ -4,10 +4,10 @@ export function checkAccess(
     userRole: UserRole = "none",
     expectedRole: UserRole,
 ) {
-    const roleHierarchy = ["admin", "member", "guest", "none"] as const;
+    const roleHierarchy = ["none", "guest", "member", "admin"] as const;
     const userIndex = roleHierarchy.indexOf(userRole);
     const requiredIndex = roleHierarchy.indexOf(expectedRole);
-    return userIndex <= requiredIndex;
+    return userIndex >= requiredIndex;
 }
 
 export function checkVisibility(

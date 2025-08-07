@@ -12,14 +12,13 @@ import {
     Lock,
     X,
 } from "lucide-react";
-import type { ClientEvent } from "@/lib/types";
+import type { ClientEvent, ClientUser } from "@/lib/types";
 import { formatDate, formatWeekDistance } from "@/lib/date";
 import { api } from "@/trpc/react";
 import { UserAvatar } from "@/components/ui/user-avatar";
-import { type User } from "@/lib/auth-client";
 import { ResponsiveTooltip } from "@/components/ui/responsive-tooltip";
 import { checkAccess } from "@/lib/permissions/utilts";
-import { useUser } from "@/lib/utils";
+import { useUser } from "@/lib/use-user";
 
 export function EventCard(props: {
     event: ClientEvent;
@@ -93,7 +92,7 @@ export function EventCard(props: {
     );
 }
 
-function SpeakerCard(props: { user: User }) {
+function SpeakerCard(props: { user: ClientUser }) {
     return (
         <div className="flex items-center gap-3">
             <UserAvatar userId={props.user.id} className="h-10 w-10" />
