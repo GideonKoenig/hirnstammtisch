@@ -6,18 +6,29 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
-    /* NEW COLORS */
-    --color-bg: oklch(0.2 0 0);
-    --color-bg-muted: oklch(0.29 0 15);
-    --color-text: oklch(0.9851 0 0);
-    --color-text-muted: oklch(0.7118 0.0129 286.07);
+    /* DARK-ONLY DESIGN TOKENS (neutral grayscale surfaces) */
+    --color-bg: oklch(0.12 0 0);
+    --color-bg-muted: oklch(0.15 0 0);
+
+    --color-surface: oklch(0.14 0 0);
+    --color-surface-hover: oklch(0.16 0 0);
+    --color-card: oklch(0.17 0 0);
+
+    --color-text: oklch(0.98 0 0);
+    --color-text-muted: oklch(0.72 0 0);
     --color-text-contrast: oklch(1 0 0);
-    --color-border: oklch(0.3703 0.0119 285.81);
-    --color-accent: oklch(0.5849 0.1899 15.75);
-    --color-accent-secondary: oklch(0.6 0.15 200);
-    --color-success: oklch(0.65 0.25 135);
-    --color-error: oklch(0.5849 0.1899 15.75);
+
+    --color-border: oklch(0.28 0 0);
+    --color-ring: oklch(0.72 0.17 155);
+
+    --color-accent: oklch(0.72 0.17 155);
+    --color-success: oklch(0.72 0.17 155);
+    --color-error: oklch(0.62 0.2 25);
     --color-warning: oklch(0.75 0.15 85);
+
+    /* Glass/overlay tokens */
+    --color-veil-1: oklch(1 0 0 / 0.06);
+    --color-veil-2: oklch(1 0 0 / 0.04);
 }
 
 @layer base {

@@ -103,7 +103,7 @@ export function ProfilePreferences(props: { className?: string }) {
     return (
         <div
             className={cn(
-                "border-border bg-bg-muted flex flex-col gap-4 rounded-lg border p-6",
+                "border-border bg-surface flex flex-col gap-4 rounded-lg border p-6",
                 props.className,
             )}
         >

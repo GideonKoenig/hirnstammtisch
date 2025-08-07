@@ -7,6 +7,7 @@ import { EventModal } from "@/components/events/event-modal";
 import { EventContextProvider } from "@/components/events/event-context";
 import { UserSidebar } from "@/components/events/user-sidebar";
 import { api, HydrateClient } from "@/trpc/server";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default async function Events() {
     const session = await getSession(await headers());
@@ -18,7 +19,12 @@ export default async function Events() {
     return (
         <HydrateClient>
             <EventContextProvider>
-                <div className="relative mx-auto w-full max-w-3xl">
+                <div className="relative mx-auto w-full max-w-4xl p-4 md:p-6">
+                    <PageHeader
+                        title="Events"
+                        subtitle="Browse upcoming talks or search the archive by speaker and title"
+                        className="mb-4"
+                    />
                     <EventsSearchBar className="mb-4" />
                     <div className="sticky top-8 h-0 w-full">
                         <UserSidebar className="absolute right-full mr-8 hidden lg:block" />

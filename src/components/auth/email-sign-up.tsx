@@ -37,8 +37,11 @@ export function EmailSignUp() {
             }}
             className="flex flex-col gap-4"
         >
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium">
+            <div className="flex flex-col gap-1">
+                <label
+                    htmlFor="name"
+                    className="text-text-muted text-sm font-medium"
+                >
                     Name
                 </label>
                 <Input
@@ -49,8 +52,11 @@ export function EmailSignUp() {
                     autoComplete="name"
                 />
             </div>
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium">
+            <div className="flex flex-col gap-1">
+                <label
+                    htmlFor="email"
+                    className="text-text-muted text-sm font-medium"
+                >
                     Email
                 </label>
                 <Input
@@ -61,8 +67,11 @@ export function EmailSignUp() {
                     autoComplete="email"
                 />
             </div>
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium">
+            <div className="flex flex-col gap-1">
+                <label
+                    htmlFor="password"
+                    className="text-text-muted text-sm font-medium"
+                >
                     Password
                 </label>
                 <Input
@@ -73,7 +82,7 @@ export function EmailSignUp() {
                     autoComplete="new-password"
                 />
             </div>
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" variant="accent" disabled={loading}>
                 {loading ? "Signing up..." : "Sign up"}
             </Button>
         </form>

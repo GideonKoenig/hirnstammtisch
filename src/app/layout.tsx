@@ -82,7 +82,7 @@ export default async function RootLayout({
                         <ScrollArea className="h-full w-full">
                             <div className="flex min-h-dvh flex-col">
                                 <NavigationBar className="hidden lg:grid" />
-                                <main className="flex grow flex-col p-4 sm:p-6 lg:p-8">
+                                <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
                                 </main>
                                 <NavigationBar className="bg-bg sticky bottom-0 lg:hidden" />

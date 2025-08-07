@@ -39,10 +39,22 @@ export function EventCard(props: {
     if (!speaker) return null;
 
     return (
-        <div className="group bg-bg-muted/50 ring-border hover:from-bg-muted/50 hover:to-accent/20 relative rounded-lg p-4 ring-1 hover:bg-gradient-to-br">
-            <div className="relative mb-4 flex flex-row items-start">
+        <div className="group border-border/80 bg-card/70 ring-border/50 hover:bg-card/80 relative transform-gpu rounded-xl border p-4 ring-1 backdrop-blur-md transition-transform duration-50 ease-out hover:scale-[1.008] hover:shadow-[0_10px_40px_rgba(0,0,0,0.45)]">
+            <span
+                aria-hidden
+                className="border-border/60 absolute -inset-px rounded-xl border"
+            />
+            <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-xl bg-[linear-gradient(135deg,var(--color-accent),transparent_40%,var(--color-accent))] opacity-[0.06] transition-opacity group-hover:opacity-[0.12]"
+            />
+            <span
+                aria-hidden
+                className="pointer-events-none absolute -top-6 -right-8 h-24 w-32 rounded-full bg-[radial-gradient(closest-side,var(--color-accent)/18,transparent)] opacity-0 blur-2xl transition-opacity group-hover:opacity-100"
+            />
+            <div className="relative mb-4 flex flex-row items-start will-change-transform">
                 <div className="min-w-0 grow">
-                    <h3 className="text-text mb-1 text-lg font-bold break-words sm:text-xl">
+                    <h3 className="text-text mb-1 text-lg font-bold tracking-tight break-words md:text-xl">
                         {props.event.title}
                     </h3>
                     <div className="flex items-center gap-2 text-sm">
@@ -56,12 +68,12 @@ export function EventCard(props: {
                 </div>
 
                 {props.showActions && checkAccess(user?.role, "member") && (
-                    <div className="flex items-center gap-1 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
+                    <div className="flex items-center gap-1 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
                         <Button
                             variant="outline"
                             size="icon"
                             onMouseDown={() => props.onEdit?.(props.event)}
-                            className="inline-flex sm:hidden sm:group-hover:inline-flex"
+                            className="inline-flex md:hidden md:group-hover:inline-flex"
                         >
                             <Pencil className="h-4 w-4" />
                         </Button>
@@ -72,7 +84,7 @@ export function EventCard(props: {
                             onClick={() =>
                                 deleteEvent.mutate({ id: props.event.id })
                             }
-                            className="inline-flex sm:hidden sm:group-hover:inline-flex"
+                            className="inline-flex md:hidden md:group-hover:inline-flex"
                             disabled={deleteEvent.isPending}
                         >
                             <Trash className="h-4 w-4" />
@@ -81,9 +93,9 @@ export function EventCard(props: {
                 )}
             </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <SpeakerCard user={speaker} />
-                <div className="flex items-center gap-2 sm:justify-end">
+                <div className="flex items-center gap-2 md:justify-end">
                     <SlidesLinkCard event={props.event} />
                     <RecordingDownloadCard event={props.event} />
                 </div>
@@ -91,6 +103,8 @@ export function EventCard(props: {
         </div>
     );
 }
+
+// TODO: the slides element is not a clickable link, when it exists, and the recording should show "no recording" even if it is redacted and only redacted if it exists but was redacted
 
 function SpeakerCard(props: { user: ClientUser }) {
     return (

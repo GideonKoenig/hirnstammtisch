@@ -1,5 +1,6 @@
 import { EventCard } from "@/components/events/event-item";
 import { api } from "@/trpc/server";
+import { PageHeader } from "@/components/ui/page-header";
 
 export default async function HomePage() {
     const events = await api.event.getAll();
@@ -18,24 +19,44 @@ export default async function HomePage() {
         .sort((a, b) => b.date!.getTime() - a.date!.getTime());
 
     return (
-        <div className="mx-auto flex h-full w-full max-w-3xl flex-col gap-4 p-4">
-            <p className="text-2xl font-bold">Current Events</p>
-            <div className="flex flex-col gap-2">
-                {currentEvents.map((event) => (
-                    <EventCard key={event.id} event={event} />
-                ))}
-            </div>
-            <p className="pt-4 text-2xl font-bold">
-                Past Events
-                <span className="text-text-muted text-xl whitespace-pre">
-                    {"  "}({pastEvents.length})
-                </span>
-            </p>
-            <div className="flex flex-col gap-2">
-                {pastEvents.map((event) => (
-                    <EventCard key={event.id} event={event} />
-                ))}
-            </div>
+        <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
+            <PageHeader
+                title="Events"
+                subtitle="Join upcoming talks and explore our archive of past sessions."
+                className="mb-6 md:mb-8"
+            />
+
+            <section className="mb-4 md:mb-6">
+                <div className="mb-2 flex items-center gap-2 md:mb-3">
+                    <h2 className="text-lg font-semibold tracking-tight md:text-xl">
+                        Current Events
+                    </h2>
+                    <span className="border-border bg-bg-muted/60 text-text-muted rounded-full border px-2 py-0.5 text-xs">
+                        {currentEvents.length}
+                    </span>
+                </div>
+                <div className="flex flex-col gap-3">
+                    {currentEvents.map((event) => (
+                        <EventCard key={event.id} event={event} />
+                    ))}
+                </div>
+            </section>
+
+            <section>
+                <div className="mb-2 flex items-center gap-2 md:mb-3">
+                    <h2 className="text-lg font-semibold tracking-tight md:text-xl">
+                        Past Events
+                    </h2>
+                    <span className="border-border bg-bg-muted/60 text-text-muted rounded-full border px-2 py-0.5 text-xs">
+                        {pastEvents.length}
+                    </span>
+                </div>
+                <div className="flex flex-col gap-3">
+                    {pastEvents.map((event) => (
+                        <EventCard key={event.id} event={event} />
+                    ))}
+                </div>
+            </section>
         </div>
     );
 }

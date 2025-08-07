@@ -13,7 +13,7 @@ export function ProfileInfo(props: { className?: string }) {
     return (
         <div
             className={cn(
-                "border-border bg-bg-muted grid grid-cols-2 items-center gap-2 rounded-lg border p-6",
+                "border-border bg-surface grid grid-cols-2 items-center gap-2 rounded border p-6",
                 props.className,
             )}
         >

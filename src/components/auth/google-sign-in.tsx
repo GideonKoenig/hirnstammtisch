@@ -26,7 +26,7 @@ export function GoogleSignIn() {
                 setLoading(false);
             }}
             className={cn(
-                "border-border flex w-full items-center justify-center gap-3 rounded-lg border bg-white px-4 py-2.5 font-medium text-gray-700 hover:bg-gray-100",
+                "border-border bg-surface text-text hover:bg-surface-hover flex w-full items-center justify-center gap-3 rounded-lg border px-4 py-2.5 font-medium",
                 loading && "opacity-50",
             )}
         >

@@ -78,10 +78,10 @@ export default async function AdminPage() {
         return (
             <div className="flex min-h-screen items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-red-600">
+                    <h1 className="text-error text-2xl font-bold">
                         Access Denied
                     </h1>
-                    <p className="mt-2 text-gray-600">
+                    <p className="text-text-muted mt-2">
                         You do not have permission to access this page.
                     </p>
                 </div>
@@ -101,34 +101,28 @@ export default async function AdminPage() {
             <h1 className="mb-8 text-3xl font-bold">Admin Panel</h1>
 
             <div className="space-y-6">
-                <div className="rounded-lg border p-6">
+                <div className="border-border bg-surface rounded-lg border p-6">
                     <h2 className="mb-4 text-xl font-semibold">
                         Delete All Events
                     </h2>
-                    <p className="mb-4 text-gray-600">
+                    <p className="text-text-muted mb-4">
                         Permanently delete all events from the database. This
                         action cannot be undone.
                     </p>
                     <form action={deleteAllEvents}>
-                        <Button
-                            type="submit"
-                            className="bg-red-600 hover:bg-red-700"
-                        >
+                        <Button type="submit" variant="destructive">
                             Delete All Events
                         </Button>
                     </form>
                 </div>
 
-                <div className="rounded-lg border p-6">
+                <div className="border-border bg-surface rounded-lg border p-6">
                     <h2 className="mb-4 text-xl font-semibold">
                         Event Migration
                     </h2>
-                    <p className="mb-4 text-gray-600">{`Migrate all ${totalGideonEvents} events where Gideon was the speaker (including deleted).`}</p>
+                    <p className="text-text-muted mb-4">{`Migrate all ${totalGideonEvents} events where Gideon was the speaker (including deleted).`}</p>
                     <form action={migrateGideonEvents}>
-                        <Button
-                            type="submit"
-                            className="bg-green-600 hover:bg-green-700"
-                        >
+                        <Button type="submit" variant="accent">
                             {"Migrate Gideon's Events"}
                         </Button>
                     </form>

@@ -27,9 +27,9 @@ export function MemberList() {
     );
 
     return (
-        <div>
-            <h2 className="mb-6 text-2xl font-bold">Members</h2>
-            <div className="flex flex-col gap-6">
+        <>
+            <h2 className="mb-6 w-full text-2xl font-bold">Members</h2>
+            <div className="flex w-full flex-col gap-6">
                 {usersWithPastEvents
                     .sort(
                         (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
@@ -44,6 +44,6 @@ export function MemberList() {
                         />
                     ))}
             </div>
-        </div>
+        </>
     );
 }

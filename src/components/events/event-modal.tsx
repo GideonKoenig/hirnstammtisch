@@ -108,7 +108,10 @@ export function EventModal() {
     return (
         <Dialog open={modalOpen} onOpenChange={closeModal}>
             <ScrollArea className="max-h-[90vh]">
-                <DialogContent showCloseButton={false}>
+                <DialogContent
+                    showCloseButton={false}
+                    className="border-border bg-surface border backdrop-blur-xl"
+                >
                     <DialogHeader>
                         <DialogTitle className="text-xl font-semibold">
                             {activeEvent.id ? "Edit Event" : "Add Event"}
@@ -275,14 +278,14 @@ export function EventModal() {
                         </div>
                     </div>
 
-                    <DialogFooter className="flex-col gap-2 sm:flex-row">
+                    <DialogFooter className="flex-col gap-2 md:flex-row">
                         <Button
                             variant="outline"
                             onClick={() => {
                                 setNotesVisible(false);
                                 closeModal();
                             }}
-                            className="w-full sm:w-auto"
+                            className="w-full md:w-auto"
                             disabled={
                                 createEvent.isPending || updateEvent.isPending
                             }
@@ -296,7 +299,7 @@ export function EventModal() {
                                 createEvent.isPending ||
                                 updateEvent.isPending
                             }
-                            className="w-full sm:w-auto"
+                            className="w-full md:w-auto"
                         >
                             {createEvent.isPending || updateEvent.isPending ? (
                                 <div className="flex items-center gap-2">
