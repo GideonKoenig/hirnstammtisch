@@ -41,7 +41,6 @@ export async function redactEvent<T extends Event | Event[]>(
     viewer: User | null | undefined,
 ): Promise<T extends Event[] ? ClientEvent[] : ClientEvent> {
     type ReturnType = T extends Event[] ? ClientEvent[] : ClientEvent;
-
     const viewerRole = parseUserRole(viewer?.role);
 
     // Fetch all preferences at once
@@ -81,11 +80,9 @@ export async function redactEvent<T extends Event | Event[]>(
 
 export async function redactUser<T extends User | User[]>(
     users: T,
-    viewer: User | null | undefined,
+    _viewer: User | null | undefined,
 ): Promise<T extends User[] ? ClientUser[] : ClientUser> {
     type ReturnType = T extends User[] ? ClientUser[] : ClientUser;
-
-    const viewerRole = parseUserRole(viewer?.role);
 
     // Fetch all preferences at once
     const result = await tryCatch(db.select().from(preference));
@@ -97,9 +94,6 @@ export async function redactUser<T extends User | User[]>(
     }
 
     const redactSingleUser = (userData: User) => {
-        const userPreferences =
-            preferencesMap.get(userData.id) ?? PREFERENCES_DEFAULT;
-
         return {
             ...userData,
         };

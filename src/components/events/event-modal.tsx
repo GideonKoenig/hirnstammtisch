@@ -68,8 +68,9 @@ export function EventModal() {
         },
     });
 
-    const isFormValid =
-        activeEvent && activeEvent.title?.trim() && activeEvent.speaker?.trim();
+    const isFormValid = !!(
+        activeEvent?.title?.trim() && activeEvent?.speaker?.trim()
+    );
 
     const handleUpdateEvent = (updates: Partial<Event>) => {
         setActiveEvent((prev) => ({ ...prev, ...updates }));

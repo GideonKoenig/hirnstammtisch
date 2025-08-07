@@ -26,7 +26,7 @@ export function checkVisibility(
     }
 }
 
-export function parseUserRole(userRole: string | undefined) {
+export function parseUserRole(userRole: string | undefined): UserRole {
     if (userRole === "admin") return "admin";
     if (userRole === "member") return "member";
     if (userRole === "guest") return "guest";

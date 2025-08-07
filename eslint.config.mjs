@@ -1,6 +1,7 @@
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import drizzle from "eslint-plugin-drizzle";
 import tsParser from "@typescript-eslint/parser";
+import importPlugin from "eslint-plugin-import";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
@@ -28,14 +29,14 @@ export default [
         plugins: {
             "@typescript-eslint": typescriptEslint,
             drizzle,
+            import: importPlugin,
             "react-compiler": reactCompiler,
         },
 
         languageOptions: {
             parser: tsParser,
-            ecmaVersion: 5,
-            sourceType: "script",
-
+            ecmaVersion: 2022,
+            sourceType: "module",
             parserOptions: {
                 project: true,
             },
@@ -110,6 +111,9 @@ export default [
                     ],
                 },
             ],
+
+            // Enforce throwing proper Error objects
+            "@/no-throw-literal": "error",
         },
     },
 ];

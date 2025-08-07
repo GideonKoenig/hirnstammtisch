@@ -1,5 +1,5 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError, UTApi } from "uploadthing/server";
+import { UTApi } from "uploadthing/server";
 import { db } from "@/server/db";
 import { getSession } from "@/server/utils";
 import { headers } from "next/headers";
@@ -17,7 +17,7 @@ export const fileRouter = {
     })
         .middleware(async () => {
             const session = await getSession(await headers());
-            if (!session?.user) throw new UploadThingError("Unauthorized");
+            if (!session?.user) throw new Error("Unauthorized");
             return { user: session.user };
         })
         .onUploadComplete(async ({ metadata, file }) => {
@@ -55,7 +55,7 @@ export const fileRouter = {
     })
         .middleware(async () => {
             const session = await getSession(await headers());
-            if (!session?.user) throw new UploadThingError("Unauthorized");
+            if (!session?.user) throw new Error("Unauthorized");
             return { user: session.user };
         })
         .onUploadComplete(async ({ metadata, file }) => {

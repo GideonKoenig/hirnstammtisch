@@ -50,14 +50,15 @@ export function EventList(props: { showSpeakerNames?: boolean }) {
             return b.createdAt.getTime() - a.createdAt.getTime();
         });
 
-    let lastSpeaker: ClientUser | null = null;
-
     return (
         <div className="flex flex-col gap-2">
-            {eventsFiltered.map((event) => {
+            {eventsFiltered.map((event, index) => {
                 const speaker = getSpeaker(event, users)!;
-                const showSpeaker = lastSpeaker !== speaker;
-                lastSpeaker = speaker;
+                const prevSpeakerId =
+                    index > 0
+                        ? getSpeaker(eventsFiltered[index - 1]!, users)?.id
+                        : undefined;
+                const showSpeaker = speaker.id !== prevSpeakerId;
 
                 return (
                     <div key={event.id} className="flex flex-col gap-4">
