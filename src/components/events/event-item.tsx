@@ -42,7 +42,7 @@ export function EventCard(props: {
         <div className="group border-border/80 bg-card/70 ring-border/50 hover:bg-card/80 relative transform-gpu rounded-xl border p-4 ring-1 backdrop-blur-md transition-transform duration-50 ease-out hover:scale-[1.008] hover:shadow-[0_10px_40px_rgba(0,0,0,0.45)]">
             <span
                 aria-hidden
-                className="border-border/60 absolute -inset-px rounded-xl border"
+                className="border-border/60 pointer-events-none absolute -inset-px rounded-xl border"
             />
             <span
                 aria-hidden
@@ -104,8 +104,6 @@ export function EventCard(props: {
     );
 }
 
-// TODO: the slides element is not a clickable link, when it exists, and the recording should show "no recording" even if it is redacted and only redacted if it exists but was redacted
-
 function SpeakerCard(props: { user: ClientUser }) {
     return (
         <div className="flex items-center gap-3">
@@ -159,7 +157,7 @@ function SlidesLinkCard(props: { event: ClientEvent }) {
 
     if (!hasValue) {
         return (
-            <div className="bg-bg-muted/50 text-text-muted flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
+            <div className="bg-bg/50 text-text-muted flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
                 <X className="h-4 w-4" />
                 <span>No Slides</span>
             </div>
@@ -181,20 +179,18 @@ function SlidesLinkCard(props: { event: ClientEvent }) {
 }
 
 function RecordingDownloadCard(props: { event: ClientEvent }) {
-    const user = useUser();
-    const userIsMember = checkAccess(user?.role, "member");
     const { value, redacted } = props.event.recording;
     const asset = api.asset.getRecording.useQuery(
         {
             id: value!,
         },
-        { enabled: !!value && !redacted && userIsMember },
+        { enabled: !!value && !redacted },
     );
 
     const hasValue = !!value;
     const isRedacted = redacted;
 
-    if (isRedacted || !userIsMember) {
+    if (isRedacted) {
         return (
             <ResponsiveTooltip
                 content={
@@ -229,7 +225,7 @@ function RecordingDownloadCard(props: { event: ClientEvent }) {
 
     if (!hasValue) {
         return (
-            <div className="bg-bg-muted/50 text-text-muted flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
+            <div className="bg-bg/50 text-text-muted flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
                 <X className="h-4 w-4" />
                 <span>No Recording</span>
             </div>

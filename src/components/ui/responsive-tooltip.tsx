@@ -17,7 +17,7 @@ export function ResponsiveTooltip(props: {
     className?: string;
 }) {
     const tooltipClasses = cn(
-        "w-80 rounded-xl shadow-2xl p-0 bg-border overflow-hidden",
+        "rounded-lg border border-border/60 bg-card/95 text-text shadow-2xl backdrop-blur-md p-0 overflow-hidden",
         props.className,
     );
 
