@@ -9,5 +9,9 @@ export function createRedactedField<T>(
     if (checkVisibility(viewerRole, requiredVisibility)) {
         return { value, redacted: false };
     }
+    // If there's nothing to show, don't mark as redacted
+    if (value == null) {
+        return { value: null as T, redacted: false };
+    }
     return { value: null as T, redacted: true };
 }
