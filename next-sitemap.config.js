@@ -5,6 +5,10 @@ const config = {
     generateIndexSitemap: true,
     changefreq: "daily",
     priority: 0.7,
+    additionalPaths: async (cfg) => {
+        const routes = ["/", "/about", "/calendar"];
+        return Promise.all(routes.map((loc) => cfg.transform(cfg, loc)));
+    },
     exclude: [
         "/api/*",
         "/profile/*",
