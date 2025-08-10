@@ -26,9 +26,9 @@ export function ProfileHeader(props: { className?: string }) {
 
             <Button
                 variant="accent"
-                onMouseDown={() => {
-                    void authClient.signOut();
-                    router.push("/signin");
+                onMouseDown={async () => {
+                    await authClient.signOut();
+                    router.replace("/signin");
                 }}
             >
                 <LogOut className="mr-1 h-4 w-4" />
