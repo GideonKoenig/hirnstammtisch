@@ -113,7 +113,7 @@ export default [
             ],
 
             // Enforce throwing proper Error objects
-            "@/no-throw-literal": "error",
+            "no-throw-literal": "error",
         },
     },
 ];
