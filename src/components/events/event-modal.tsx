@@ -306,23 +306,29 @@ function RecordingField(props: {
     return (
         <div className="flex flex-col gap-2">
             {hasSelected && (
-                <div className="flex items-center gap-2">
-                    <div className="truncate text-sm">{props.file?.name}</div>
+                <div className="flex h-10 w-full items-center gap-2">
+                    <div
+                        className="max-w-80 min-w-0 truncate text-sm"
+                        title={props.file?.name}
+                    >
+                        {props.file?.name}
+                    </div>
+                    <div className="flex-1" />
                     <Button
                         variant="outline"
                         onMouseDown={props.onClearFile}
-                        className="bg-bg hover:bg-bg/70 border-border h-8 px-3 text-xs"
+                        className="bg-bg hover:bg-bg/70 border-border h-10 px-3 text-xs"
                     >
-                        <X className="h-4 w-4" />
-                        Clear
+                        <X className="mr-1 h-4 w-4" />
+                        {"Remove"}
                     </Button>
                     <Button
                         variant="outline"
                         onMouseDown={props.onRequestPickFile}
-                        className="bg-bg hover:bg-bg/70 border-border h-8 px-3 text-xs"
+                        className="bg-bg hover:bg-bg/70 border-border h-10 px-3 text-xs"
                     >
-                        <Upload className="h-4 w-4" />
-                        Change
+                        <Upload className="mr-1 h-4 w-4" />
+                        {"Replace"}
                     </Button>
                 </div>
             )}
@@ -337,16 +343,16 @@ function RecordingField(props: {
                             props.removeExistingRecording && "opacity-70",
                         )}
                     >
-                        <X className="h-4 w-4" />
-                        Remove Recording
+                        <X className="mr-1 h-4 w-4" />
+                        {"Remove"}
                     </Button>
                     <Button
                         variant="outline"
                         onMouseDown={props.onRequestPickFile}
                         className="bg-bg hover:bg-bg/70 border-border h-10 w-full md:w-auto"
                     >
-                        <Upload className="h-4 w-4" />
-                        Replace File
+                        <Upload className="mr-1 h-4 w-4" />
+                        {"Replace"}
                     </Button>
                 </div>
             )}
@@ -356,12 +362,12 @@ function RecordingField(props: {
                     variant="outline"
                     onMouseDown={props.onRequestPickFile}
                     className={cn(
-                        "bg-bg hover:bg-bg/70 border-border h-10 w-full",
+                        "bg-bg hover:bg-bg/70 border-border h-10 w-full text-sm",
                         props.isUploading && "opacity-50",
                     )}
                 >
-                    <Upload className="h-4 w-4" />
-                    Choose File
+                    <Upload className="mr-1 h-4 w-4" />
+                    {"Choose File"}
                 </Button>
             )}
 
