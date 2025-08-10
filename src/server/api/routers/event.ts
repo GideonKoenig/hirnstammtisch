@@ -29,6 +29,7 @@ export const eventRouter = createTRPCRouter({
             z.object({
                 title: z.string().min(1),
                 speaker: z.string(),
+                recording: z.string().nullish(),
                 slidesUrl: z.string().nullish(),
                 maxAttendees: z.number().int().positive().nullish(),
                 date: z.date().nullish(),
