@@ -5,12 +5,26 @@ const config = {
     generateIndexSitemap: true,
     changefreq: "daily",
     priority: 0.7,
-    exclude: ["/api/*", "/profile/*"],
+    exclude: [
+        "/api/*",
+        "/profile/*",
+        "/admin",
+        "/signin",
+        "/signup",
+        "/events",
+    ],
     robotsTxtOptions: {
         policies: [
             {
                 userAgent: "*",
-                disallow: ["/api/*", "/profile/*"],
+                disallow: [
+                    "/api/*",
+                    "/profile/*",
+                    "/admin",
+                    "/signin",
+                    "/signup",
+                    "/events",
+                ],
                 allow: "/",
             },
         ],

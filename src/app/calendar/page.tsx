@@ -3,6 +3,18 @@ import { EventContextProvider } from "@/components/events/event-context";
 import { api, HydrateClient } from "@/trpc/server";
 import { CalendarView } from "@/components/calendar/calendar-view";
 import { PageHeader } from "@/components/ui/page-header";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Event Calendar",
+    description: "See all HirnstammTisch events on a monthly calendar view.",
+    alternates: { canonical: "/calendar" },
+    openGraph: {
+        title: "Event Calendar - HirnstammTisch",
+        description: "Browse HirnstammTisch events by date on the calendar.",
+        url: "https://hirnstammtisch.com/calendar",
+    },
+};
 
 export default async function CalendarPage() {
     void api.user.getAll.prefetch();

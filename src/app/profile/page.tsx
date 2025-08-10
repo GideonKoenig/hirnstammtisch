@@ -7,6 +7,18 @@ import { ProfileImage } from "@/components/profile/profile-image";
 import { ProfileInfo } from "@/components/profile/profile-info";
 import { ProfilePreferences } from "@/components/profile/profile-preferences";
 import { api, HydrateClient } from "@/trpc/server";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Profile",
+    description: "Manage your account settings and preferences.",
+    robots: {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+    },
+    alternates: { canonical: "/profile" },
+};
 
 export default async function Profile() {
     const session = await getSession(await headers());

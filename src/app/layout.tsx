@@ -19,12 +19,16 @@ const APP_TITLE_TEMPLATE = "%s - HirnstammTisch";
 const APP_DESCRIPTION = "Let's talk about stuff.";
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://hirnstammtisch.com"),
     applicationName: APP_NAME,
     title: {
         default: APP_DEFAULT_TITLE,
         template: APP_TITLE_TEMPLATE,
     },
     description: APP_DESCRIPTION,
+    alternates: {
+        canonical: "/",
+    },
     manifest: "/manifest.json",
     appleWebApp: {
         capable: true,
@@ -35,6 +39,14 @@ export const metadata: Metadata = {
     formatDetection: {
         telephone: false,
     },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+        },
+    },
     openGraph: {
         type: "website",
         siteName: APP_NAME,
@@ -43,17 +55,20 @@ export const metadata: Metadata = {
             template: APP_TITLE_TEMPLATE,
         },
         description: APP_DESCRIPTION,
+        images: [{ url: "/icon.webp" }],
     },
     twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: {
             default: APP_DEFAULT_TITLE,
             template: APP_TITLE_TEMPLATE,
         },
         description: APP_DESCRIPTION,
+        images: ["/icon.webp"],
     },
     icons: {
         icon: "/favicon.ico",
+        apple: "/ios/180.png",
     },
 };
 

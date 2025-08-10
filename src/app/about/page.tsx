@@ -1,6 +1,20 @@
 import { MemberList } from "@/components/about/member-list";
 import { api, HydrateClient } from "@/trpc/server";
 import { PageHeader } from "@/components/ui/page-header";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "About",
+    description:
+        "The HirnstammTisch is a small group of people who meet regularly to discuss interesting topics.",
+    alternates: { canonical: "/about" },
+    openGraph: {
+        title: "About - HirnstammTisch",
+        description:
+            "Learn about the HirnstammTisch community and its members.",
+        url: "https://hirnstammtisch.com/about",
+    },
+};
 
 export default async function About() {
     void api.user.getAll.prefetch();

@@ -1,6 +1,20 @@
 import { EventCard } from "@/components/events/event-item";
 import { api } from "@/trpc/server";
 import { PageHeader } from "@/components/ui/page-header";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Events",
+    description:
+        "Join upcoming HirnstammTisch talks and explore our archive of past sessions.",
+    alternates: { canonical: "/" },
+    openGraph: {
+        title: "HirnstammTisch",
+        description:
+            "Discover upcoming events and browse past sessions from the HirnstammTisch community.",
+        url: "https://hirnstammtisch.com/",
+    },
+};
 
 export default async function HomePage() {
     const events = await api.event.getAll();

@@ -1,7 +1,17 @@
-"use client";
-
 import { EmailSignUp } from "@/components/auth/email-sign-up";
 import { Link } from "@/components/ui/fast-link";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Sign up",
+    description: "Create your HirnstammTisch account.",
+    robots: {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+    },
+    alternates: { canonical: "/signup" },
+};
 
 export default function SignUpPage() {
     return (

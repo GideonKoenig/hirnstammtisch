@@ -8,6 +8,18 @@ import { EventContextProvider } from "@/components/events/event-context";
 import { UserSidebar } from "@/components/events/user-sidebar";
 import { api, HydrateClient } from "@/trpc/server";
 import { PageHeader } from "@/components/ui/page-header";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Events",
+    description: "Create and update HirnstammTisch events.",
+    robots: {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+    },
+    alternates: { canonical: "/events" },
+};
 
 export default async function Events() {
     const session = await getSession(await headers());
@@ -22,7 +34,7 @@ export default async function Events() {
                 <div className="relative mx-auto w-full max-w-4xl p-4 md:p-6">
                     <PageHeader
                         title="Events"
-                        subtitle="Browse upcoming talks or search the archive by speaker and title"
+                        subtitle="Create and update events."
                         className="mb-4"
                     />
                     <EventsSearchBar className="mb-4" />

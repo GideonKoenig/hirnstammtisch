@@ -6,6 +6,7 @@ import {
     Home,
     Text,
     User,
+    Shield,
     type LucideIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -23,6 +24,7 @@ export function NavigationBar(props: { className?: string }) {
         icon: LucideIcon;
         label: string;
         hide?: boolean;
+        desktopOnly?: boolean;
     }[] = [
         {
             href: "/events",
@@ -51,6 +53,13 @@ export function NavigationBar(props: { className?: string }) {
             label: "Sign In",
             hide: !!session,
         },
+        {
+            href: "/admin",
+            icon: Shield,
+            label: "Admin",
+            hide: session?.user.role !== "admin",
+            desktopOnly: true,
+        },
     ];
 
     return (
@@ -58,6 +67,7 @@ export function NavigationBar(props: { className?: string }) {
             className={cn(
                 "grid w-full grid-cols-5 items-center gap-1 lg:grid-cols-7 lg:gap-4",
                 props.className,
+                session?.user.role === "admin" && "lg:grid-cols-8",
             )}
         >
             <Link
@@ -89,6 +99,7 @@ export function NavigationBar(props: { className?: string }) {
                         className={cn(
                             "hover:bg-bg-muted flex flex-col items-center rounded px-4 py-2 lg:mt-1 lg:py-2",
                             isActive && "text-accent",
+                            item.desktopOnly && "hidden lg:flex",
                         )}
                         href={item.href}
                     >

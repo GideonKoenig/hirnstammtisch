@@ -8,6 +8,18 @@ import { sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import eventsJson from "@data/events.json";
 import usersJson from "@data/users.json";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Admin",
+    description: "Administrative tools for HirnstammTisch.",
+    robots: {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+    },
+    alternates: { canonical: "/admin" },
+};
 
 async function deleteAllEvents() {
     "use server";

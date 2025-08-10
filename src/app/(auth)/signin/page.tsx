@@ -1,8 +1,18 @@
-"use client";
-
 import { GoogleSignIn } from "@/components/auth/google-sign-in";
 import { EmailSignIn } from "@/components/auth/email-sign-in";
 import { Link } from "@/components/ui/fast-link";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Sign in",
+    description: "Sign in to your HirnstammTisch account.",
+    robots: {
+        index: false,
+        follow: false,
+        googleBot: { index: false, follow: false },
+    },
+    alternates: { canonical: "/signin" },
+};
 
 export default function SignInPage() {
     return (
