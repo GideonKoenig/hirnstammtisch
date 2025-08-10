@@ -5,6 +5,8 @@ import { CalendarView } from "@/components/calendar/calendar-view";
 import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
     title: "Event Calendar",
     description: "See all HirnstammTisch events on a monthly calendar view.",

@@ -3,6 +3,8 @@ import { api, HydrateClient } from "@/trpc/server";
 import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
     title: "About",
     description:
