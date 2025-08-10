@@ -23,3 +23,18 @@ const serwist = new Serwist({
 });
 
 serwist.addEventListeners();
+
+self.addEventListener("fetch", (event) => {
+    const url = new URL(event.request.url);
+    if (url.pathname.startsWith("/api/auth/")) {
+        event.respondWith(fetch(event.request));
+        return;
+    }
+    if (
+        event.request.mode === "navigate" &&
+        (url.pathname === "/signin" || url.pathname === "/profile")
+    ) {
+        event.respondWith(fetch(event.request));
+        return;
+    }
+});
