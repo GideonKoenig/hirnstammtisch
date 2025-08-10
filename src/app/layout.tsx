@@ -12,6 +12,7 @@ import { PwaInstallPopupIos } from "@/components/pwa/pwa-install-popup-ios";
 import { Toaster } from "@/components/ui/sonner";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Suspense } from "react";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
@@ -104,8 +105,10 @@ export default async function RootLayout({
                             </div>
                         </ScrollArea>
                         <Toaster closeButton />
-                        <PwaInstallPopup />
-                        <PwaInstallPopupIos />
+                        <Suspense fallback={null}>
+                            <PwaInstallPopup />
+                            <PwaInstallPopupIos />
+                        </Suspense>
                     </body>
                 </PwaProvider>
             </TRPCReactProvider>
