@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
+import { type UserRole } from "@/lib/permissions/types";
 import { cn } from "@/lib/utils";
-import { type UserRole } from "@/lib/permissions/redact-fields";
 
 export function RoleBadge(props: { role: UserRole; className?: string }) {
     if (props.role === "admin") {
