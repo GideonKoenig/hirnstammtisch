@@ -35,7 +35,7 @@ export default async function HomePage() {
     return (
         <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
             <PageHeader
-                title="Events"
+                title="HirnstammTisch"
                 subtitle="Join upcoming talks and explore our archive of past sessions."
                 className="mb-6 md:mb-8"
             />
