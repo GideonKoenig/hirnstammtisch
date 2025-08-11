@@ -24,9 +24,13 @@ export function PwaInstallPopupIos() {
         false,
     );
 
+    const debug = false;
+
     return (
         <div
-            data-show={isIos && !isStandalone && (!isDismissed || forcePwa)}
+            data-show={
+                debug || (isIos && !isStandalone && (!isDismissed || forcePwa))
+            }
             className="bg-bg/70 fixed inset-0 z-50 hidden items-end backdrop-blur-sm data-[show=true]:flex"
         >
             <div className="border-border bg-surface mx-auto w-full max-w-lg translate-y-2 rounded-t-2xl border p-4 pb-[calc(env(safe-area-inset-bottom)+12px)] shadow-xl transition-transform data-[show=true]:translate-y-0">

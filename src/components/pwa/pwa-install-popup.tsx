@@ -16,9 +16,11 @@ export function PwaInstallPopup() {
         false,
     );
 
+    const debug = false;
+
     return (
         <div
-            data-show={isInstallable && (!isDismissed || forcePwa)}
+            data-show={debug || (isInstallable && (!isDismissed || forcePwa))}
             className="bg-bg/70 fixed inset-0 z-50 hidden items-end backdrop-blur-sm data-[show=true]:flex"
         >
             <div
