@@ -96,12 +96,12 @@ export default async function RootLayout({
                             routerConfig={extractRouterConfig(fileRouter)}
                         />
                         <ScrollArea className="h-full w-full">
-                            <div className="flex min-h-dvh flex-col">
+                            <div className="flex min-h-dvh flex-col pb-[calc(env(safe-area-inset-bottom)+56px)] lg:pb-0">
                                 <NavigationBar className="hidden lg:grid" />
                                 <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
                                 </main>
-                                <NavigationBar className="bg-bg sticky bottom-0 lg:hidden" />
+                                <NavigationBar className="bg-bg border-border fixed inset-x-0 bottom-0 z-50 border-t lg:hidden" />
                             </div>
                         </ScrollArea>
                         <Toaster closeButton />
