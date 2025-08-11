@@ -96,12 +96,12 @@ export default async function RootLayout({
             </head>
             <TRPCReactProvider>
                 <PwaProvider>
-                    <body className="bg-bg text-text relative h-dvh w-dvw overflow-hidden">
+                    <body className="bg-bg text-text relative h-svh w-screen overflow-hidden">
                         <UploadThingProvider
                             routerConfig={extractRouterConfig(fileRouter)}
                         />
                         <ScrollArea className="h-full w-full">
-                            <div className="flex min-h-dvh flex-col">
+                            <div className="flex min-h-svh flex-col">
                                 <NavigationBar className="hidden lg:grid" />
                                 <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
