@@ -3,9 +3,7 @@ import { toNextJsHandler } from "better-auth/next-js";
 
 const handler = toNextJsHandler(auth);
 
-type RouteContext = { params?: Record<string, string | string[]> };
-
-async function logAuthRequest(request: Request, context?: RouteContext) {
+async function logAuthRequest(request: Request) {
     const requestClone = request.clone();
     let body: unknown = null;
     try {
@@ -30,23 +28,21 @@ async function logAuthRequest(request: Request, context?: RouteContext) {
         string,
         string
     >;
-    const params = context?.params ?? null;
 
     console.log("[AUTH API]", {
         method: request.method,
         url: request.url,
-        params,
         headers,
         body,
     });
 }
 
-export async function GET(request: Request, context: RouteContext) {
-    await logAuthRequest(request, context);
+export async function GET(request: Request) {
+    await logAuthRequest(request);
     return handler.GET(request);
 }
 
-export async function POST(request: Request, context: RouteContext) {
-    await logAuthRequest(request, context);
+export async function POST(request: Request) {
+    await logAuthRequest(request);
     return handler.POST(request);
 }
