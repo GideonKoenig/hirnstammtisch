@@ -21,7 +21,6 @@ const APP_DESCRIPTION = "Let's talk about stuff.";
 
 /* Todo
  * - Properly setup the height for the page (respect save areas) and then make sure, the scrollbehaviour on mobile (both in chrome and installed work properly)
- * - Add a 404 page
  */
 
 export const metadata: Metadata = {
@@ -102,16 +101,12 @@ export default async function RootLayout({
                             routerConfig={extractRouterConfig(fileRouter)}
                         />
                         <ScrollArea className="h-full w-full">
-                            <div className="flex min-h-dvh flex-col pb-[calc(env(safe-area-inset-bottom)+56px)] lg:pb-0">
+                            <div className="flex min-h-dvh flex-col">
                                 <NavigationBar className="hidden lg:grid" />
                                 <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
                                 </main>
-                                <NavigationBar className="bg-bg fixed inset-x-0 bottom-0 pb-[env(safe-area-inset-bottom)] lg:hidden" />
-                                <div
-                                    aria-hidden
-                                    className="bg-bg pointer-events-none fixed inset-x-0 bottom-0 h-[env(safe-area-inset-bottom)] lg:hidden"
-                                />
+                                <NavigationBar className="bg-bg sticky bottom-0 lg:hidden" />
                             </div>
                         </ScrollArea>
                         <Toaster closeButton />
