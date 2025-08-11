@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Events",
+    title: "HirnstammTisch",
     description:
         "Join upcoming HirnstammTisch talks and explore our archive of past sessions.",
     alternates: { canonical: "/" },

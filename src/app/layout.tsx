@@ -16,8 +16,13 @@ import { Suspense } from "react";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
-const APP_TITLE_TEMPLATE = "%s - HirnstammTisch";
+const APP_TITLE_TEMPLATE = "%s";
 const APP_DESCRIPTION = "Let's talk about stuff.";
+
+/* Todo
+ * - Properly setup the height for the page (respect save areas) and then make sure, the scrollbehaviour on mobile (both in chrome and installed work properly)
+ * - Add a 404 page
+ */
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://hirnstammtisch.com"),

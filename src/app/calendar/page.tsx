@@ -8,7 +8,7 @@ import { type Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-    title: "Event Calendar",
+    title: "Calendar",
     description: "See all HirnstammTisch events on a monthly calendar view.",
     alternates: { canonical: "/calendar" },
     openGraph: {
