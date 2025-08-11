@@ -164,7 +164,7 @@ export function EventModal() {
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className="grid grid-cols-1 items-center gap-4 py-4 pr-1 md:grid-cols-[auto_1fr] md:gap-x-4 md:gap-y-3">
+                <div className="grid grid-cols-1 items-center gap-4 px-1 py-4 md:grid-cols-[auto_1fr] md:gap-x-4 md:gap-y-3">
                     <label className="text-sm font-medium md:text-right">
                         Title *
                     </label>
