@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { redactEvent } from "@/server/utils";
 import { tryCatch } from "@/lib/try-catch";
+import { and } from "drizzle-orm";
 
 export const eventRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ ctx }) => {
@@ -105,6 +106,38 @@ export const eventRouter = createTRPCRouter({
                 throw new TRPCError({
                     code: "NOT_FOUND",
                     message: "Event not found",
+                });
+            }
+            return;
+        }),
+
+    getDeleted: protectedProcedure("admin").query(async ({ ctx }) => {
+        const result = await tryCatch(
+            ctx.db.select().from(event).where(eq(event.deleted, true)),
+        );
+        const events = result.unwrap();
+        const redacted = await redactEvent(events, ctx.session?.user, ctx.db);
+        return redacted;
+    }),
+
+    deletePermanently: protectedProcedure("admin")
+        .input(
+            z.object({
+                id: z.string(),
+            }),
+        )
+        .mutation(async ({ ctx, input }) => {
+            const result = await tryCatch(
+                ctx.db
+                    .delete(event)
+                    .where(
+                        and(eq(event.id, input.id), eq(event.deleted, true)),
+                    ),
+            );
+            if (!result.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to permanently delete event",
                 });
             }
             return;

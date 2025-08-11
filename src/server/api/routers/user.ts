@@ -76,4 +76,61 @@ export const userRouter = createTRPCRouter({
                 : (imageData.assetUrl ?? null);
             return imageUrl;
         }),
+
+    setRole: protectedProcedure("admin")
+        .input(
+            z.object({
+                id: z.string(),
+                role: z.enum(["guest", "member", "admin"]),
+            }),
+        )
+        .mutation(async ({ ctx, input }) => {
+            const result = await tryCatch(
+                ctx.db
+                    .update(user)
+                    .set({ role: input.role, updatedAt: new Date() })
+                    .where(eq(user.id, input.id))
+                    .returning({ id: user.id }),
+            );
+            if (!result.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to update user role",
+                });
+            }
+            const rows = result.unwrap();
+            if (rows.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "User not found",
+                });
+            }
+            return;
+        }),
+
+    setCreatedAt: protectedProcedure("admin")
+        .input(z.object({ id: z.string(), createdAt: z.date() }))
+        .mutation(async ({ ctx, input }) => {
+            const result = await tryCatch(
+                ctx.db
+                    .update(user)
+                    .set({ createdAt: input.createdAt, updatedAt: new Date() })
+                    .where(eq(user.id, input.id))
+                    .returning({ id: user.id }),
+            );
+            if (!result.success) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to update user creation date",
+                });
+            }
+            const rows = result.unwrap();
+            if (rows.length !== 1) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "User not found",
+                });
+            }
+            return;
+        }),
 });

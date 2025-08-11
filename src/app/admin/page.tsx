@@ -8,7 +8,14 @@ import { sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import eventsJson from "@data/events.json";
 import usersJson from "@data/users.json";
+import { UserAdmin } from "@/components/admin/user-admin";
+import { DeletedEventsAdmin } from "@/components/admin/deleted-events-admin";
 import { type Metadata } from "next";
+import {
+    actionMigrate,
+    actionLoadLegacy,
+    actionStatus,
+} from "@/components/admin/actions";
 
 export const metadata: Metadata = {
     title: "Admin",
@@ -113,6 +120,40 @@ export default async function AdminPage() {
             <h1 className="mb-8 text-3xl font-bold">Admin Panel</h1>
 
             <div className="space-y-6">
+                <div className="border-border bg-surface rounded-lg border p-6">
+                    <h2 className="mb-4 text-xl font-semibold">Users</h2>
+                    <p className="text-text-muted mb-4">
+                        Manage user roles and creation dates.
+                    </p>
+                    <UserAdmin
+                        legacyUsers={(
+                            usersJson as Array<{
+                                id: number;
+                                name: string;
+                                created_at?: string | null;
+                            }>
+                        ).map((u) => ({
+                            id: u.id,
+                            name: u.name,
+                            createdAt: u.created_at ?? undefined,
+                        }))}
+                        actionMigrate={actionMigrate}
+                        actionLoadLegacy={actionLoadLegacy}
+                        actionStatus={actionStatus}
+                    />
+                </div>
+
+                <div className="border-border bg-surface rounded-lg border p-6">
+                    <h2 className="mb-4 text-xl font-semibold">
+                        Deleted Events
+                    </h2>
+                    <p className="text-text-muted mb-4">
+                        Review events marked as deleted and permanently remove
+                        if needed.
+                    </p>
+                    <DeletedEventsAdmin />
+                </div>
+
                 <div className="border-border bg-surface rounded-lg border p-6">
                     <h2 className="mb-4 text-xl font-semibold">
                         Delete All Events
