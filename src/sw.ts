@@ -14,27 +14,31 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
-const serwist = new Serwist({
-    precacheEntries: self.__SW_MANIFEST,
-    skipWaiting: true,
-    clientsClaim: true,
-    navigationPreload: true,
-    runtimeCaching: defaultCache,
-});
-
-serwist.addEventListeners();
-
 self.addEventListener("fetch", (event) => {
     const url = new URL(event.request.url);
+    if (url.origin !== self.location.origin) return;
     if (url.pathname.startsWith("/api/auth/")) {
         event.respondWith(fetch(event.request));
         return;
     }
     if (
         event.request.mode === "navigate" &&
-        (url.pathname === "/signin" || url.pathname === "/profile")
+        (url.pathname === "/signin" ||
+            url.pathname === "/signup" ||
+            url.pathname === "/profile" ||
+            /[?&](code|state)=/.test(url.search))
     ) {
         event.respondWith(fetch(event.request));
         return;
     }
 });
+
+const serwist = new Serwist({
+    precacheEntries: self.__SW_MANIFEST,
+    skipWaiting: true,
+    clientsClaim: true,
+    navigationPreload: false,
+    runtimeCaching: defaultCache,
+});
+
+serwist.addEventListeners();

@@ -101,7 +101,7 @@ export default async function RootLayout({
                                 <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
                                 </main>
-                                <NavigationBar className="bg-bg border-border fixed inset-x-0 bottom-0 z-50 border-t lg:hidden" />
+                                <NavigationBar className="bg-bg border-border fixed inset-x-0 bottom-0 border-t lg:hidden" />
                             </div>
                         </ScrollArea>
                         <Toaster closeButton />

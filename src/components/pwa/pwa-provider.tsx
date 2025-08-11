@@ -100,7 +100,14 @@ export const PwaProvider = ({ children }: { children: React.ReactNode }) => {
                     clearTimeout(toastTimer);
                     toastTimer = null;
                 }
+                const { pathname, search } = window.location;
+                const isAuthFlow =
+                    pathname.startsWith("/api/auth/") ||
+                    pathname === "/signin" ||
+                    pathname === "/signup" ||
+                    /[?&](code|state)=/.test(search);
                 toast.dismiss();
+                if (isAuthFlow) return;
                 window.location.reload();
             };
 
