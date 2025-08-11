@@ -19,10 +19,6 @@ const APP_DEFAULT_TITLE = "HirnstammTisch";
 const APP_TITLE_TEMPLATE = "%s";
 const APP_DESCRIPTION = "Let's talk about stuff.";
 
-/* Todo
- * - Properly setup the height for the page (respect save areas) and then make sure, the scrollbehaviour on mobile (both in chrome and installed work properly)
- */
-
 export const metadata: Metadata = {
     metadataBase: new URL("https://hirnstammtisch.com"),
     applicationName: APP_NAME,
