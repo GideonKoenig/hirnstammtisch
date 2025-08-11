@@ -75,6 +75,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
     themeColor: "#060606",
+    viewportFit: "cover",
 };
 
 export default async function RootLayout({
@@ -101,7 +102,11 @@ export default async function RootLayout({
                                 <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
                                 </main>
-                                <NavigationBar className="bg-bg border-border fixed inset-x-0 bottom-0 border-t pb-[env(safe-area-inset-bottom)] lg:hidden" />
+                                <NavigationBar className="bg-bg fixed inset-x-0 bottom-0 pb-[env(safe-area-inset-bottom)] lg:hidden" />
+                                <div
+                                    aria-hidden
+                                    className="bg-bg pointer-events-none fixed inset-x-0 bottom-0 h-[env(safe-area-inset-bottom)] lg:hidden"
+                                />
                             </div>
                         </ScrollArea>
                         <Toaster closeButton />
