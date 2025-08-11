@@ -14,40 +14,11 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
-self.addEventListener("fetch", (event) => {
-    const url = new URL(event.request.url);
-    if (url.origin !== self.location.origin) return;
-    if (url.pathname.startsWith("/api/auth/")) {
-        (
-            event as unknown as {
-                preloadResponse?: Promise<Response | undefined>;
-            }
-        ).preloadResponse = Promise.resolve(undefined);
-        event.respondWith(fetch(event.request));
-        return;
-    }
-    if (
-        event.request.mode === "navigate" &&
-        (url.pathname === "/signin" ||
-            url.pathname === "/signup" ||
-            url.pathname === "/profile" ||
-            /[?&](code|state)=/.test(url.search))
-    ) {
-        (
-            event as unknown as {
-                preloadResponse?: Promise<Response | undefined>;
-            }
-        ).preloadResponse = Promise.resolve(undefined);
-        event.respondWith(fetch(event.request));
-        return;
-    }
-});
-
 const serwist = new Serwist({
     precacheEntries: self.__SW_MANIFEST,
     skipWaiting: true,
     clientsClaim: true,
-    navigationPreload: false,
+    navigationPreload: true,
     runtimeCaching: defaultCache,
 });
 
