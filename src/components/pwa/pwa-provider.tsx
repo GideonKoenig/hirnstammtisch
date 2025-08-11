@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 declare global {
     interface WindowEventMap {
@@ -83,6 +84,56 @@ export const PwaProvider = ({ children }: { children: React.ReactNode }) => {
             },
             { signal },
         );
+
+        if ("serviceWorker" in navigator) {
+            let toastTimer: number | null = null;
+
+            const scheduleToast = () => {
+                if (toastTimer !== null) return;
+                toastTimer = window.setTimeout(() => {
+                    toast("Updating…");
+                }, 1000);
+            };
+
+            const clearToastAndReload = () => {
+                if (toastTimer !== null) {
+                    clearTimeout(toastTimer);
+                    toastTimer = null;
+                }
+                toast.dismiss();
+                window.location.reload();
+            };
+
+            void navigator.serviceWorker
+                .getRegistration()
+                .then((r) => {
+                    if (!r) return;
+                    r.addEventListener("updatefound", scheduleToast, {
+                        signal,
+                    });
+                    return r.update();
+                })
+                .catch(() => undefined);
+
+            document.addEventListener(
+                "visibilitychange",
+                () => {
+                    if (document.visibilityState === "visible") {
+                        void navigator.serviceWorker
+                            .getRegistration()
+                            .then((r) => r?.update())
+                            .catch(() => undefined);
+                    }
+                },
+                { signal },
+            );
+
+            navigator.serviceWorker.addEventListener(
+                "controllerchange",
+                clearToastAndReload,
+                { signal },
+            );
+        }
 
         return () => {
             controller.abort();
