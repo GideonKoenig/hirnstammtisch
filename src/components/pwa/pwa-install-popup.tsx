@@ -19,41 +19,54 @@ export function PwaInstallPopup() {
     return (
         <div
             data-show={isInstallable && (!isDismissed || forcePwa)}
-            className="bg-bg/90 shadow-bg absolute top-0 left-0 z-20 hidden h-dvh w-dvw flex-col items-center p-8 pt-16 shadow-md data-[show=true]:flex"
+            className="bg-bg/70 fixed inset-0 z-50 hidden items-end backdrop-blur-sm data-[show=true]:flex"
         >
-            <div className="bg-bg-muted flex w-full max-w-md flex-col items-center gap-4 rounded-lg p-6 shadow-md">
-                <h2 className="text-center text-xl font-bold">
-                    Install HirnstammTisch App
-                </h2>
-                <p className="text-center text-sm">
-                    Get the best experience by installing HirnstammTisch as an
-                    app:
-                </p>
-                <ul className="list-disc space-y-2 pl-6 text-sm">
-                    <li>Quick access from your home screen</li>
-                    <li>Works offline or with poor connection</li>
-                    <li>Smoother experience and faster loading</li>
-                </ul>
-                <p className="text-text-muted text-center text-xs">
-                    You can also install the app later from your profile page.
-                </p>
-                <div className="flex gap-4 pt-4">
+            <div
+                data-show={isInstallable && (!isDismissed || forcePwa)}
+                className="border-border bg-surface mx-auto w-full max-w-lg translate-y-2 rounded-t-2xl border p-4 pb-[calc(env(safe-area-inset-bottom)+12px)] shadow-xl transition-transform data-[show=true]:translate-y-0"
+            >
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 flex-col gap-1">
+                        <h2 className="text-lg font-semibold">
+                            Install HirnstammTisch
+                        </h2>
+                        <p className="text-text-muted text-sm">
+                            Add the app to your device for faster access and
+                            offline support.
+                        </p>
+                    </div>
                     <button
-                        className="bg-accent hover:bg-accent/80 text-text rounded px-8 py-1.5"
-                        onClick={async () => {
-                            await installPrompt();
-                        }}
-                    >
-                        Install Now
-                    </button>
-                    <button
-                        className="bg-border text-text hover:bg-border/80 rounded px-8 py-1.5"
+                        aria-label="Dismiss install prompt"
+                        className="border-border bg-surface-hover text-text hidden h-8 w-8 shrink-0 items-center justify-center rounded border md:inline-flex"
                         onClick={() => {
                             setIsDismissed(true);
                             setForcePwa(false);
                         }}
                     >
-                        Not Now
+                        ×
+                    </button>
+                </div>
+                <ul className="text-text-muted mt-3 list-disc space-y-1 pl-5 text-sm">
+                    <li>One-tap launch from home screen</li>
+                    <li>Improved performance and reliability</li>
+                </ul>
+                <div className="mt-4 flex gap-3">
+                    <button
+                        className="bg-accent text-text rounded px-4 py-2"
+                        onClick={async () => {
+                            await installPrompt();
+                        }}
+                    >
+                        Install
+                    </button>
+                    <button
+                        className="border-border bg-surface-hover text-text rounded border px-4 py-2"
+                        onClick={() => {
+                            setIsDismissed(true);
+                            setForcePwa(false);
+                        }}
+                    >
+                        Not now
                     </button>
                 </div>
             </div>

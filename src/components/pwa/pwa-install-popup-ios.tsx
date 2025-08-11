@@ -27,36 +27,43 @@ export function PwaInstallPopupIos() {
     return (
         <div
             data-show={isIos && !isStandalone && (!isDismissed || forcePwa)}
-            className="bg-bg/90 shadow-bg absolute top-0 left-0 z-20 hidden h-dvh w-dvw flex-col items-center p-8 pt-16 shadow-md data-[show=true]:flex"
+            className="bg-bg/70 fixed inset-0 z-50 hidden items-end backdrop-blur-sm data-[show=true]:flex"
         >
-            <div className="bg-bg-muted flex w-full max-w-md flex-col items-center gap-4 rounded-lg p-6 shadow-md">
-                <h2 className="text-center text-xl font-bold">
-                    Install HirnstammTisch on iOS
-                </h2>
-                <p className="text-center text-sm">
-                    To install the HirnstammTisch app on your iOS device:
-                </p>
-                <ol className="list-decimal space-y-2 pl-6 text-sm">
-                    <li>
-                        Tap the Share button in Safari&apos;s toolbar (the
-                        square with an arrow pointing up)
-                    </li>
-                    <li>Scroll down and tap &quot;Add to Home Screen&quot;</li>
-                    <li>Tap &quot;Add&quot; in the top right corner</li>
-                </ol>
-                <p className="text-text-muted text-center text-xs">
-                    Once installed, you&apos;ll have quick access to
-                    HirnstammTisch right from your home screen.
-                </p>
-                <div className="flex justify-center pt-4">
+            <div className="border-border bg-surface mx-auto w-full max-w-lg translate-y-2 rounded-t-2xl border p-4 pb-[calc(env(safe-area-inset-bottom)+12px)] shadow-xl transition-transform data-[show=true]:translate-y-0">
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 flex-col gap-1">
+                        <h2 className="text-lg font-semibold">
+                            Install on iOS
+                        </h2>
+                        <p className="text-text-muted text-sm">
+                            Add HirnstammTisch to your Home Screen.
+                        </p>
+                    </div>
                     <button
-                        className="bg-border text-text hover:bg-border/80 rounded px-8 py-1.5"
+                        aria-label="Dismiss iOS install instructions"
+                        className="border-border bg-surface-hover text-text hidden h-8 w-8 shrink-0 items-center justify-center rounded border md:inline-flex"
                         onClick={() => {
                             setIsDismissed(true);
                             setForcePwa(false);
                         }}
                     >
-                        Okay
+                        ×
+                    </button>
+                </div>
+                <ol className="text-text-muted mt-3 list-decimal space-y-1 pl-5 text-sm">
+                    <li>Open Share in Safari</li>
+                    <li>Select Add to Home Screen</li>
+                    <li>Confirm Add</li>
+                </ol>
+                <div className="mt-4 flex gap-3">
+                    <button
+                        className="border-border bg-surface-hover text-text rounded border px-4 py-2"
+                        onClick={() => {
+                            setIsDismissed(true);
+                            setForcePwa(false);
+                        }}
+                    >
+                        Got it
                     </button>
                 </div>
             </div>
