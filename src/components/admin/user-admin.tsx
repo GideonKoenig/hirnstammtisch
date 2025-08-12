@@ -138,10 +138,10 @@ export function UserAdmin(props: {
                             }}
                         />
                         {(() => {
+                            const selected = selectedLegacy[u.id];
+                            if (!selected) return null;
                             const legacy = (props.legacyUsers ?? []).find(
-                                (lu) =>
-                                    lu.name.toLowerCase() ===
-                                    u.name.toLowerCase(),
+                                (lu) => lu.id === selected,
                             );
                             const original = legacy?.createdAt
                                 ? new Date(legacy.createdAt)
