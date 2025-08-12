@@ -7,7 +7,7 @@ import { UserAvatar } from "@/components/ui/user-avatar";
 export function MemberCard(props: { user: ClientUser; events: ClientEvent[] }) {
     const sortedEvents = props.events
         .filter((event) => event.date)
-        .sort((a, b) => a.date!.getTime() - b.date!.getTime());
+        .sort((a, b) => b.date!.getTime() - a.date!.getTime());
 
     return (
         <div className="border-border bg-surface/60 relative flex flex-col gap-4 rounded-xl border p-6 backdrop-blur-md">
