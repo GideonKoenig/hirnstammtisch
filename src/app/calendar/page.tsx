@@ -4,6 +4,7 @@ import { api, HydrateClient } from "@/trpc/server";
 import { CalendarView } from "@/components/calendar/calendar-view";
 import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
+import { env } from "@/env";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Event Calendar - HirnstammTisch",
         description: "Browse HirnstammTisch events by date on the calendar.",
-        url: "https://hirnstammtisch.com/calendar",
+        url: `${env.SITE_URL}/calendar`,
     },
 };
 

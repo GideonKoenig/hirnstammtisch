@@ -2,6 +2,7 @@ import { EventCard } from "@/components/events/event-item";
 import { api } from "@/trpc/server";
 import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
+import { env } from "@/env";
 
 export const metadata: Metadata = {
     title: "HirnstammTisch",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
         title: "HirnstammTisch",
         description:
             "Discover upcoming events and browse past sessions from the HirnstammTisch community.",
-        url: "https://hirnstammtisch.com/",
+        url: `${env.SITE_URL}/`,
     },
 };
 

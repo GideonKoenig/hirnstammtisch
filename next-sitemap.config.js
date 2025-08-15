@@ -1,9 +1,11 @@
+import { env } from "@/env";
+
 /** @type {import('next-sitemap').IConfig} */
 const config = {
-    siteUrl: "https://hirnstammtisch.com",
+    siteUrl: env.SITE_URL,
     generateRobotsTxt: true,
     generateIndexSitemap: true,
-    changefreq: "daily",
+    changefreq: "weekly",
     priority: 0.7,
     additionalPaths: async (cfg) => {
         const routes = ["/", "/about", "/calendar"];
@@ -29,7 +31,7 @@ const config = {
                     "/signup",
                     "/events",
                 ],
-                allow: "/",
+                allow: ["/", "/about", "/calendar"],
             },
         ],
     },

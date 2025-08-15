@@ -2,6 +2,7 @@ import { MemberList } from "@/components/about/member-list";
 import { api, HydrateClient } from "@/trpc/server";
 import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
+import { env } from "@/env";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
         title: "About - HirnstammTisch",
         description:
             "Learn about the HirnstammTisch community and its members.",
-        url: "https://hirnstammtisch.com/about",
+        url: `${env.SITE_URL}/about`,
     },
 };
 

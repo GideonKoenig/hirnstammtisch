@@ -13,14 +13,16 @@ import { Toaster } from "@/components/ui/sonner";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Suspense } from "react";
+import { env } from "@/env";
 
 const APP_NAME = "HirnstammTisch";
 const APP_DEFAULT_TITLE = "HirnstammTisch";
 const APP_TITLE_TEMPLATE = "%s";
-const APP_DESCRIPTION = "Let's talk about stuff.";
+const APP_DESCRIPTION =
+    "Join upcoming HirnstammTisch talks and explore our archive of past sessions.";
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://hirnstammtisch.com"),
+    metadataBase: new URL(env.SITE_URL),
     applicationName: APP_NAME,
     title: {
         default: APP_DEFAULT_TITLE,
@@ -68,7 +70,19 @@ export const metadata: Metadata = {
         images: ["/icon.webp"],
     },
     icons: {
-        icon: "/favicon.ico",
+        icon: [
+            { url: "/favicon.ico" },
+            {
+                url: "/icon-light.svg",
+                media: "(prefers-color-scheme: light)",
+                type: "image/svg+xml",
+            },
+            {
+                url: "/icon-dark.svg",
+                media: "(prefers-color-scheme: dark)",
+                type: "image/svg+xml",
+            },
+        ],
         apple: "/ios/180.png",
     },
 };
@@ -88,7 +102,37 @@ export default async function RootLayout({
             className={`${GeistSans.variable}`}
         >
             <head>
-                <PlausibleProvider domain="hirnstammtisch.com" selfHosted />
+                <PlausibleProvider
+                    domain={new URL(env.SITE_URL).hostname}
+                    selfHosted
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "WebSite",
+                            name: "HirnstammTisch",
+                            alternateName: [
+                                "Hirnstammtisch",
+                                "Hirnstamm Tisch",
+                            ],
+                            url: env.SITE_URL,
+                        }),
+                    }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "Organization",
+                            name: "HirnstammTisch",
+                            url: env.SITE_URL,
+                            logo: `${env.SITE_URL}/icon.webp`,
+                        }),
+                    }}
+                />
             </head>
             <TRPCReactProvider>
                 <PwaProvider>
