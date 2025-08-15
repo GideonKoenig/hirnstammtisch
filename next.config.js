@@ -1,6 +1,6 @@
 import { withPlausibleProxy } from "next-plausible";
 import withSerwistInit from "@serwist/next";
-await import("./src/env.js");
+const { env } = await import("./src/env.js");
 
 const config = {
     images: {
@@ -28,7 +28,7 @@ const withSerwist = withSerwistInit({
 });
 
 const withPlausible = withPlausibleProxy({
-    customDomain: "https://plausible.gko.gg",
+    customDomain: env.PLAUSIBLE_CUSTOM_DOMAIN,
 });
 
 export default isDev
