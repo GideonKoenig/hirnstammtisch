@@ -7,19 +7,24 @@ import { cn } from "@/lib/utils";
 const ScrollArea = React.forwardRef<
     React.ComponentRef<typeof ScrollAreaPrimitive.Root>,
     React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-    <ScrollAreaPrimitive.Root
-        ref={ref}
-        className={cn("relative overflow-hidden", className)}
-        {...props}
-    >
-        <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
-            {children}
-        </ScrollAreaPrimitive.Viewport>
-        <ScrollBar />
-        <ScrollAreaPrimitive.Corner />
-    </ScrollAreaPrimitive.Root>
-));
+>(({ className, children, ...props }, ref) => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+
+    return (
+        <ScrollAreaPrimitive.Root
+            ref={ref}
+            type={isMobile ? "scroll" : "auto"}
+            className={cn("relative overflow-hidden", className)}
+            {...props}
+        >
+            <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+                {children}
+            </ScrollAreaPrimitive.Viewport>
+            <ScrollBar />
+            <ScrollAreaPrimitive.Corner />
+        </ScrollAreaPrimitive.Root>
+    );
+});
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
 
 const ScrollBar = React.forwardRef<
