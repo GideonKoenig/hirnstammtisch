@@ -1,4 +1,5 @@
-import { env } from "@/env";
+// eslint-disable-next-line no-restricted-imports
+import { env } from "./src/env.js";
 
 /** @type {import('next-sitemap').IConfig} */
 const config = {
