@@ -1,9 +1,9 @@
-# HirnstammTisch
+# HirnStammtisch
 
 A small community site to propose, schedule, and browse discussion sessions.
 
 ## Screenshot
-![HirnstammTisch screenshot](public/page-screenshot.webp)
+![HirnStammtisch screenshot](public/page-screenshot.webp)
 
 
 ## Stack

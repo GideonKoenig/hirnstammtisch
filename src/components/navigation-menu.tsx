@@ -79,7 +79,7 @@ export function NavigationBar(props: { className?: string }) {
                 <Image
                     className="hidden lg:block"
                     src={"icon.svg"}
-                    alt="HirnstammTisch"
+                    alt="HirnStammtisch"
                     width={40}
                     height={40}
                 />

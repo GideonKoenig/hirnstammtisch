@@ -10,11 +10,11 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
     title: "Calendar",
-    description: "See all HirnstammTisch events on a monthly calendar view.",
+    description: "See all HirnStammtisch events on a monthly calendar view.",
     alternates: { canonical: "/calendar" },
     openGraph: {
-        title: "Event Calendar - HirnstammTisch",
-        description: "Browse HirnstammTisch events by date on the calendar.",
+        title: "Event Calendar - HirnStammtisch",
+        description: "Browse HirnStammtisch events by date on the calendar.",
         url: `${env.SITE_URL}/calendar`,
     },
 };

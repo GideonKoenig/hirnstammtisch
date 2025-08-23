@@ -12,7 +12,7 @@ import { type Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Events",
-    description: "Create and update HirnstammTisch events.",
+    description: "Create and update HirnStammtisch events.",
     robots: {
         index: false,
         follow: false,

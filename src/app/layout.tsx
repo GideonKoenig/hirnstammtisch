@@ -15,11 +15,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Suspense } from "react";
 import { env } from "@/env";
 
-const APP_NAME = "HirnstammTisch";
-const APP_DEFAULT_TITLE = "HirnstammTisch";
+const APP_NAME = "HirnStammtisch";
+const APP_DEFAULT_TITLE = "HirnStammtisch";
 const APP_TITLE_TEMPLATE = "%s";
 const APP_DESCRIPTION =
-    "Join upcoming HirnstammTisch talks and explore our archive of past sessions.";
+    "Join upcoming HirnStammtisch talks and explore our archive of past sessions.";
 
 export const metadata: Metadata = {
     metadataBase: new URL(env.SITE_URL),
@@ -112,10 +112,12 @@ export default async function RootLayout({
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "WebSite",
-                            name: "HirnstammTisch",
+                            name: "HirnStammtisch",
                             alternateName: [
                                 "Hirnstammtisch",
+                                "HirnstammTisch",
                                 "Hirnstamm Tisch",
+                                "Hirn Stammtisch",
                             ],
                             url: env.SITE_URL,
                         }),
@@ -127,7 +129,7 @@ export default async function RootLayout({
                         __html: JSON.stringify({
                             "@context": "https://schema.org",
                             "@type": "Organization",
-                            name: "HirnstammTisch",
+                            name: "HirnStammtisch",
                             url: env.SITE_URL,
                             logo: `${env.SITE_URL}/icon.webp`,
                         }),

@@ -5,14 +5,14 @@ import { type Metadata } from "next";
 import { env } from "@/env";
 
 export const metadata: Metadata = {
-    title: "HirnstammTisch",
+    title: "HirnStammtisch",
     description:
-        "Join upcoming HirnstammTisch talks and explore our archive of past sessions.",
+        "Join upcoming HirnStammtisch talks and explore our archive of past sessions.",
     alternates: { canonical: "/" },
     openGraph: {
-        title: "HirnstammTisch",
+        title: "HirnStammtisch",
         description:
-            "Discover upcoming events and browse past sessions from the HirnstammTisch community.",
+            "Discover upcoming events and browse past sessions from the HirnStammtisch community.",
         url: `${env.SITE_URL}/`,
     },
 };
@@ -36,7 +36,7 @@ export default async function HomePage() {
     return (
         <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
             <PageHeader
-                title="HirnstammTisch"
+                title="HirnStammtisch"
                 subtitle="Join upcoming talks and explore our archive of past sessions."
                 className="mb-6 md:mb-8"
             />

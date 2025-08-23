@@ -30,7 +30,7 @@ export function PwaInstallPopup() {
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 flex-col gap-1">
                         <h2 className="text-lg font-semibold">
-                            Install HirnstammTisch
+                            Install HirnStammtisch
                         </h2>
                         <p className="text-text-muted text-sm">
                             Add the app to your device for faster access and

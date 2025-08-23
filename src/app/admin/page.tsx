@@ -19,7 +19,7 @@ import {
 
 export const metadata: Metadata = {
     title: "Admin",
-    description: "Administrative tools for HirnstammTisch.",
+    description: "Administrative tools for HirnStammtisch.",
     robots: {
         index: false,
         follow: false,

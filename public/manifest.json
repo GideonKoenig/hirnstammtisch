@@ -1,6 +1,6 @@
 {
-    "name": "HirnstammTisch",
-    "short_name": "HirnstammTisch",
+    "name": "HirnStammtisch",
+    "short_name": "HirnStammtisch",
     "description": "Let's talk about stuff.",
     "start_url": "/",
     "display": "standalone",
