@@ -26,7 +26,7 @@ export default async function HomePage() {
     const currentEvents = events
         .filter((event) => event.date !== null)
         .filter((event) => event.date!.getTime() >= today.getTime())
-        .sort((a, b) => a.date!.getTime() - b.date!.getTime());
+        .sort((a, b) => b.date!.getTime() - a.date!.getTime());
 
     const pastEvents = events
         .filter((event) => event.date !== null)
