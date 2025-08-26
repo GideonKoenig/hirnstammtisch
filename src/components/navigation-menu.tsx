@@ -65,9 +65,9 @@ export function NavigationBar(props: { className?: string }) {
     return (
         <div
             className={cn(
-                "grid w-full grid-cols-5 items-center gap-1 lg:grid-cols-7 lg:gap-4",
+                "grid w-full grid-cols-5 items-center gap-1 lg:grid-cols-6 lg:gap-4",
                 props.className,
-                session?.user.role === "admin" && "lg:grid-cols-8",
+                session?.user.role === "admin" && "lg:grid-cols-7",
             )}
         >
             <Link
@@ -87,8 +87,6 @@ export function NavigationBar(props: { className?: string }) {
                     Home
                 </span>
             </Link>
-
-            <div className="hidden lg:block" />
 
             {navigationConfig.map((item) => {
                 if (item.hide) return;
