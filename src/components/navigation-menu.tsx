@@ -65,9 +65,9 @@ export function NavigationBar(props: { className?: string }) {
     return (
         <div
             className={cn(
-                "grid w-full grid-cols-5 items-center gap-1 lg:grid-cols-6 lg:gap-4",
+                "mx-auto grid w-full max-w-4xl grid-cols-5 items-center gap-1 lg:gap-4",
                 props.className,
-                session?.user.role === "admin" && "lg:grid-cols-7",
+                session?.user.role === "admin" && "lg:grid-cols-6",
             )}
         >
             <Link
