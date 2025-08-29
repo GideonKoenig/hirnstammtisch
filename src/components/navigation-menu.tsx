@@ -15,7 +15,7 @@ import { Link } from "@/components/ui/fast-link";
 import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
 
-export function NavigationBar(props: { className?: string }) {
+export function NavigationMenu(props: { className?: string }) {
     const pathname = usePathname();
     const { data: session } = authClient.useSession();
 

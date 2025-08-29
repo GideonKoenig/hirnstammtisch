@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import PlausibleProvider from "next-plausible";
 import { type Viewport, type Metadata } from "next";
-import { NavigationBar } from "@/components/navigation-menu";
+import { NavigationMenu } from "@/components/navigation-menu";
 import { NextSSRPlugin as UploadThingProvider } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { fileRouter } from "@/app/api/uploadthing/core";
@@ -144,11 +144,11 @@ export default async function RootLayout({
                         />
                         <ScrollArea className="h-full w-full">
                             <div className="flex min-h-svh flex-col">
-                                <NavigationBar className="hidden lg:grid" />
+                                <NavigationMenu className="hidden lg:grid" />
                                 <main className="flex grow flex-col p-4 md:p-6 lg:p-8">
                                     {children}
                                 </main>
-                                <NavigationBar className="bg-bg sticky bottom-0 lg:hidden" />
+                                <NavigationMenu className="bg-bg sticky bottom-0 lg:hidden" />
                             </div>
                         </ScrollArea>
                         <Toaster closeButton />
