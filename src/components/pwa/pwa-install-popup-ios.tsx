@@ -40,7 +40,7 @@ export function PwaInstallPopupIos() {
                             Install on iOS
                         </h2>
                         <p className="text-text-muted text-sm">
-                            Add HirnStammtisch to your Home Screen.
+                            Add Hirnstammtisch to your Home Screen.
                         </p>
                     </div>
                     <button

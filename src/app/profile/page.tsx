@@ -10,8 +10,14 @@ import { api, HydrateClient } from "@/trpc/server";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Profile",
-    description: "Manage your account settings and preferences.",
+    title: "Profile - Hirnstammtisch",
+    description:
+        "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Manage your profile, account settings, and preferences.",
+    openGraph: {
+        title: "Profile - Hirnstammtisch",
+        description:
+            "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Manage your profile, account settings, and preferences.",
+    },
     robots: {
         index: false,
         follow: false,

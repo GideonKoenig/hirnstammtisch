@@ -4,8 +4,14 @@ import { Link } from "@/components/ui/fast-link";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Sign in",
-    description: "Sign in to your HirnStammtisch account.",
+    title: "Sign in - Hirnstammtisch",
+    description:
+        "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Sign in to access your account.",
+    openGraph: {
+        title: "Sign in - Hirnstammtisch",
+        description:
+            "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Sign in to access your account.",
+    },
     robots: {
         index: false,
         follow: false,

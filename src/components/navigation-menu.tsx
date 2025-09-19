@@ -79,7 +79,7 @@ export function NavigationMenu(props: { className?: string }) {
                 <Image
                     className="hidden lg:block"
                     src={"icon.svg"}
-                    alt="HirnStammtisch"
+                    alt="Hirnstammtisch"
                     width={40}
                     height={40}
                 />

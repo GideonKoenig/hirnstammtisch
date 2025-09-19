@@ -11,14 +11,20 @@ import { PageHeader } from "@/components/ui/page-header";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Events",
-    description: "Create and update HirnStammtisch events.",
+    title: "Events - Hirnstammtisch",
+    description:
+        "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Create and manage talks and sessions.",
     robots: {
         index: false,
         follow: false,
         googleBot: { index: false, follow: false },
     },
     alternates: { canonical: "/events" },
+    openGraph: {
+        title: "Events - Hirnstammtisch",
+        description:
+            "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Create and manage talks and sessions.",
+    },
 };
 
 export default async function Events() {

@@ -1,7 +1,7 @@
 {
-    "name": "HirnStammtisch",
-    "short_name": "HirnStammtisch",
-    "description": "Let's talk about stuff.",
+    "name": "Hirnstammtisch",
+    "short_name": "Hirnstammtisch",
+    "description": "A Bonn-area group meeting regularly for prepared talks on interesting topics.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#060606",

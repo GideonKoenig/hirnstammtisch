@@ -9,12 +9,14 @@ import { env } from "@/env";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-    title: "Calendar",
-    description: "See all HirnStammtisch events on a monthly calendar view.",
+    title: "Calendar - Hirnstammtisch",
+    description:
+        "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. See events by date on the monthly calendar.",
     alternates: { canonical: "/calendar" },
     openGraph: {
-        title: "Event Calendar - HirnStammtisch",
-        description: "Browse HirnStammtisch events by date on the calendar.",
+        title: "Event Calendar - Hirnstammtisch",
+        description:
+            "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. See events by date on the monthly calendar.",
         url: `${env.SITE_URL}/calendar`,
     },
 };

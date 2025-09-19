@@ -7,14 +7,14 @@ import { env } from "@/env";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-    title: "About",
+    title: "About - Hirnstammtisch",
     description:
-        "The HirnStammtisch is a small group of people who meet regularly to discuss interesting topics.",
+        "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Learn what we’re about and how the community meets.",
     alternates: { canonical: "/about" },
     openGraph: {
-        title: "About - HirnStammtisch",
+        title: "About - Hirnstammtisch",
         description:
-            "Learn about the HirnStammtisch community and its members.",
+            "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Learn what we’re about and how the community meets.",
         url: `${env.SITE_URL}/about`,
     },
 };
@@ -28,7 +28,7 @@ export default async function About() {
             <div className="mx-auto w-full max-w-4xl p-4 md:p-6">
                 <PageHeader
                     title="About"
-                    subtitle="The HirnStammtisch is a small group of people who meet regularly to discuss interesting topics."
+                    subtitle="The Hirnstammtisch is a small group of people who meet regularly to discuss interesting topics."
                     className="mb-6 md:mb-8"
                 />
                 <MemberList />

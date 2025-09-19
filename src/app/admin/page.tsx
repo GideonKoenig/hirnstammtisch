@@ -18,8 +18,14 @@ import {
 } from "@/components/admin/actions";
 
 export const metadata: Metadata = {
-    title: "Admin",
-    description: "Administrative tools for HirnStammtisch.",
+    title: "Admin - Hirnstammtisch",
+    description:
+        "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Administrative tools to manage users, migrations, and events.",
+    openGraph: {
+        title: "Admin - Hirnstammtisch",
+        description:
+            "Hirnstammtisch is a local group of curious young people in the Bonn area meeting regularly in person for prepared talks on interesting topics. Administrative tools to manage users, migrations, and events.",
+    },
     robots: {
         index: false,
         follow: false,
