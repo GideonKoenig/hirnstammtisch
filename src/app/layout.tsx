@@ -53,6 +53,7 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         siteName: APP_NAME,
+        url: env.SITE_URL,
         title: {
             default: APP_DEFAULT_TITLE,
             template: APP_TITLE_TEMPLATE,
@@ -114,7 +115,7 @@ export default async function RootLayout({
                             "@type": "WebSite",
                             name: "Hirnstammtisch",
                             alternateName: [
-                                "Hirnstammtisch",
+                                "hirnstammtisch.com",
                                 "Hirnstammtisch",
                                 "Hirnstamm Tisch",
                                 "Hirn Stammtisch",
