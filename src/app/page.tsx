@@ -52,7 +52,11 @@ export default async function HomePage() {
                 </div>
                 <div className="flex flex-col gap-3">
                     {currentEvents.map((event) => (
-                        <EventCard key={event.id} event={event} />
+                        <EventCard
+                            key={event.id}
+                            event={event}
+                            showActions={true}
+                        />
                     ))}
                 </div>
             </section>
@@ -68,7 +72,11 @@ export default async function HomePage() {
                 </div>
                 <div className="flex flex-col gap-3">
                     {pastEvents.map((event) => (
-                        <EventCard key={event.id} event={event} />
+                        <EventCard
+                            key={event.id}
+                            event={event}
+                            showActions={true}
+                        />
                     ))}
                 </div>
             </section>
