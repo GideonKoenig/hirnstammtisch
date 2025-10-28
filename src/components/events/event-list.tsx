@@ -33,7 +33,7 @@ function filterEvents(
 }
 
 export function EventList(props: { showSpeakerNames?: boolean }) {
-    const { search, pastEvents, openModal } = useEvents();
+    const { search, pastEvents } = useEvents();
 
     const { data: users = [] } = api.user.getAll.useQuery();
     const { data: events = [] } = api.event.getAll.useQuery();
@@ -70,11 +70,7 @@ export function EventList(props: { showSpeakerNames?: boolean }) {
                                 {speaker.name}
                             </h2>
                         )}
-                        <EventCard
-                            event={event}
-                            showActions={true}
-                            onEdit={openModal}
-                        />
+                        <EventCard event={event} showActions={true} />
                     </div>
                 );
             })}

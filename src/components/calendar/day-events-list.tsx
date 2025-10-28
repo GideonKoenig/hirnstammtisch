@@ -4,13 +4,11 @@ import { EventCard } from "@/components/events/event-item";
 import type { ClientEvent } from "@/lib/types";
 import { formatDate } from "@/lib/date";
 import { Calendar } from "lucide-react";
-import { useEvents } from "@/components/events/event-context";
 
 export function DayEventsList(props: {
     date: Date | undefined;
     events: ClientEvent[];
 }) {
-    const { openModal } = useEvents();
     if (!props.date) {
         return (
             <div className="text-text-muted flex h-48 items-center justify-center md:h-64">
@@ -46,7 +44,6 @@ export function DayEventsList(props: {
                             key={event.id}
                             event={event}
                             showActions={true}
-                            onEdit={openModal}
                         />
                     ))}
                 </div>

@@ -20,6 +20,7 @@ import { UserAvatar } from "@/components/ui/user-avatar";
 import { ResponsiveTooltip } from "@/components/ui/responsive-tooltip";
 import { checkAccess } from "@/lib/permissions/utilts";
 import { useUser } from "@/lib/use-user";
+import { useEvents } from "@/components/events/event-context";
 
 export function EventCard(props: {
     event: ClientEvent;
@@ -28,6 +29,7 @@ export function EventCard(props: {
 }) {
     const utils = api.useUtils();
     const user = useUser();
+    const { openModal } = useEvents();
     const { data: speaker } = api.user.getById.useQuery({
         id: props.event.speaker,
     });
@@ -73,7 +75,10 @@ export function EventCard(props: {
                         <Button
                             variant="outline"
                             size="icon"
-                            onMouseDown={() => props.onEdit?.(props.event)}
+                            onMouseDown={() => {
+                                props.onEdit?.(props.event);
+                                openModal(props.event);
+                            }}
                             className="inline-flex h-8 w-8 md:hidden md:h-10 md:w-10 md:group-hover:inline-flex"
                         >
                             <Pencil className="h-4 w-4" />

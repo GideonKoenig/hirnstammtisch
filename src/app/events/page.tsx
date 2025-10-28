@@ -3,7 +3,6 @@ import { headers } from "next/headers";
 import { getSession } from "@/server/utils";
 import { EventsSearchBar } from "@/components/events/event-search-bar";
 import { EventList } from "@/components/events/event-list";
-import { EventModal } from "@/components/events/event-modal";
 import { EventContextProvider } from "@/components/events/event-context";
 import { UserSidebar } from "@/components/events/user-sidebar";
 import { api, HydrateClient } from "@/trpc/server";
@@ -48,7 +47,6 @@ export default async function Events() {
                         <UserSidebar className="absolute right-full mr-8 hidden lg:block" />
                     </div>
                     <EventList showSpeakerNames />
-                    <EventModal />
                 </div>
             </EventContextProvider>
         </HydrateClient>

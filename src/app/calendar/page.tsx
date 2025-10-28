@@ -1,4 +1,3 @@
-import { EventModal } from "@/components/events/event-modal";
 import { EventContextProvider } from "@/components/events/event-context";
 import { api, HydrateClient } from "@/trpc/server";
 import { CalendarView } from "@/components/calendar/calendar-view";
@@ -35,7 +34,6 @@ export default async function CalendarPage() {
                         className="mb-6 md:mb-8"
                     />
                     <CalendarView />
-                    <EventModal />
                 </div>
             </EventContextProvider>
         </HydrateClient>

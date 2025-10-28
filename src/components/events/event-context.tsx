@@ -9,6 +9,7 @@ import {
     type SetStateAction,
 } from "react";
 import { type ClientEvent, type Event } from "@/lib/types";
+import { EventModal } from "@/components/events/event-modal";
 
 interface EventsContextType {
     modalOpen: boolean;
@@ -86,6 +87,7 @@ export function EventContextProvider({ children }: { children: ReactNode }) {
             }}
         >
             {children}
+            <EventModal />
         </EventContext.Provider>
     );
 }
