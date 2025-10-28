@@ -73,7 +73,7 @@ export function EventCard(props: {
                             variant="outline"
                             size="icon"
                             onMouseDown={() => props.onEdit?.(props.event)}
-                            className="inline-flex md:hidden md:group-hover:inline-flex"
+                            className="inline-flex h-8 w-8 md:hidden md:h-10 md:w-10 md:group-hover:inline-flex"
                         >
                             <Pencil className="h-4 w-4" />
                         </Button>
@@ -84,7 +84,7 @@ export function EventCard(props: {
                             onClick={() =>
                                 deleteEvent.mutate({ id: props.event.id })
                             }
-                            className="inline-flex md:hidden md:group-hover:inline-flex"
+                            className="inline-flex h-8 w-8 md:hidden md:h-10 md:w-10 md:group-hover:inline-flex"
                             disabled={deleteEvent.isPending}
                         >
                             <Trash className="h-4 w-4" />
