@@ -24,6 +24,7 @@ type AssetKind = Attachment["type"];
 export function AssetUploader(props: { eventId?: string }) {
     const uploadsDisabled = !props.eventId;
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState<number | null>(null);
     const utils = api.useUtils();
     const attachments = api.attachment.getAll.useQuery(
         { eventId: props.eventId ?? "" },
@@ -65,13 +66,13 @@ export function AssetUploader(props: { eventId?: string }) {
                                 {isUploading && (
                                     <div className="flex items-center gap-2">
                                         <LoaderCircle className="h-4 w-4 animate-spin" />
-                                        Uploading...
+                                        {`${uploadProgress ?? 0}%`}
                                     </div>
                                 )}
                                 {!isUploading && (
                                     <div className="flex items-center gap-2">
                                         <Upload className="h-4 w-4" />
-                                        Upload asset
+                                        Upload attachement
                                     </div>
                                 )}
                             </>
@@ -92,7 +93,10 @@ export function AssetUploader(props: { eventId?: string }) {
                         invalidate();
                         toast.success("Asset uploaded successfully");
                         setIsUploading(false);
+                        setUploadProgress(null);
                     }}
+                    uploadProgressGranularity="fine"
+                    onUploadProgress={(p) => setUploadProgress(p)}
                 />
                 <Button
                     variant="outline"
