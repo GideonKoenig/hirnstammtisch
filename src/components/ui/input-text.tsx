@@ -81,14 +81,14 @@ export function InputText(props: {
                 </>
             ) : (
                 <>
-                    <span className="text-text grow py-2 text-sm">
+                    <span className="text-text grow truncate py-2 text-sm">
                         {props.value ?? props.placeholder}
                     </span>
                     <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => setIsEditing(true)}
-                        className="text-text-muted hover:bg-border h-8 w-8"
+                        className="text-text-muted hover:bg-border h-8 w-8 p-2"
                         disabled={props.disabled}
                     >
                         <Edit2 className="h-4 w-4" />

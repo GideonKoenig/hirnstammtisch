@@ -30,8 +30,6 @@ export const eventRouter = createTRPCRouter({
             z.object({
                 title: z.string().min(1),
                 speaker: z.string(),
-                recording: z.string().nullish(),
-                slidesUrl: z.string().nullish(),
                 maxAttendees: z.number().int().positive().nullish(),
                 date: z.date().nullish(),
                 speakerNotes: z.string().nullish(),
@@ -54,8 +52,6 @@ export const eventRouter = createTRPCRouter({
                 id: z.string(),
                 title: z.string().min(1).optional(),
                 speaker: z.string().optional(),
-                recording: z.string().nullable().optional(),
-                slidesUrl: z.string().nullable().optional(),
                 maxAttendees: z.number().int().positive().nullable().optional(),
                 date: z.date().nullable().optional(),
                 speakerNotes: z.string().nullable().optional(),

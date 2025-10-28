@@ -9,7 +9,7 @@ export const auth = betterAuth({
     }),
     user: {
         additionalFields: {
-            imageId: {
+            uploadedImageAssetId: {
                 type: "string",
                 required: false,
                 defaultValue: null,

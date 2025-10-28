@@ -44,20 +44,7 @@ export const useEvents = () => {
     } = context;
 
     const openModal = (event?: ClientEvent) => {
-        const eventForForm = event
-            ? {
-                  ...event,
-                  slidesUrl:
-                      event.slidesUrl && !event.slidesUrl.redacted
-                          ? event.slidesUrl.value
-                          : null,
-                  recording:
-                      event.recording && !event.recording.redacted
-                          ? event.recording.value
-                          : null,
-              }
-            : {};
-        setActiveEvent(eventForForm);
+        setActiveEvent(event ?? {});
         setModalOpen(true);
     };
 

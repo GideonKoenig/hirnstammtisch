@@ -8,9 +8,10 @@ import {
     ExternalLink,
     Video,
     FileText,
-    Download,
     Lock,
     X,
+    Image as ImageIcon,
+    Music2,
 } from "lucide-react";
 import type { ClientEvent, ClientUser } from "@/lib/types";
 import { formatDate, formatWeekDistance } from "@/lib/date";
@@ -96,8 +97,7 @@ export function EventCard(props: {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <SpeakerCard user={speaker} />
                 <div className="flex items-center gap-2 md:justify-end">
-                    <SlidesLinkCard event={props.event} />
-                    <RecordingDownloadCard event={props.event} />
+                    <AttachmentPills eventId={props.event.id} />
                 </div>
             </div>
         </div>
@@ -116,142 +116,91 @@ function SpeakerCard(props: { user: ClientUser }) {
     );
 }
 
-function SlidesLinkCard(props: { event: ClientEvent }) {
-    const { value, redacted } = props.event.slidesUrl;
+function AttachmentPills(props: { eventId: string }) {
+    const attachments = api.attachment.getAll.useQuery({
+        eventId: props.eventId,
+    });
 
-    const hasValue = !!value;
-    const isRedacted = redacted;
+    if (attachments.isLoading) return null;
 
-    if (isRedacted) {
+    const items = attachments.data ?? [];
+    if (items.length === 0) {
         return (
-            <ResponsiveTooltip
-                content={
-                    <div className="p-4">
-                        <div className="mb-3 flex items-center gap-3">
-                            <div className="bg-warning/20 flex h-10 w-10 items-center justify-center rounded-full">
-                                <Lock className="text-warning h-5 w-5" />
-                            </div>
-                            <div>
-                                <h3 className="text-text font-semibold">
-                                    Member Content
-                                </h3>
-                                <p className="text-text-muted text-sm">
-                                    Slides are available to members
-                                </p>
-                            </div>
-                        </div>
-                        <p className="text-text-muted text-sm">
-                            Become a member to access presentation slides and
-                            other exclusive content.
-                        </p>
-                    </div>
-                }
-            >
-                <div className="border-warning/30 bg-warning/10 text-warning hover:bg-warning/20 flex w-32 cursor-pointer items-center justify-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold">
-                    <Lock className="h-4 w-4" />
-                    <span>Slides</span>
-                </div>
-            </ResponsiveTooltip>
-        );
-    }
-
-    if (!hasValue) {
-        return (
-            <div className="bg-bg/50 text-text-muted flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
+            <div className="bg-bg/50 text-text-muted flex items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
                 <X className="h-4 w-4" />
-                <span>No Slides</span>
+                <span>No Attachments</span>
             </div>
         );
     }
 
-    return (
-        <a
-            href={value}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-success/10 text-success hover:bg-success/20 flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold"
-        >
+    const iconFor = (type: string) =>
+        type === "link" ? (
             <FileText className="h-4 w-4" />
-            <span>Slides</span>
-            <ExternalLink className="h-3 w-3" />
-        </a>
-    );
-}
-
-function RecordingDownloadCard(props: { event: ClientEvent }) {
-    const { value, redacted } = props.event.recording;
-    const asset = api.asset.getRecording.useQuery(
-        {
-            id: value!,
-        },
-        { enabled: !!value && !redacted },
-    );
-
-    const hasValue = !!value;
-    const isRedacted = redacted;
-
-    if (isRedacted) {
-        return (
-            <ResponsiveTooltip
-                content={
-                    <div className="p-4">
-                        <div className="mb-3 flex items-center gap-3">
-                            <div className="bg-warning/20 flex h-10 w-10 items-center justify-center rounded-full">
-                                <Lock className="text-warning h-5 w-5" />
-                            </div>
-                            <div>
-                                <h3 className="text-text font-semibold">
-                                    Member Content
-                                </h3>
-                                <p className="text-text-muted text-sm">
-                                    Recording is available to members
-                                </p>
-                            </div>
-                        </div>
-                        <p className="text-text-muted text-sm">
-                            Become a member to access video recordings and other
-                            exclusive content.
-                        </p>
-                    </div>
-                }
-            >
-                <div className="border-warning/30 bg-warning/10 text-warning hover:bg-warning/20 flex w-32 cursor-pointer items-center justify-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold">
-                    <Lock className="h-4 w-4" />
-                    <span>Recording</span>
-                </div>
-            </ResponsiveTooltip>
+        ) : type === "image" ? (
+            <ImageIcon className="h-4 w-4" />
+        ) : type === "audio" ? (
+            <Music2 className="h-4 w-4" />
+        ) : (
+            <Video className="h-4 w-4" />
         );
-    }
-
-    if (!hasValue) {
-        return (
-            <div className="bg-bg/50 text-text-muted flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
-                <X className="h-4 w-4" />
-                <span>No Recording</span>
-            </div>
-        );
-    }
-
-    if (asset.isLoading || !asset.data) {
-        return (
-            <div className="bg-bg-muted/50 text-text-muted flex w-32 animate-pulse items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
-                <Video className="h-4 w-4" />
-                <span>Loading...</span>
-            </div>
-        );
-    }
 
     return (
-        <a
-            href={asset.data.url}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-accent-secondary/10 text-accent-secondary hover:bg-accent-secondary/20 flex w-32 items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold"
-        >
-            <Video className="h-4 w-4" />
-            <span>Recording</span>
-            <Download className="h-3 w-3" />
-        </a>
+        <div className="flex flex-wrap items-center gap-2">
+            {items.map((asset) => {
+                const isRedacted = asset.url.redacted;
+
+                if (isRedacted) {
+                    return (
+                        <ResponsiveTooltip
+                            key={asset.id}
+                            content={
+                                <div className="p-4">
+                                    <div className="mb-3 flex items-center gap-3">
+                                        <div className="bg-warning/20 flex h-10 w-10 items-center justify-center rounded-full">
+                                            <Lock className="text-warning h-5 w-5" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-text font-semibold">
+                                                Member Content
+                                            </h3>
+                                            <p className="text-text-muted text-sm">
+                                                This attachment is available to
+                                                members
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="text-text-muted text-sm">
+                                        {`Become a member to access this ${asset.type}.`}
+                                    </p>
+                                </div>
+                            }
+                        >
+                            <div className="border-warning/30 bg-warning/10 text-warning hover:bg-warning/20 flex cursor-pointer items-center justify-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold">
+                                <Lock className="h-4 w-4" />
+                                <span>{asset.name}</span>
+                            </div>
+                        </ResponsiveTooltip>
+                    );
+                }
+
+                return (
+                    <a
+                        key={asset.id}
+                        href={asset.url.value ?? undefined}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={
+                            asset.url.value
+                                ? "bg-success/10 text-success hover:bg-success/20 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold"
+                                : "border-warning/30 bg-warning/10 text-warning hover:bg-warning/20 flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold"
+                        }
+                    >
+                        {iconFor(asset.type)}
+                        <span>{asset.name}</span>
+                        <ExternalLink className="h-3 w-3" />
+                    </a>
+                );
+            })}
+        </div>
     );
 }

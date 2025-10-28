@@ -24,12 +24,12 @@ export function ProfileImage(props: { className?: string }) {
     const user = useUser();
 
     const utils = api.useUtils();
-    const deleteAsset = api.asset.delete.useMutation();
+    const deleteProfileImage = api.user.deleteProfileImageAsset.useMutation();
 
     if (!user) return null;
 
     const imageSource = user.useProviderImage ? "Google" : "Custom";
-    const hasImage = user.imageId ?? user.useProviderImage;
+    const hasImage = user.uploadedImageAssetId ?? user.useProviderImage;
 
     return (
         <div
@@ -65,7 +65,7 @@ export function ProfileImage(props: { className?: string }) {
                                 content={{
                                     button: <Upload className="h-5 w-5" />,
                                 }}
-                                endpoint="imageUploader"
+                                endpoint="profileImageUploader"
                                 onUploadBegin={() => setIsLoading(true)}
                                 onUploadError={(error) => {
                                     toast.error(error.message);
@@ -77,7 +77,7 @@ export function ProfileImage(props: { className?: string }) {
                                     if (!assetId)
                                         toast.error("Failed to upload image");
                                     void authClient.updateUser({
-                                        imageId: assetId,
+                                        uploadedImageAssetId: assetId,
                                         useProviderImage: false,
                                     });
                                     void utils.user.getImage.invalidate();
@@ -119,13 +119,12 @@ export function ProfileImage(props: { className?: string }) {
                                 disabled={isOffline}
                                 onMouseDown={async () => {
                                     setIsLoading(true);
-                                    if (user.imageId) {
-                                        await deleteAsset.mutateAsync({
-                                            id: user.imageId,
+                                    if (user.uploadedImageAssetId)
+                                        await deleteProfileImage.mutateAsync({
+                                            id: user.uploadedImageAssetId,
                                         });
-                                    }
                                     await authClient.updateUser({
-                                        imageId: null,
+                                        uploadedImageAssetId: null,
                                         useProviderImage: false,
                                     });
                                     await utils.user.getImage.invalidate();
@@ -164,7 +163,7 @@ export function ProfileImage(props: { className?: string }) {
                             </div>
                         ),
                     }}
-                    endpoint="imageUploader"
+                    endpoint="profileImageUploader"
                     onUploadBegin={() => setIsLoading(true)}
                     onUploadError={(error) => {
                         toast.error(error.message);
@@ -174,7 +173,7 @@ export function ProfileImage(props: { className?: string }) {
                         const assetId = result[0]?.serverData?.assetId;
                         if (!assetId) toast.error("Failed to upload image");
                         void authClient.updateUser({
-                            imageId: assetId,
+                            uploadedImageAssetId: assetId,
                             useProviderImage: false,
                         });
                         void utils.user.getImage.invalidate();
@@ -204,13 +203,12 @@ export function ProfileImage(props: { className?: string }) {
                     disabled={isOffline}
                     onMouseDown={async () => {
                         setIsLoading(true);
-                        if (user.imageId) {
-                            await deleteAsset.mutateAsync({
-                                id: user.imageId,
+                        if (user.uploadedImageAssetId)
+                            await deleteProfileImage.mutateAsync({
+                                id: user.uploadedImageAssetId,
                             });
-                        }
                         await authClient.updateUser({
-                            imageId: null,
+                            uploadedImageAssetId: null,
                             useProviderImage: false,
                         });
                         await utils.user.getImage.invalidate();

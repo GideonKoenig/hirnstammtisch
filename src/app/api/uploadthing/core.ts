@@ -3,13 +3,15 @@ import { UTApi } from "uploadthing/server";
 import { db } from "@/server/db";
 import { getSession } from "@/server/utils";
 import { headers } from "next/headers";
-import { asset } from "@/server/db/schema";
+import { asset, eventAttachment } from "@/server/db/schema";
 import { tryCatch } from "@/lib/try-catch";
+import z from "zod";
+import { eq } from "drizzle-orm";
 
 const f = createUploadthing();
 
 export const fileRouter = {
-    imageUploader: f({
+    profileImageUploader: f({
         image: {
             maxFileSize: "4MB",
             maxFileCount: 1,
@@ -25,7 +27,8 @@ export const fileRouter = {
                 db
                     .insert(asset)
                     .values({
-                        type: "profile-image",
+                        type: "image",
+                        name: "Profile Image",
                         uploadthingId: file.key,
                         url: file.ufsUrl,
                         uploadedBy: metadata.user.id,
@@ -43,7 +46,7 @@ export const fileRouter = {
             return { assetId: assetElement.data[0]!.id };
         }),
 
-    videoAudioUploader: f({
+    eventAttachmentUploader: f({
         video: {
             maxFileSize: "1GB",
             maxFileCount: 1,
@@ -52,18 +55,37 @@ export const fileRouter = {
             maxFileSize: "128MB",
             maxFileCount: 1,
         },
+        image: {
+            maxFileSize: "4MB",
+            maxFileCount: 1,
+        },
     })
-        .middleware(async () => {
+        .input(
+            z.object({
+                eventId: z.string(),
+            }),
+        )
+        .middleware(async ({ input }) => {
             const session = await getSession(await headers());
             if (!session?.user) throw new Error("Unauthorized");
-            return { user: session.user };
+            return {
+                user: session.user,
+                eventId: input.eventId,
+            };
         })
         .onUploadComplete(async ({ metadata, file }) => {
+            const type = file.type.startsWith("audio/")
+                ? "audio"
+                : file.type.startsWith("image/")
+                  ? "image"
+                  : "video";
+            const name = type.charAt(0).toUpperCase() + type.slice(1);
             const assetElement = await tryCatch(
                 db
                     .insert(asset)
                     .values({
-                        type: "recording",
+                        type,
+                        name,
                         uploadthingId: file.key,
                         url: file.ufsUrl,
                         uploadedBy: metadata.user.id,
@@ -77,8 +99,23 @@ export const fileRouter = {
                 assetElement.unwrap();
                 return;
             }
+            const assetId = assetElement.data[0]!.id;
 
-            return { assetId: assetElement.data[0]!.id };
+            const eventAttachmentElement = await tryCatch(
+                db.insert(eventAttachment).values({
+                    eventId: metadata.eventId,
+                    assetId,
+                }),
+            );
+            if (!eventAttachmentElement.success) {
+                const utapi = new UTApi();
+                await utapi.deleteFiles(file.key);
+                db.delete(asset).where(eq(asset.id, assetId));
+                eventAttachmentElement.unwrap();
+                return;
+            }
+
+            return { assetId };
         }),
 } satisfies FileRouter;
 

@@ -1,6 +1,6 @@
 import { eventRouter } from "@/server/api/routers/event";
 import { userRouter } from "@/server/api/routers/user";
-import { assetRouter } from "@/server/api/routers/asset";
+import { attachmentRouter } from "@/server/api/routers/attachment";
 import { preferenceRouter } from "@/server/api/routers/preference";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
@@ -12,7 +12,7 @@ import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 export const appRouter = createTRPCRouter({
     event: eventRouter,
     user: userRouter,
-    asset: assetRouter,
+    attachment: attachmentRouter,
     preference: preferenceRouter,
 });
 

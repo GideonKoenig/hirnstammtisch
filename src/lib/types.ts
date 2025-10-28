@@ -14,9 +14,11 @@ export type Asset = typeof asset.$inferSelect;
 export type AssetInsert = typeof asset.$inferInsert;
 export type Preference = typeof preference.$inferSelect;
 
-export type ClientEvent = Omit<Event, "slidesUrl" | "recording"> & {
-    slidesUrl: RedactedField<string | null>;
-    recording: RedactedField<string | null>;
+export type ClientEvent = Event;
+
+export type ClientAsset = Omit<Asset, "uploadthingId" | "url"> & {
+    uploadthingId: RedactedField<string>;
+    url: RedactedField<string>;
 };
 
 export type DbUser = typeof user.$inferSelect;

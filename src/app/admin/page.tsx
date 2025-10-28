@@ -186,6 +186,20 @@ export default async function AdminPage() {
                         </Button>
                     </form>
                 </div>
+
+                <div className="border-border bg-surface rounded-lg border p-6">
+                    <h2 className="mb-2 text-xl font-semibold">
+                        Slides ➜ Attachments
+                    </h2>
+                    <p className="text-text-muted mb-4">
+                        {
+                            "Convert all events with a Slides URL into link attachments named 'Slides' and clear the legacy field."
+                        }
+                    </p>
+                    <Button type="button" variant="accent" disabled>
+                        Migrate Slides URLs
+                    </Button>
+                </div>
             </div>
         </div>
     );

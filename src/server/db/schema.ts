@@ -14,8 +14,10 @@ export * from "@/server/db/auth-schema";
 export const visibilityEnum = pgEnum("visibility", ["everyone", "members"]);
 
 export const assetTypeEnum = pgEnum("asset_type", [
-    "recording",
-    "profile-image",
+    "image",
+    "video",
+    "audio",
+    "link",
 ]);
 
 export const event = pgTable(
@@ -28,8 +30,6 @@ export const event = pgTable(
         speaker: text("speaker")
             .notNull()
             .references(() => user.id),
-        recording: text("recording").references(() => asset.id),
-        slidesUrl: text("slides_url"),
         deleted: boolean("deleted").notNull().default(false),
         maxAttendees: integer("max_attendees"),
         date: timestamp("date", { withTimezone: true }),
@@ -61,11 +61,29 @@ export const eventAttendee = pgTable(
     ],
 );
 
+export const eventAttachment = pgTable(
+    "event_attachment",
+    {
+        eventId: text("event_id").references(() => event.id),
+        assetId: text("asset_id").references(() => asset.id),
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+    },
+    (eventAttachment) => [
+        index("event_attachment_idx").on(
+            eventAttachment.eventId,
+            eventAttachment.assetId,
+        ),
+    ],
+);
+
 export const asset = pgTable("asset", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
     type: assetTypeEnum("type").notNull(),
+    name: text("name").notNull(),
     uploadthingId: text("uploadthing_id").notNull(),
     url: text("url").notNull(),
     uploadedBy: text("uploaded_by").references(() => user.id),
