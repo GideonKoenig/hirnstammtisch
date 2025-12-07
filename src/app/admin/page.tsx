@@ -38,7 +38,7 @@ async function deleteAllEvents() {
     "use server";
 
     const session = await getSession(await headers());
-    if (!session?.user || session.user.role !== "admin") {
+    if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
 
@@ -50,7 +50,7 @@ async function migrateGideonEvents() {
     "use server";
 
     const session = await getSession(await headers());
-    if (!session?.user || session.user.role !== "admin") {
+    if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
 
