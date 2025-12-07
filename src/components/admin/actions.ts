@@ -40,7 +40,7 @@ export async function migrateLegacyEvents(params: {
     targetUserId: string;
 }) {
     const session = await getSession(await headers());
-    if (!session?.user || session.user.role !== "admin") {
+    if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
 
@@ -93,7 +93,7 @@ export async function migrateLegacyEvents(params: {
 
 export async function loadLegacyEvents(params: { oldUserId: number }) {
     const session = await getSession(await headers());
-    if (!session?.user || session.user.role !== "admin") {
+    if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
 
@@ -122,7 +122,7 @@ export async function getMigrationStatus(params: {
     targetUserId: string;
 }) {
     const session = await getSession(await headers());
-    if (!session?.user || session.user.role !== "admin") {
+    if (session?.user?.role !== "admin") {
         throw new Error("Unauthorized");
     }
     const legacyTitles = (
