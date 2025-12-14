@@ -6,7 +6,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
-import reactCompiler from "eslint-plugin-react-compiler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +29,6 @@ export default [
             "@typescript-eslint": typescriptEslint,
             drizzle,
             import: importPlugin,
-            "react-compiler": reactCompiler,
         },
 
         languageOptions: {
@@ -94,8 +92,6 @@ export default [
                     drizzleObjectName: ["db", "ctx.db"],
                 },
             ],
-
-            "react-compiler/react-compiler": "error",
 
             "import/no-relative-packages": "error",
             "import/no-relative-parent-imports": "off",
