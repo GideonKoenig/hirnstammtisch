@@ -26,10 +26,12 @@ export function EventModal() {
     const [notesVisible, setNotesVisible] = useState(false);
 
     const { data: users = [] } = api.user.getAll.useQuery();
-    const options = users.map((user) => ({
-        value: user.id,
-        displayValue: user.name,
-    }));
+    const options = users
+        .filter((user) => user.role === "member")
+        .map((user) => ({
+            value: user.id,
+            displayValue: user.name,
+        }));
 
     const utils = api.useUtils();
     const { data: allEvents } = api.event.getAll.useQuery();
