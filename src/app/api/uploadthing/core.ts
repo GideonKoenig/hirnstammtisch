@@ -48,11 +48,11 @@ export const fileRouter = {
 
     eventAttachmentUploader: f({
         video: {
-            maxFileSize: "1GB",
+            maxFileSize: "4GB",
             maxFileCount: 1,
         },
         audio: {
-            maxFileSize: "128MB",
+            maxFileSize: "2GB",
             maxFileCount: 1,
         },
         image: {
