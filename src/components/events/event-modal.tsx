@@ -27,7 +27,7 @@ export function EventModal() {
 
     const { data: users = [] } = api.user.getAll.useQuery();
     const options = users
-        .filter((user) => user.role === "member")
+        .filter((user) => user.role === "member" || user.role === "admin")
         .map((user) => ({
             value: user.id,
             displayValue: user.name,
