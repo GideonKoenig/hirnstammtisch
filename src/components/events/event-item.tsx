@@ -21,6 +21,7 @@ import { ResponsiveTooltip } from "@/components/ui/responsive-tooltip";
 import { checkAccess } from "@/lib/permissions/utilts";
 import { useUser } from "@/lib/use-user";
 import { useEvents } from "@/components/events/event-context";
+import { getAssetUrl } from "@/lib/assets";
 
 export function EventCard(props: {
     event: ClientEvent;
@@ -191,7 +192,7 @@ function AttachmentPills(props: { eventId: string }) {
                 return (
                     <a
                         key={asset.id}
-                        href={asset.url.value ?? undefined}
+                        href={getAssetUrl(asset)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={

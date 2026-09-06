@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { tryCatch } from "@/lib/try-catch";
 import { cn } from "@/lib/utils";
+import { getAssetUrl } from "@/lib/assets";
 
 type Attachment = RouterOutputs["attachment"]["getAll"][number];
 type AssetKind = Attachment["type"];
@@ -204,7 +205,7 @@ function AttachmentRow(props: { item: Attachment; eventId?: string }) {
             )}
 
             <a
-                href={props.item.url.value}
+                href={getAssetUrl(props.item)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:bg-border inline-flex h-8 w-8 items-center justify-center rounded-md"
