@@ -22,7 +22,7 @@ export const auth = betterAuth({
                 type: "string",
                 required: true,
                 defaultValue: "guest",
-                input: true,
+                input: false,
             },
             useProviderImage: {
                 type: "boolean",
